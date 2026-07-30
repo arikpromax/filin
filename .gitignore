@@ -1,0 +1,9 @@
+# системне
+Thumbs.db
+desktop.ini
+.DS_Store
+
+# тимчасове
+*.tmp
+*.bak
+*~

@@ -1,0 +1,1394 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Меню — Кухня «Філін», Кобеляки</title>
+<meta name="description" content="Меню кафе «Філін» у Кобеляках: домашня кухня, сніданки з 07:00, перші страви, гриль, випічка. Замовлення з собою або за столиком.">
+<meta name="theme-color" content="#f7f2e9">
+<meta property="og:title" content="Меню — Кухня «Філін»">
+<meta property="og:description" content="Домашня кухня в Кобеляках. Щодня 07:00–23:00.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23f7f2e9'/><text x='50' y='70' font-family='Georgia,serif' font-size='60' fill='%23b0602b' text-anchor='middle'>Ф</text></svg>">
+
+<!--
+  ═══════════════════════════════════════════════════════════
+  1) СТРАВИ Й ЦІНИ — у змінній MENU внизу файлу (шукайте "var MENU =").
+     {n:'Назва', d:'опис', w:'вага', p:95, t:'хіт', img:'borsch'}
+       n — назва (обов'язково)     p — ціна (обов'язково)
+       d — опис                     t — позначка: хіт / гостро / нове / пост
+       w — вага або об'єм           img — ім'я файлу фото без .jpg
+
+  2) ФОТО СТРАВ — кладіть у папку cafe\photos\ з іменем із поля img.
+     Приклад: img:'borsch'  ->  cafe\photos\borsch.jpg
+     Немає файлу — буде акуратна заглушка з літерою, сайт не ламається.
+     Найкраще горизонтальні фото, ширина ~800 px.
+
+  3) НОМЕР СТОЛИКА береться з посилання у QR-коді: ?t=5
+     Тобто QR на 5-му столику веде на  .../cafe/index.html?t=5
+  ═══════════════════════════════════════════════════════════
+-->
+
+<style>
+/* ═══════ ТОКЕНИ ═══════ */
+:root{
+  --paper:#f7f2e9;
+  --paper-2:#efe7d9;
+  --card:#fffdf8;
+  --ink:#191410;
+  --ink-2:#574d43;
+  --ink-3:#8c8175;
+  --acc:#b0602b;
+  --acc-lt:#d98d55;
+  --acc-soft:rgba(176,96,43,.1);
+  --line:rgba(25,20,16,.13);
+  --line-2:rgba(25,20,16,.07);
+  --ok:#3f7d54;
+  --bad:#b3402a;
+  --display:'Cormorant Garamond',Georgia,serif;
+  --text:'Manrope','Segoe UI',system-ui,sans-serif;
+  --e:cubic-bezier(.19,.72,.28,1);
+  --pad:clamp(14px,4vw,28px);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+/* атрибут hidden має перемагати будь-який display у класах
+   (інакше .add{display:grid} лишає кнопку «+» видимою) */
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{
+  background:var(--paper);color:var(--ink);
+  font-family:var(--text);font-weight:400;line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+  background-image:
+    radial-gradient(circle at 12% 4%,rgba(176,96,43,.07),transparent 40%),
+    radial-gradient(circle at 88% 96%,rgba(176,96,43,.05),transparent 44%);
+}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+input,textarea,select{font:inherit;color:inherit}
+img{display:block;max-width:100%}
+::selection{background:var(--acc);color:var(--paper)}
+.wrap{width:100%;max-width:1000px;margin:0 auto;padding:0 var(--pad)}
+
+/* ═══════ ШАПКА ═══════ */
+.top{
+  position:sticky;top:0;z-index:40;background:rgba(247,242,233,.94);
+  backdrop-filter:blur(14px);border-bottom:1px solid var(--line-2);
+}
+.top-in{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:11px 0}
+.brand{display:flex;align-items:center;gap:10px;min-width:0}
+.mono{
+  width:36px;height:36px;flex:none;display:grid;place-items:center;
+  background:var(--ink);color:var(--paper);
+  font-family:var(--display);font-size:1.25rem;line-height:1;
+}
+.brand-t{display:flex;flex-direction:column;line-height:1.15;min-width:0}
+.brand-t b{font-family:var(--display);font-size:1.02rem;font-weight:600;letter-spacing:.14em}
+.brand-t span{font-size:.56rem;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-3)}
+.hbtn{
+  display:inline-flex;align-items:center;gap:7px;flex:none;padding:10px 15px;
+  border:1px solid var(--line);font-size:.68rem;font-weight:700;letter-spacing:.1em;
+  text-transform:uppercase;transition:all .3s;
+}
+.hbtn:hover{border-color:var(--acc);color:var(--acc)}
+.hbtn svg{width:13px;height:13px}
+.back{
+  display:inline-flex;align-items:center;gap:7px;padding:10px 0;
+  font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3);
+  transition:color .3s;
+}
+.back:hover{color:var(--acc)}
+.back svg{width:12px;height:12px}
+
+/* ═══════ ШАПКА МЕНЮ ═══════ */
+.head{padding:clamp(12px,3vw,22px) 0 clamp(14px,3vw,22px)}
+.head-row{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.head h1{
+  font-family:var(--display);font-weight:500;line-height:.92;
+  font-size:clamp(3rem,11vw,5.4rem);letter-spacing:.01em;
+}
+.head h1 em{display:block;font-size:.26em;font-style:italic;font-weight:400;color:var(--acc);letter-spacing:.1em;margin-top:8px}
+.state{
+  display:inline-flex;align-items:center;gap:9px;
+  padding:8px 15px;border:1px solid var(--line);background:var(--card);
+  font-size:.75rem;white-space:nowrap;
+}
+.state .dot{width:7px;height:7px;border-radius:50%;background:var(--ok);flex:none}
+.state.shut .dot{background:var(--acc)}
+.state b{font-weight:700}
+.tablebar{
+  margin-top:14px;padding:11px 15px;background:var(--acc-soft);border-left:3px solid var(--acc);
+  font-size:.82rem;color:var(--ink-2);
+}
+.tablebar[hidden]{display:none}
+.tablebar b{color:var(--acc);font-weight:700}
+
+/* ═══════ ПОШУК ═══════ */
+.seek{position:relative;margin-top:14px}
+.seek>svg{position:absolute;left:14px;top:50%;transform:translateY(-50%);width:16px;height:16px;color:var(--ink-3)}
+.seek input{
+  width:100%;padding:14px 42px;border:1px solid var(--line);background:var(--card);
+  font-size:.92rem;font-weight:400;transition:border-color .3s,box-shadow .3s;
+}
+.seek input::placeholder{color:var(--ink-3);font-weight:300}
+.seek input:focus{outline:none;border-color:var(--acc);box-shadow:0 0 0 4px var(--acc-soft)}
+.seek .clear{position:absolute;right:8px;top:50%;transform:translateY(-50%);width:28px;height:28px;display:none;place-items:center;color:var(--ink-3)}
+.seek .clear.on{display:grid}
+.seek .clear svg{width:13px;height:13px}
+
+/* ═══════ КАТЕГОРІЇ ═══════ */
+.tabs{
+  position:sticky;top:59px;z-index:30;margin-top:12px;
+  background:rgba(247,242,233,.96);backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--line-2);
+}
+.tabs-row{display:flex;gap:22px;overflow-x:auto;padding:12px 0;scrollbar-width:none}
+.tabs-row::-webkit-scrollbar{display:none}
+.tab{
+  flex:none;position:relative;padding:4px 0;white-space:nowrap;
+  font-size:.76rem;font-weight:600;letter-spacing:.04em;color:var(--ink-3);transition:color .3s;
+}
+.tab::after{content:'';position:absolute;left:0;right:100%;bottom:-2px;height:2px;background:var(--acc);transition:right .35s var(--e)}
+.tab:hover{color:var(--ink)}
+.tab.on{color:var(--acc)}
+.tab.on::after{right:0}
+
+/* ═══════ ПЛИТКИ СТРАВ ═══════ */
+main{padding-bottom:clamp(80px,14vw,120px)}
+.sec{padding-top:clamp(26px,5vw,44px)}
+.sec[hidden]{display:none}
+.sec-head{display:flex;align-items:baseline;gap:12px;margin-bottom:16px}
+.sec-head h2{font-family:var(--display);font-weight:600;font-size:clamp(1.5rem,4.4vw,2.1rem);line-height:1;white-space:nowrap}
+.sec-head i{flex:1;height:1px;background:var(--line);display:block}
+.sec-head span{font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--acc);white-space:nowrap}
+
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(10px,2vw,18px)}
+@media (min-width:700px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+
+.tile{
+  position:relative;display:flex;flex-direction:column;
+  background:var(--card);border:1px solid var(--line-2);
+  transition:border-color .3s,transform .4s var(--e),box-shadow .4s;
+}
+.tile[hidden]{display:none}
+.tile:hover{border-color:var(--line);transform:translateY(-3px);box-shadow:0 18px 30px -22px rgba(25,20,16,.4)}
+.tile.picked{border-color:var(--acc)}
+.tile-ph{
+  position:relative;aspect-ratio:4/3;overflow:hidden;background:var(--paper-2);
+  display:grid;place-items:center;
+}
+.tile-ph img{width:100%;height:100%;object-fit:cover}
+.tile-mono{
+  font-family:var(--display);font-size:clamp(2.4rem,9vw,3.4rem);font-weight:400;
+  color:rgba(176,96,43,.34);line-height:1;
+}
+.tile-tag{
+  position:absolute;top:8px;left:8px;padding:4px 9px;
+  background:var(--acc);color:#fff;font-size:.54rem;font-weight:800;
+  letter-spacing:.12em;text-transform:uppercase;
+}
+.tile-tag.calm{background:var(--card);color:var(--acc)}
+.tile-body{padding:11px 12px 14px;display:flex;flex-direction:column;flex:1}
+.tile-n{font-size:.9rem;font-weight:600;line-height:1.25}
+.tile-d{margin-top:5px;font-size:.76rem;font-weight:300;color:var(--ink-3);line-height:1.4}
+.tile-foot{margin-top:auto;padding-top:11px;display:flex;align-items:baseline;gap:8px}
+.tile-p{font-family:var(--display);font-size:1.3rem;font-weight:600}
+.tile-w{font-size:.62rem;letter-spacing:.08em;color:var(--ink-3);margin-left:auto}
+
+/* кнопка «додати» — на фото */
+.tile-act{position:absolute;right:8px;bottom:8px;z-index:2}
+.add{
+  width:40px;height:40px;display:grid;place-items:center;
+  background:var(--ink);color:var(--paper);transition:background .25s,transform .25s;
+}
+.add:hover{background:var(--acc);transform:scale(1.06)}
+.add svg{width:16px;height:16px}
+.qty{display:flex;align-items:center;background:var(--acc);color:#fff}
+.qty[hidden]{display:none}
+.qty button{width:36px;height:40px;display:grid;place-items:center;font-size:1.15rem;font-weight:600;color:#fff}
+.qty button:hover{background:rgba(0,0,0,.12)}
+.qty b{min-width:26px;text-align:center;font-size:.95rem;font-weight:700}
+.empty{padding:44px 0;text-align:center;color:var(--ink-3)}
+.empty b{display:block;font-family:var(--display);font-size:1.5rem;color:var(--ink);margin-bottom:6px}
+
+/* ═══════ ІНФО ═══════ */
+.note{margin-top:clamp(30px,6vw,50px);padding:clamp(20px,4vw,30px);background:var(--card);border:1px solid var(--line)}
+.note h3{font-family:var(--display);font-weight:600;font-size:1.35rem;margin-bottom:10px}
+.note p{font-size:.88rem;color:var(--ink-2);font-weight:300}
+.note-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:1px;background:var(--line);margin-top:20px}
+.note-grid div{background:var(--card);padding:15px 13px}
+.note-grid b{display:block;font-family:var(--display);font-size:1.25rem;color:var(--acc);font-weight:600}
+.note-grid span{font-size:.58rem;letter-spacing:.15em;text-transform:uppercase;color:var(--ink-3)}
+
+footer{border-top:1px solid var(--line);padding:26px 0 100px;margin-top:clamp(26px,5vw,44px)}
+.f-row{display:flex;flex-wrap:wrap;gap:14px;justify-content:space-between;align-items:center;font-size:.84rem}
+.f-row a:hover{color:var(--acc)}
+.f-small{margin-top:14px;font-size:.68rem;color:var(--ink-3);font-weight:300}
+
+/* ═══════ НИЖНЯ СМУГА ═══════ */
+.dock{
+  position:fixed;left:0;right:0;bottom:0;z-index:50;
+  padding:10px var(--pad) calc(10px + env(safe-area-inset-bottom));
+  background:rgba(247,242,233,.96);backdrop-filter:blur(14px);border-top:1px solid var(--line);
+  display:grid;grid-template-columns:1fr 1fr;gap:9px;
+  max-width:1000px;margin:0 auto;
+  transform:translateY(130%);transition:transform .45s var(--e);
+}
+.dock.one{grid-template-columns:1fr}
+.dock.up{transform:none}
+.dock a,.dock button{
+  display:flex;align-items:center;justify-content:center;gap:8px;padding:15px 8px;
+  font-size:.71rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;
+}
+.dock .a1{background:var(--acc);color:#fff}
+.dock .a2{border:1px solid var(--line)}
+.dock svg{width:15px;height:15px}
+
+/* ═══════ ПЕРЕГЛЯД СТРАВИ ═══════ */
+.tile{cursor:zoom-in}
+.tile-act{cursor:default}
+.dlb{position:fixed;inset:0;z-index:70;display:flex;align-items:center;justify-content:center;background:rgba(25,20,16,.55);backdrop-filter:blur(4px);padding:14px}
+.dlb-box{
+  position:relative;width:100%;max-width:min(980px,96vw);max-height:94vh;overflow-y:auto;
+  background:var(--paper);border-top:2px solid var(--acc);
+  padding:16px var(--pad) calc(20px + env(safe-area-inset-bottom));
+}
+.dlb-x{
+  position:absolute;top:12px;right:12px;z-index:3;width:40px;height:40px;
+  display:grid;place-items:center;background:var(--card);border:1px solid var(--line);color:var(--ink-2);
+}
+.dlb-x:hover{border-color:var(--acc);color:var(--acc)}
+.dlb-x svg{width:14px;height:14px}
+/* minmax(0,…) — інакше довгий ряд сусідніх страв розпирає вікно */
+.dlb-main{display:grid;grid-template-columns:minmax(0,1fr);gap:16px}
+.dlb-left,.dlb-right{min-width:0}
+.dlb-name{
+  display:block;font-family:var(--display);font-size:clamp(1.5rem,4vw,2.2rem);
+  font-weight:600;line-height:1.1;padding-right:52px;
+}
+@media (min-width:780px){
+  .dlb-main{grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:26px;align-items:start}
+  .dlb-right{padding-top:4px}
+  .dlb-list{flex-wrap:wrap;overflow:visible}
+}
+.dlb-stage{position:relative;background:var(--paper-2);border:1px solid var(--line-2)}
+.dlb-img{aspect-ratio:4/3;display:grid;place-items:center;overflow:hidden}
+.dlb-img img{width:100%;height:100%;object-fit:cover}
+.dlb-mono{font-family:var(--display);font-size:4rem;color:rgba(176,96,43,.3)}
+.dlb-none{padding:22px;text-align:center;color:var(--ink-3);font-size:.85rem;max-width:32ch}
+.dlb-nav{
+  position:absolute;top:50%;transform:translateY(-50%);width:40px;height:40px;
+  display:grid;place-items:center;background:rgba(255,253,248,.92);border:1px solid var(--line);
+}
+.dlb-nav:hover{background:var(--acc);color:#fff}
+.dlb-nav svg{width:15px;height:15px}
+.dlb-nav.prev{left:9px}.dlb-nav.next{right:9px}
+.dlb-count{position:absolute;right:10px;bottom:10px;padding:4px 10px;background:rgba(25,20,16,.7);color:#fff;font-size:.66rem}
+.dlb-thumbs{display:flex;gap:7px;overflow-x:auto;padding:9px 0 2px}
+.dlb-thumbs button{flex:none;width:66px;aspect-ratio:4/3;border:1px solid var(--line);overflow:hidden;opacity:.5;transition:opacity .3s,border-color .3s}
+.dlb-thumbs button img{width:100%;height:100%;object-fit:cover}
+.dlb-thumbs button.on{opacity:1;border-color:var(--acc)}
+.dlb-d{margin-top:10px;font-size:.88rem;color:var(--ink-2);font-weight:300}
+.dlb-foot{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-top:14px;padding-top:12px;border-top:1px solid var(--line)}
+.dlb-p{font-family:var(--display);font-size:1.7rem;font-weight:600}
+.dlb-p span{display:block;font-family:var(--text);font-size:.62rem;letter-spacing:.14em;color:var(--ink-3);font-weight:400}
+.dlb-add{display:flex;align-items:center;gap:9px;padding:14px 22px;background:var(--acc);color:#fff;font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
+.dlb-add:hover{background:var(--ink)}
+.dlb-qty{display:flex;align-items:center;background:var(--acc);color:#fff}
+.dlb-qty button{width:42px;height:46px;display:grid;place-items:center;font-size:1.2rem;font-weight:600;color:#fff}
+.dlb-qty button:hover{background:rgba(0,0,0,.14)}
+.dlb-qty b{min-width:32px;text-align:center;font-size:1rem;font-weight:700}
+.dlb-more{margin-top:14px;padding-top:12px;border-top:1px solid var(--line)}
+.dlb-more p{font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-3);margin-bottom:8px}
+.dlb-list{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px}
+.dlb-list button{
+  flex:none;display:flex;align-items:center;gap:9px;
+  padding:6px 13px 6px 6px;border:1px solid var(--line);background:var(--card);
+  font-size:.78rem;white-space:nowrap;transition:all .25s;
+}
+.dlb-list button:hover{border-color:var(--acc);color:var(--acc)}
+.mini{
+  width:40px;height:40px;flex:none;display:grid;place-items:center;overflow:hidden;
+  background:var(--paper-2);font-family:var(--display);font-size:1.15rem;
+  color:rgba(176,96,43,.5);line-height:1;
+}
+.mini img{width:100%;height:100%;object-fit:cover}
+
+/* ═══════ АРКУШ ЗАМОВЛЕННЯ ═══════ */
+.sheet{position:fixed;inset:0;z-index:60;display:flex;align-items:flex-end;justify-content:center;background:rgba(25,20,16,.45);backdrop-filter:blur(3px)}
+.sheet[hidden]{display:none}
+.sheet-box{
+  width:100%;max-width:520px;max-height:94vh;overflow-y:auto;
+  background:var(--paper);border-top:2px solid var(--acc);
+  padding:18px var(--pad) calc(20px + env(safe-area-inset-bottom));
+  animation:rise .35s var(--e);
+}
+@keyframes rise{from{transform:translateY(28px);opacity:.5}to{transform:none;opacity:1}}
+.sheet-top{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.sheet-top b{font-family:var(--display);font-size:1.55rem;font-weight:600}
+.sheet-x{width:36px;height:36px;display:grid;place-items:center;border:1px solid var(--line);color:var(--ink-2)}
+.sheet-x:hover{border-color:var(--acc);color:var(--acc)}
+.sheet-x svg{width:13px;height:13px}
+.sheet-list{border-top:1px solid var(--line);margin-top:12px}
+.sl{display:grid;grid-template-columns:1fr auto auto;gap:5px 10px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line-2)}
+.sl-n{font-size:.88rem;font-weight:600}
+.sl-n span{display:block;font-size:.7rem;font-weight:300;color:var(--ink-3)}
+.sl-p{font-family:var(--display);font-size:1.05rem;font-weight:600;white-space:nowrap}
+.sl-x{width:26px;height:26px;display:grid;place-items:center;color:var(--ink-3)}
+.sl-x:hover{color:var(--acc)}
+.sl-x svg{width:11px;height:11px}
+.sheet-sum{display:flex;align-items:baseline;justify-content:space-between;padding:13px 0 2px}
+.sheet-sum span{font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-3)}
+.sheet-sum b{font-family:var(--display);font-size:1.8rem;font-weight:600;color:var(--acc)}
+
+.olab{margin:15px 0 7px;font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-3)}
+.olab i{font-style:normal;color:var(--acc)}
+.way{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.way button{
+  padding:13px 6px;border:1px solid var(--line);background:var(--card);
+  font-size:.7rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2);
+  transition:all .3s;
+}
+.way button[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+.chips{display:flex;gap:6px;overflow-x:auto;padding:2px 0 8px;scrollbar-width:thin}
+.chips[hidden]{display:none}
+.chips::-webkit-scrollbar{height:3px}
+.chips::-webkit-scrollbar-thumb{background:var(--acc)}
+.chip{
+  flex:none;padding:10px 13px;border:1px solid var(--line);background:var(--card);
+  font-size:.83rem;white-space:nowrap;transition:all .25s;
+}
+.chip:hover{border-color:var(--acc);color:var(--acc)}
+.chip.on{background:var(--acc);border-color:var(--acc);color:#fff;font-weight:700}
+.hintline{font-size:.74rem;color:var(--ink-3);font-weight:300;margin:-2px 0 8px}
+.ofld{display:flex;flex-direction:column;gap:6px;margin-bottom:10px}
+.ofld[hidden]{display:none}
+.ofld label{font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-3)}
+.ofld label i{font-style:normal;color:var(--acc)}
+.ofld input,.ofld textarea{width:100%;padding:13px 13px;border:1px solid var(--line);background:var(--card);font-size:.93rem;font-weight:400}
+.ofld textarea{min-height:62px;resize:vertical;font-weight:300}
+.ofld input:focus,.ofld textarea:focus{outline:none;border-color:var(--acc);box-shadow:0 0 0 3px var(--acc-soft)}
+.ofld.bad input{border-color:var(--bad)}
+
+/* число з власними кнопками замість системних стрілок */
+.num{display:flex;align-items:stretch;border:1px solid var(--line);background:var(--card)}
+.num input{
+  flex:1;min-width:0;height:48px;border:0;background:none;text-align:center;
+  font-size:1.02rem;font-weight:500;-moz-appearance:textfield;appearance:textfield;
+}
+.num input::-webkit-outer-spin-button,
+.num input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.num input:focus{outline:none;box-shadow:none}
+.num button{
+  width:46px;flex:none;display:grid;place-items:center;
+  font-size:1.2rem;line-height:1;color:var(--acc);transition:background .25s;
+}
+.num button:hover{background:var(--acc-soft)}
+.num button:first-child{border-right:1px solid var(--line)}
+.num button:last-child{border-left:1px solid var(--line)}
+.num:focus-within{border-color:var(--acc)}
+.ofld.bad .num{border-color:var(--bad)}
+.send{
+  display:flex;align-items:center;justify-content:center;gap:9px;width:100%;
+  margin-top:6px;padding:17px;background:var(--acc);color:#fff;
+  font-size:.74rem;font-weight:800;letter-spacing:.11em;text-transform:uppercase;
+  transition:background .3s,opacity .3s;
+}
+.send:hover{background:var(--ink)}
+.send.off{opacity:.4;pointer-events:none}
+.send svg{width:15px;height:15px}
+.owarn{display:none;margin-top:10px;font-size:.75rem;color:var(--acc)}
+.owarn.on{display:block}
+
+/* ═══════ ПІДТВЕРДЖЕННЯ ═══════ */
+.done{text-align:center;padding:8px 0 4px}
+.done[hidden]{display:none}
+.done-ok{width:56px;height:56px;margin:0 auto 14px;display:grid;place-items:center;background:var(--ok);color:#fff}
+.done-ok svg{width:26px;height:26px}
+.done h4{font-family:var(--display);font-size:1.5rem;font-weight:600;margin-bottom:4px}
+.done p{font-size:.85rem;color:var(--ink-2);font-weight:300}
+.num-big{
+  margin:16px auto;padding:14px 18px;border:1px dashed var(--acc);display:inline-block;
+  font-family:var(--display);font-size:1.9rem;font-weight:600;color:var(--acc);letter-spacing:.04em;
+}
+.done-note{font-size:.74rem;color:var(--ink-3);font-weight:300}
+.done-acts{display:grid;gap:8px;margin-top:18px}
+.done-acts button,.done-acts a{
+  padding:14px;border:1px solid var(--line);font-size:.71rem;font-weight:700;
+  letter-spacing:.09em;text-transform:uppercase;
+}
+.done-acts .prim{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+
+/* історія */
+.hist{border-top:1px solid var(--line);margin-top:14px}
+.hist-row{display:grid;grid-template-columns:1fr auto;gap:4px 12px;padding:11px 0;border-bottom:1px solid var(--line-2)}
+.hist-row b{font-family:var(--display);font-size:1.05rem;font-weight:600;color:var(--acc)}
+.hist-row span{font-size:.72rem;color:var(--ink-3);font-weight:300}
+.hist-row em{font-style:normal;font-size:.85rem;font-weight:600;text-align:right}
+.hist-empty{padding:26px 0;text-align:center;color:var(--ink-3);font-size:.85rem}
+.hist-link{
+  display:inline-flex;align-items:center;gap:7px;margin-top:12px;
+  font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--acc);
+  border-bottom:1px solid var(--acc);padding-bottom:2px;
+}
+.hist-link[hidden]{display:none}
+
+@media (min-width:761px){
+  .tabs{top:60px}
+  .sheet{align-items:center}
+  .sheet-box{border:1px solid var(--line);border-top:2px solid var(--acc);box-shadow:0 40px 80px -40px rgba(25,20,16,.5)}
+  footer{padding-bottom:40px}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+  html{scroll-behavior:auto}
+}
+</style>
+</head>
+<body>
+
+<svg style="display:none" aria-hidden="true">
+  <symbol id="i-ph" viewBox="0 0 24 24"><path fill="currentColor" d="M6.6 10.8c1.2 2.3 3.1 4.2 5.4 5.4l1.8-1.8c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.5.6.6 0 1 .4 1 1V19c0 .6-.4 1-1 1-8.3 0-15-6.7-15-15 0-.6.4-1 1-1h3.2c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.5.1.4 0 .8-.2 1z"/></symbol>
+  <symbol id="i-back" viewBox="0 0 24 24"><path fill="currentColor" d="M10.8 4.6l1.4 1.4-5 5h13.4v2H7.2l5 5-1.4 1.4L3.4 12z"/></symbol>
+  <symbol id="i-seek" viewBox="0 0 24 24"><path fill="currentColor" d="M10 3a7 7 0 1 0 4.2 12.6l4.6 4.6 1.4-1.4-4.6-4.6A7 7 0 0 0 10 3zm0 2a5 5 0 1 1 0 10 5 5 0 0 1 0-10z"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path fill="currentColor" d="M18.3 5.7L12 12l6.3 6.3-1.4 1.4L10.6 13.4 5.7 18.3 4.3 16.9 10.6 12 4.3 5.7l1.4-1.4L12 10.6l4.9-4.9z"/></symbol>
+  <symbol id="i-fwd" viewBox="0 0 24 24"><path fill="currentColor" d="M13.2 4.6l7.4 7.4-7.4 7.4-1.4-1.4 5-5H3.4v-2h13.4l-5-5z"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path fill="currentColor" d="M11 5h2v6h6v2h-6v6h-2v-6H5v-2h6z"/></symbol>
+  <symbol id="i-bag" viewBox="0 0 24 24"><path fill="currentColor" d="M8 7V6a4 4 0 0 1 8 0v1h3l1 15H4L5 7zm2 0h4V6a2 2 0 0 0-4 0z"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path fill="currentColor" d="M9.6 17.2l-4.8-4.8L6.2 11l3.4 3.4L17.8 6.2l1.4 1.4z"/></symbol>
+  <symbol id="i-ig" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2.2c3.2 0 3.6 0 4.9.1 1.2.1 1.8.2 2.2.4.6.2 1 .5 1.4.9.4.4.7.8.9 1.4.2.4.3 1 .4 2.2.1 1.3.1 1.7.1 4.9s0 3.6-.1 4.9c-.1 1.2-.2 1.8-.4 2.2-.2.6-.5 1-.9 1.4-.4.4-.8.7-1.4.9-.4.2-1 .3-2.2.4-1.3.1-1.7.1-4.9.1s-3.6 0-4.9-.1c-1.2-.1-1.8-.2-2.2-.4-.6-.2-1-.5-1.4-.9-.4-.4-.7-.8-.9-1.4-.2-.4-.3-1-.4-2.2-.1-1.3-.1-1.7-.1-4.9s0-3.6.1-4.9c.1-1.2.2-1.8.4-2.2.2-.6.5-1 .9-1.4.4-.4.8-.7 1.4-.9.4-.2 1-.3 2.2-.4 1.3-.1 1.7-.1 4.9-.1zm0 3.2A6.6 6.6 0 1 0 12 18.6 6.6 6.6 0 0 0 12 5.4zm0 10.9a4.3 4.3 0 1 1 0-8.6 4.3 4.3 0 0 1 0 8.6zm6.9-11.2a1.55 1.55 0 1 1-3.1 0 1.55 1.55 0 0 1 3.1 0z"/></symbol>
+</svg>
+
+<header class="top">
+  <div class="wrap top-in">
+    <a class="brand" href="#top">
+      <span class="mono">Ф</span>
+      <span class="brand-t"><b>КУХНЯ ФІЛІН</b><span>Кобеляки · домашня кухня</span></span>
+    </a>
+    <button type="button" class="hbtn" id="histBtn"><svg><use href="#i-bag"/></svg>Мої замовлення</button>
+  </div>
+</header>
+
+<div class="wrap">
+  <a class="back" href="../index.html"><svg><use href="#i-back"/></svg>Назад на сайт</a>
+</div>
+
+<div class="wrap head" id="top">
+  <div class="head-row">
+    <h1>Меню<em>домашня кухня</em></h1>
+    <div class="state" id="state"><span class="dot"></span><span id="stateTxt">07:00 – 23:00</span></div>
+  </div>
+  <p class="tablebar" id="tablebar" hidden>Ви за столиком <b id="tableNo">—</b> — замовлення принесемо саме сюди.</p>
+
+  <div class="seek">
+    <svg><use href="#i-seek"/></svg>
+    <input type="search" id="seek" placeholder="Знайти страву — борщ, вареники, кава…" aria-label="Пошук по меню" autocomplete="off">
+    <button type="button" class="clear" id="seekClear" aria-label="Очистити"><svg><use href="#i-x"/></svg></button>
+  </div>
+</div>
+
+<nav class="tabs" id="tabs"><div class="wrap"><div class="tabs-row" id="tabsRow"></div></div></nav>
+
+<main class="wrap" id="menu"></main>
+
+<div class="wrap">
+  <div class="note">
+    <h3>Кілька слів про кухню</h3>
+    <p>Готуємо щодня невеликими партіями, тому деякі страви до вечора можуть закінчитися —
+      якщо їдете спеціально, наберіть і ми відкладемо. Замовлення з собою збираємо
+      за 20–30 хвилин, банкетне меню обговорюємо окремо.</p>
+    <div class="note-grid">
+      <div><b>07:00</b><span>Відчиняємось</span></div>
+      <div><b>23:00</b><span>Зачиняємось</span></div>
+      <div><b>Щодня</b><span>Без вихідних</span></div>
+      <div><b>20–30 хв</b><span>Зібрати з собою</span></div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap">
+    <div class="f-row">
+      <div><a href="tel:+380681558595">068 155 85 95</a> · <a href="tel:+380662783888">066 278 38 88</a></div>
+      <a href="https://www.instagram.com/cafe__filin__" target="_blank" rel="noopener">
+        <svg style="width:14px;height:14px;vertical-align:-2px"><use href="#i-ig"/></svg> @cafe__filin__
+      </a>
+    </div>
+    <p class="f-small">м. Кобеляки, Полтавська обл. · <a href="../index.html" style="color:var(--acc)">Номери та сауна →</a></p>
+  </div>
+</footer>
+
+<div class="dock" id="dock">
+  <button type="button" class="a1" id="openOrder" hidden><svg><use href="#i-bag"/></svg><span id="dockTxt">Замовлення</span></button>
+  <a class="a1" id="dockCall" href="tel:+380681558595"><svg><use href="#i-ph"/></svg>Подзвонити</a>
+</div>
+
+<!-- перегляд страви -->
+<div class="dlb" id="dlb" hidden>
+  <div class="dlb-box">
+    <button type="button" class="dlb-x" id="dlbX" aria-label="Закрити"><svg><use href="#i-x"/></svg></button>
+    <div class="dlb-main">
+      <div class="dlb-left">
+        <div class="dlb-stage">
+          <button type="button" class="dlb-nav prev" id="dlbPrev" aria-label="Попереднє фото"><svg><use href="#i-back"/></svg></button>
+          <div class="dlb-img" id="dlbImg"></div>
+          <button type="button" class="dlb-nav next" id="dlbNext" aria-label="Наступне фото"><svg><use href="#i-fwd"/></svg></button>
+          <span class="dlb-count" id="dlbCount" hidden></span>
+        </div>
+        <div class="dlb-thumbs" id="dlbThumbs"></div>
+      </div>
+
+      <div class="dlb-right">
+        <b class="dlb-name" id="dlbName"></b>
+        <p class="dlb-d" id="dlbDesc"></p>
+        <div class="dlb-foot">
+          <span class="dlb-p" id="dlbPrice">—</span>
+          <span id="dlbAct"></span>
+        </div>
+        <div class="dlb-more">
+          <p>Інші страви розділу</p>
+          <div class="dlb-list" id="dlbMore"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- аркуш замовлення -->
+<div class="sheet" id="sheet" hidden>
+  <div class="sheet-box">
+    <div class="sheet-top">
+      <b id="sheetTitle">Ваше замовлення</b>
+      <button type="button" class="sheet-x" id="sheetX" aria-label="Закрити"><svg><use href="#i-x"/></svg></button>
+    </div>
+
+    <div id="orderForm">
+      <div class="sheet-list" id="sheetList"></div>
+      <div class="sheet-sum"><span>Разом</span><b id="sheetSum">0 ₴</b></div>
+
+      <p class="olab">Куди</p>
+      <div class="way" role="group" aria-label="Куди">
+        <button type="button" id="wayIn" aria-pressed="false">За столиком</button>
+        <button type="button" id="wayOut" aria-pressed="true">З собою</button>
+      </div>
+
+      <div class="ofld" id="of-table" hidden style="margin-top:12px">
+        <label for="oTable">Номер столика <i>*</i></label>
+        <div class="num">
+          <button type="button" data-num="-1" data-for="oTable" aria-label="Менше">−</button>
+          <input type="number" id="oTable" min="1" max="99" inputmode="numeric" placeholder="напр. 5">
+          <button type="button" data-num="1" data-for="oTable" aria-label="Більше">+</button>
+        </div>
+        <p class="hintline" id="tableHint">Зазвичай підставляється з QR-коду на вашому столі.</p>
+      </div>
+
+      <p class="olab">Коли</p>
+      <div class="way" role="group" aria-label="Коли">
+        <button type="button" id="whenNow" aria-pressed="true">На зараз</button>
+        <button type="button" id="whenAt" aria-pressed="false">На певний час</button>
+      </div>
+
+      <div id="whenBox" hidden style="margin-top:10px">
+        <div id="dateWrap" hidden>
+          <p class="olab" style="margin-top:6px">Дата</p>
+          <div class="chips" id="dates"></div>
+        </div>
+        <p class="olab" style="margin-top:6px">Час</p>
+        <div class="chips" id="times"></div>
+      </div>
+
+      <div class="ofld" id="of-name">
+        <label for="oName">Ваше ім'я <i>*</i></label>
+        <input type="text" id="oName" autocomplete="name" placeholder="Як до вас звертатись">
+      </div>
+      <div class="ofld" id="of-phone">
+        <label for="oPhone">Телефон <i>*</i></label>
+        <input type="tel" id="oPhone" inputmode="tel" autocomplete="tel" placeholder="+380 68 155 85 95">
+      </div>
+      <div class="ofld">
+        <label for="oNote">Коментар</label>
+        <textarea id="oNote" placeholder="Борщ без сметани, окремо хліб…"></textarea>
+      </div>
+
+      <a class="send off" id="sendOrder" href="#"><svg><use href="#i-check"/></svg>Надіслати замовлення</a>
+      <p class="owarn" id="oWarn"></p>
+      <p class="f-small" style="margin-top:10px">Ми отримаємо замовлення, перетелефонуємо
+        й підтвердимо час — передоплати немає.</p>
+    </div>
+
+    <!-- підтвердження з номером -->
+    <div class="done" id="done" hidden>
+      <div class="done-ok"><svg><use href="#i-check"/></svg></div>
+      <h4>Замовлення надіслано</h4>
+      <p>Назвіть цей номер, коли ми зателефонуємо:</p>
+      <div class="num-big" id="orderNo">—</div>
+      <p class="done-note">Номер збережено на цьому телефоні — знайдете його в «Моїх замовленнях»,
+        навіть якщо закриєте сторінку.</p>
+      <div class="done-acts">
+        <button type="button" class="prim" id="doneClose">Готово</button>
+        <button type="button" id="doneHist">Мої замовлення</button>
+      </div>
+    </div>
+
+    <!-- історія -->
+    <div id="histView" hidden>
+      <div class="hist" id="histList"></div>
+      <div class="done-acts"><button type="button" class="prim" id="histBack">Назад до меню</button></div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  'use strict';
+
+  /* ═════════════════════════════════════════════════════
+     МЕНЮ — редагуйте тільки цей блок
+     {n:'Назва', d:'опис', w:'вага', p:ціна, t:'позначка', img:'файл'}
+     ═════════════════════════════════════════════════════ */
+  var MENU = [
+    {id:'breakfast', name:'Сніданки', note:'07:00 – 11:00', items:[
+      {n:'Яєчня з салом та зеленню', d:'три яйця, домашнє сало', w:'220 г', p:85, t:'хіт', img:'eggs-lard'},
+      {n:'Омлет із сиром', d:'пишний, на молоці', w:'200 г', p:90, img:'omelet'},
+      {n:'Сирники зі сметаною', d:'подаємо гарячими, 4 шт.', w:'250 г', p:95, img:'syrnyky'},
+      {n:'Млинці з начинкою', d:'сир, м’ясо або вишня', w:'230 г', p:90, img:'mlyntsi'},
+      {n:'Молочна каша', d:'вівсяна або рисова', w:'300 г', p:65, img:'kasha'},
+      {n:'Бутерброд із салом', d:'на домашньому хлібі, з гірчицею', w:'120 г', p:55, img:'lard-bread'}
+    ]},
+    {id:'soup', name:'Перші страви', note:'зі сметаною та хлібом', items:[
+      {n:'Борщ український', d:'з пампушкою та сметаною', w:'350 г', p:110, t:'хіт', img:'borsch'},
+      {n:'Курячий бульйон', d:'з домашньою локшиною', w:'350 г', p:95, img:'broth'},
+      {n:'Солянка м’ясна', d:'з маслинами та лимоном', w:'350 г', p:135, img:'solyanka'},
+      {n:'Грибна юшка', d:'сезонно', w:'350 г', p:105, img:'mushroom-soup'},
+      {n:'Розсольник', d:'на м’ясному бульйоні', w:'350 г', p:100, img:'rassolnyk'}
+    ]},
+    {id:'main', name:'Гарячі страви', note:'', items:[
+      {n:'Вареники з картоплею', d:'зі шкварками або сметаною', w:'300 г', p:115, t:'хіт', img:'varenyky-potato'},
+      {n:'Вареники з сиром', d:'солодкі, зі сметаною', w:'300 г', p:115, img:'varenyky-cheese'},
+      {n:'Домашні котлети з пюре', d:'дві котлети, вершкове пюре', w:'330 г', p:150, img:'kotlety'},
+      {n:'Печеня по-домашньому', d:'у горщику, з овочами', w:'350 г', p:175, img:'pechenya'},
+      {n:'Голубці', d:'у томатному соусі', w:'300 г', p:140, img:'holubtsi'},
+      {n:'Деруни зі сметаною', d:'смажені до хрусту', w:'280 г', p:120, img:'deruny'},
+      {n:'Курка по-київськи', d:'з маслом і зеленню', w:'250 г', p:190, img:'chicken-kyiv'},
+      {n:'Риба смажена', d:'з лимоном', w:'250 г', p:175, img:'fish'}
+    ]},
+    {id:'grill', name:'Гриль', note:'на вугіллі, 20 хвилин', items:[
+      {n:'Шашлик зі свинини', d:'з цибулею та лавашем', w:'250 г', p:250, t:'хіт', img:'shashlyk-pork'},
+      {n:'Шашлик із курки', d:'у маринаді', w:'250 г', p:210, img:'shashlyk-chicken'},
+      {n:'Свиняча шия', d:'на вугіллі', w:'300 г', p:295, img:'pork-neck'},
+      {n:'Ковбаска домашня', d:'з гірчицею', w:'200 г', p:190, t:'гостро', img:'kovbaska'},
+      {n:'Овочі на грилі', d:'сезонні', w:'250 г', p:130, t:'пост', img:'veggies-grill'}
+    ]},
+    {id:'side', name:'Гарніри', note:'', items:[
+      {n:'Картопля смажена з грибами', d:'', w:'250 г', p:95, img:'potato-mushrooms'},
+      {n:'Пюре картопляне', d:'вершкове', w:'200 г', p:65, img:'mash'},
+      {n:'Каша гречана з підливою', d:'', w:'250 г', p:70, img:'buckwheat'},
+      {n:'Картопля по-селянськи', d:'з салом і цибулею', w:'250 г', p:90, img:'potato-village'}
+    ]},
+    {id:'salad', name:'Салати та закуски', note:'', items:[
+      {n:'Салат овочевий', d:'помідор, огірок, зелень, олія', w:'220 г', p:85, t:'пост', img:'salad-veg'},
+      {n:'Салат «Цезар» з куркою', d:'', w:'250 г', p:145, img:'caesar'},
+      {n:'Квашені закуски', d:'капуста, огірки, помідори', w:'250 г', p:90, img:'pickles'},
+      {n:'Сало з домашнім хлібом', d:'із часником і гірчицею', w:'150 г', p:95, img:'lard-plate'},
+      {n:'Сирна тарілка', d:'до вина або пива', w:'200 г', p:165, img:'cheese-plate'}
+    ]},
+    {id:'bake', name:'Випічка', note:'печемо зранку', items:[
+      {n:'Пиріжок печений', d:'картопля, капуста або яблуко', w:'100 г', p:30, t:'хіт', img:'pyrizhok'},
+      {n:'Пампушки з часником', d:'до борщу, 4 шт.', w:'120 г', p:35, img:'pampushky'},
+      {n:'Булочка з маком', d:'', w:'120 г', p:40, img:'bun-poppy'},
+      {n:'Пиріг домашній', d:'сезонна начинка, кусок', w:'150 г', p:60, img:'pie'}
+    ]},
+    {id:'drink', name:'Напої', note:'', items:[
+      {n:'Кава по-турецьки', d:'зварена на піску', w:'100 мл', p:45, t:'хіт', img:'coffee-turkish'},
+      {n:'Американо', d:'', w:'250 мл', p:45, img:'americano'},
+      {n:'Лате', d:'', w:'300 мл', p:55, img:'latte'},
+      {n:'Чай у чайнику', d:'чорний, зелений або травяний', w:'500 мл', p:70, img:'tea'},
+      {n:'Компот домашній', d:'із сушених фруктів', w:'250 мл', p:35, img:'compote'},
+      {n:'Узвар', d:'сезонно', w:'250 мл', p:40, img:'uzvar'},
+      {n:'Морс', d:'вишня або смородина', w:'250 мл', p:45, img:'mors'},
+      {n:'Мінеральна вода', d:'', w:'500 мл', p:30, img:'water'}
+    ]}
+  ];
+
+  var SEND_TO = '+380681558595';
+  var STORE = 'filin_orders';
+
+  function esc(s){
+    return String(s).replace(/[&<>"]/g, function(c){
+      return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];
+    });
+  }
+  function two(n){ return (n < 10 ? '0' : '') + n; }
+
+  /* час у Кобеляках, а не на пристрої гостя */
+  function kyiv(){
+    try {
+      var f = new Intl.DateTimeFormat('en-CA', {
+        timeZone:'Europe/Kyiv', year:'numeric', month:'2-digit', day:'2-digit',
+        hour:'2-digit', minute:'2-digit', hour12:false
+      });
+      var p = {};
+      f.formatToParts(new Date()).forEach(function(x){ if (x.type !== 'literal') p[x.type] = x.value; });
+      return {h:parseInt(p.hour,10) % 24, m:parseInt(p.minute,10), d:p.day, mo:p.month, y:p.year};
+    } catch(e){
+      var d = new Date();
+      return {h:d.getHours(), m:d.getMinutes(), d:two(d.getDate()), mo:two(d.getMonth()+1), y:String(d.getFullYear())};
+    }
+  }
+
+  /* ── збірка меню ── */
+  var menuBox = document.getElementById('menu');
+  var tabsRow = document.getElementById('tabsRow');
+  var BY_KEY = {};
+
+  function tileHTML(it, key){
+    var tag = it.t
+      ? '<span class="tile-tag' + (it.t === 'хіт' || it.t === 'нове' ? '' : ' calm') + '">' + esc(it.t) + '</span>'
+      : '';
+    return '<article class="tile" data-key="' + key + '" data-find="' +
+      esc((it.n + ' ' + (it.d || '')).toLowerCase()) + '">' +
+      '<div class="tile-ph">' + tag +
+        '<span class="tile-mono">' + esc(it.n.trim().charAt(0)) + '</span>' +
+        '<span class="tile-act">' +
+          '<button type="button" class="add" data-add="' + key + '" aria-label="Додати ' + esc(it.n) + '">' +
+            '<svg><use href="#i-plus"/></svg></button>' +
+          '<span class="qty" hidden>' +
+            '<button type="button" data-step="-1" data-key="' + key + '" aria-label="Менше">−</button>' +
+            '<b>0</b>' +
+            '<button type="button" data-step="1" data-key="' + key + '" aria-label="Більше">+</button>' +
+          '</span>' +
+        '</span>' +
+      '</div>' +
+      '<div class="tile-body">' +
+        '<h3 class="tile-n">' + esc(it.n) + '</h3>' +
+        (it.d ? '<p class="tile-d">' + esc(it.d) + '</p>' : '') +
+        '<div class="tile-foot"><span class="tile-p">' + it.p + ' ₴</span>' +
+          (it.w ? '<span class="tile-w">' + esc(it.w) + '</span>' : '') +
+        '</div>' +
+      '</div>' +
+      '</article>';
+  }
+
+  var html = '', tabs = '';
+  MENU.forEach(function(sec){
+    tabs += '<button type="button" class="tab" data-go="' + sec.id + '">' + esc(sec.name) + '</button>';
+    html += '<section class="sec" id="' + sec.id + '">' +
+      '<div class="sec-head"><h2>' + esc(sec.name) + '</h2><i></i>' +
+      (sec.note ? '<span>' + esc(sec.note) + '</span>' : '') + '</div><div class="grid">' +
+      sec.items.map(function(it, i){
+        var key = sec.id + '-' + i;
+        BY_KEY[key] = it;
+        return tileHTML(it, key);
+      }).join('') + '</div></section>';
+  });
+  tabsRow.innerHTML = tabs;
+  menuBox.innerHTML = html +
+    '<p class="empty" id="empty" hidden><b>Нічого не знайшли</b>Спробуйте іншу назву або гляньте все меню.</p>';
+
+  /* фото страв: photos/<img>.jpg — з'являється саме, коли файл покладено */
+  Object.keys(BY_KEY).forEach(function(key){
+    var it = BY_KEY[key];
+    if (!it.img) return;
+    var im = new Image();
+    im.onload = function(){
+      var box = menuBox.querySelector('.tile[data-key="' + key + '"] .tile-ph');
+      if (!box) return;
+      im.alt = it.n; im.loading = 'lazy';
+      box.insertBefore(im, box.firstChild);
+      var mono = box.querySelector('.tile-mono');
+      if (mono) mono.remove();
+    };
+    im.src = 'photos/' + it.img + '.jpg';
+  });
+
+  /* ── категорії ── */
+  var tabBtns = Array.prototype.slice.call(tabsRow.querySelectorAll('.tab'));
+  var secs = MENU.map(function(s){ return document.getElementById(s.id); });
+
+  tabsRow.addEventListener('click', function(e){
+    var b = e.target.closest('.tab');
+    if (!b) return;
+    var target = document.getElementById(b.getAttribute('data-go'));
+    if (target) window.scrollTo({top: target.getBoundingClientRect().top + window.pageYOffset - 112, behavior:'smooth'});
+  });
+  function markTab(i){
+    tabBtns.forEach(function(b, k){ b.classList.toggle('on', k === i); });
+    var on = tabBtns[i];
+    if (!on) return;
+    var r = on.getBoundingClientRect(), box = tabsRow.getBoundingClientRect();
+    if (r.left < box.left || r.right > box.right) tabsRow.scrollTo({left:on.offsetLeft - 20, behavior:'smooth'});
+  }
+  if ('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(list){
+      list.forEach(function(en){ if (en.isIntersecting) markTab(secs.indexOf(en.target)); });
+    }, {rootMargin:'-130px 0px -68% 0px'});
+    secs.forEach(function(s){ if (s) io.observe(s); });
+  }
+  markTab(0);
+
+  /* ── пошук ── */
+  var seek = document.getElementById('seek');
+  var clearBtn = document.getElementById('seekClear');
+  var emptyMsg = document.getElementById('empty');
+  var tiles = Array.prototype.slice.call(menuBox.querySelectorAll('.tile'));
+
+  function filter(){
+    var q = seek.value.trim().toLowerCase();
+    clearBtn.classList.toggle('on', q.length > 0);
+    var found = 0;
+    tiles.forEach(function(t){
+      var hit = !q || t.getAttribute('data-find').indexOf(q) > -1;
+      t.hidden = !hit;
+      if (hit) found++;
+    });
+    secs.forEach(function(s){ if (s) s.hidden = !s.querySelector('.tile:not([hidden])'); });
+    emptyMsg.hidden = found > 0;
+    document.getElementById('tabs').style.display = q ? 'none' : '';
+  }
+  seek.addEventListener('input', filter);
+  clearBtn.addEventListener('click', function(){ seek.value = ''; filter(); seek.focus(); });
+
+  /* ── відчинено / зачинено ── */
+  function state(){
+    var t = kyiv();
+    var box = document.getElementById('state'), txt = document.getElementById('stateTxt');
+    if (t.h >= 7 && t.h < 23){
+      var left = (23 - t.h) * 60 - t.m;
+      box.classList.remove('shut');
+      txt.innerHTML = '<b>Відчинено</b> — до 23:00 ще ' +
+        (Math.floor(left / 60) ? Math.floor(left / 60) + ' год ' : '') + two(left % 60) + ' хв';
+    } else {
+      box.classList.add('shut');
+      txt.innerHTML = '<b>Зачинено</b> — чекаємо з 07:00';
+    }
+  }
+  state();
+  setInterval(state, 30000);
+
+  /* ═════════ КОШИК ═════════ */
+  var cart = {};
+  var dock      = document.getElementById('dock');
+  var openOrder = document.getElementById('openOrder');
+  var dockTxt   = document.getElementById('dockTxt');
+  var sheet     = document.getElementById('sheet');
+  var sheetList = document.getElementById('sheetList');
+  var sheetSum  = document.getElementById('sheetSum');
+  var sendBtn   = document.getElementById('sendOrder');
+  var oWarn     = document.getElementById('oWarn');
+  var oName     = document.getElementById('oName');
+  var oPhone    = document.getElementById('oPhone');
+  var oNote     = document.getElementById('oNote');
+  var oTable    = document.getElementById('oTable');
+
+  function count(){ var n = 0; for (var k in cart) n += cart[k]; return n; }
+  function total(){ var s = 0; for (var k in cart) s += cart[k] * BY_KEY[k].p; return s; }
+
+  function paintTile(key){
+    var t = menuBox.querySelector('.tile[data-key="' + key + '"]');
+    if (!t) return;
+    var q = cart[key] || 0;
+    t.querySelector('.add').hidden = q > 0;
+    var qty = t.querySelector('.qty');
+    qty.hidden = q === 0;
+    qty.querySelector('b').textContent = q;
+    t.classList.toggle('picked', q > 0);
+  }
+  function paintDock(){
+    var n = count();
+    openOrder.hidden = (n === 0);
+    dock.classList.toggle('one', n === 0);
+    dockTxt.textContent = n + ' · ' + total() + ' ₴';
+    if (n > 0) dock.classList.add('up');
+    checkOrder();
+  }
+  function step(key, d){
+    var q = (cart[key] || 0) + d;
+    if (q <= 0) delete cart[key]; else cart[key] = q;
+    paintTile(key); paintDock();
+    if (!sheet.hidden) paintSheet();
+  }
+  menuBox.addEventListener('click', function(e){
+    var a = e.target.closest('[data-add]');
+    if (a){ step(a.getAttribute('data-add'), 1); return; }
+    var s = e.target.closest('[data-step]');
+    if (s){ step(s.getAttribute('data-key'), parseInt(s.getAttribute('data-step'), 10)); return; }
+    /* клік будь-де по плитці — відкрити страву з фото */
+    var t = e.target.closest('.tile');
+    if (t) openDish(t.getAttribute('data-key'));
+  });
+
+  /* ═════════ ПЕРЕГЛЯД СТРАВИ ═════════
+     Фото шукаються самі: photos/<img>.jpg і photos/<img>-1..4.jpg */
+  var dlb      = document.getElementById('dlb');
+  var dlbImg   = document.getElementById('dlbImg');
+  var dlbThumbs= document.getElementById('dlbThumbs');
+  var dlbCount = document.getElementById('dlbCount');
+  var dlbPrev  = document.getElementById('dlbPrev');
+  var dlbNext  = document.getElementById('dlbNext');
+  var dlbAct   = document.getElementById('dlbAct');
+  var dlbMore  = document.getElementById('dlbMore');
+  var dShots = {}, dKey = null, dIdx = 0;
+
+  function dishShots(key, done){
+    var it = BY_KEY[key];
+    if (!it || !it.img){ dShots[key] = []; return done([]); }
+    if (dShots[key]) return done(dShots[key]);
+    var cands = ['photos/' + it.img + '.jpg'];
+    for (var i = 1; i <= 4; i++) cands.push('photos/' + it.img + '-' + i + '.jpg');
+    var found = [], left = cands.length;
+    cands.forEach(function(src, idx){
+      var im = new Image();
+      im.onload = function(){ found.push({i:idx, src:src}); fin(); };
+      im.onerror = fin;
+      im.src = src;
+      function fin(){
+        if (--left) return;
+        found.sort(function(a, b){ return a.i - b.i; });
+        dShots[key] = found.map(function(x){ return x.src; });
+        done(dShots[key]);
+      }
+    });
+  }
+
+  function drawDlb(){
+    var it = BY_KEY[dKey];
+    if (!it) return;
+    document.getElementById('dlbName').textContent = it.n;
+    document.getElementById('dlbDesc').textContent = it.d || '';
+    document.getElementById('dlbPrice').innerHTML = it.p + ' ₴' +
+      '<span>' + (it.w ? esc(it.w) : '') + '</span>';
+
+    var list = dShots[dKey] || [];
+    if (!list.length){
+      dlbImg.innerHTML = '<div class="dlb-none"><span class="dlb-mono">' +
+        esc(it.n.trim().charAt(0)) + '</span></div>';
+      dlbCount.hidden = true;
+      dlbPrev.hidden = dlbNext.hidden = true;
+      dlbThumbs.innerHTML = '';
+    } else {
+      if (dIdx >= list.length) dIdx = 0;
+      if (dIdx < 0) dIdx = list.length - 1;
+      dlbImg.innerHTML = '<img src="' + list[dIdx] + '" alt="' + esc(it.n) + '">';
+      dlbCount.hidden = false;
+      dlbCount.textContent = (dIdx + 1) + ' / ' + list.length;
+      dlbPrev.hidden = dlbNext.hidden = (list.length < 2);
+      dlbThumbs.innerHTML = list.map(function(src, i){
+        return '<button type="button" class="' + (i === dIdx ? 'on' : '') +
+               '" data-i="' + i + '"><img src="' + src + '" alt=""></button>';
+      }).join('');
+    }
+
+    var q = cart[dKey] || 0;
+    dlbAct.innerHTML = q > 0
+      ? '<span class="dlb-qty"><button type="button" data-dstep="-1">−</button><b>' + q +
+        '</b><button type="button" data-dstep="1">+</button></span>'
+      : '<button type="button" class="dlb-add" data-dadd="1">' +
+        '<svg style="width:15px;height:15px"><use href="#i-plus"/></svg>Додати</button>';
+
+    var sec = dKey.split('-')[0];
+    var near = Object.keys(BY_KEY)
+      .filter(function(k){ return k.split('-')[0] === sec && k !== dKey; })
+      .slice(0, 8);
+    dlbMore.innerHTML = near.map(function(k){
+      return '<button type="button" data-dgo="' + k + '">' +
+        '<span class="mini" data-mini="' + k + '">' + esc(BY_KEY[k].n.trim().charAt(0)) + '</span>' +
+        esc(BY_KEY[k].n) + '</button>';
+    }).join('');
+    near.forEach(fillMini);
+  }
+
+  /* мініфото в списку сусідніх страв */
+  var miniCache = {};
+  function fillMini(key){
+    var box = dlbMore.querySelector('.mini[data-mini="' + key + '"]');
+    if (!box) return;
+    var it = BY_KEY[key];
+    if (!it || !it.img) return;
+    if (miniCache[key] === null) return;                 /* уже знаємо, що фото немає */
+    if (miniCache[key]){ put(miniCache[key]); return; }
+    var src = (dShots[key] && dShots[key][0]) || ('photos/' + it.img + '.jpg');
+    var im = new Image();
+    im.onload = function(){ miniCache[key] = src; put(src); };
+    im.onerror = function(){ miniCache[key] = null; };
+    im.src = src;
+    function put(s){
+      var b = dlbMore.querySelector('.mini[data-mini="' + key + '"]');
+      if (b) b.innerHTML = '<img src="' + s + '" alt="">';
+    }
+  }
+
+  function openDish(key){
+    if (!BY_KEY[key]) return;
+    dKey = key; dIdx = 0;
+    dlb.hidden = false;
+    document.body.style.overflow = 'hidden';
+    document.getElementById('dlbName').textContent = BY_KEY[key].n;
+    dlbImg.innerHTML = '<div class="dlb-none">Шукаємо фото…</div>';
+    dishShots(key, drawDlb);
+  }
+  function closeDish(){
+    dlb.hidden = true;
+    document.body.style.overflow = '';
+  }
+
+  dlb.addEventListener('click', function(e){
+    if (e.target === dlb || e.target.closest('#dlbX')){ closeDish(); return; }
+    var th = e.target.closest('.dlb-thumbs button');
+    if (th){ dIdx = parseInt(th.getAttribute('data-i'), 10); drawDlb(); return; }
+    if (e.target.closest('[data-dadd]')){ step(dKey, 1); drawDlb(); return; }
+    var ds = e.target.closest('[data-dstep]');
+    if (ds){ step(dKey, parseInt(ds.getAttribute('data-dstep'), 10)); drawDlb(); return; }
+    var go = e.target.closest('[data-dgo]');
+    if (go){ openDish(go.getAttribute('data-dgo')); }
+  });
+  dlbPrev.addEventListener('click', function(){ dIdx--; drawDlb(); });
+  dlbNext.addEventListener('click', function(){ dIdx++; drawDlb(); });
+  document.addEventListener('keydown', function(e){
+    if (dlb.hidden) return;
+    if (e.key === 'Escape') closeDish();
+    if (e.key === 'ArrowLeft'){ dIdx--; drawDlb(); }
+    if (e.key === 'ArrowRight'){ dIdx++; drawDlb(); }
+  });
+
+  function paintSheet(){
+    var keys = Object.keys(cart);
+    sheetList.innerHTML = keys.length
+      ? keys.map(function(k){
+          var it = BY_KEY[k], q = cart[k];
+          return '<div class="sl"><div class="sl-n">' + esc(it.n) +
+            '<span>' + q + ' × ' + it.p + ' ₴</span></div>' +
+            '<div class="sl-p">' + (q * it.p) + ' ₴</div>' +
+            '<button type="button" class="sl-x" data-drop="' + k + '" aria-label="Прибрати">' +
+            '<svg><use href="#i-x"/></svg></button></div>';
+        }).join('')
+      : '<p class="hist-empty">Ще нічого не вибрано</p>';
+    sheetSum.textContent = total() + ' ₴';
+    checkOrder();
+  }
+  sheetList.addEventListener('click', function(e){
+    var x = e.target.closest('[data-drop]');
+    if (!x) return;
+    var k = x.getAttribute('data-drop');
+    delete cart[k];
+    paintTile(k); paintDock(); paintSheet();
+  });
+
+  /* ═════════ КУДИ / КОЛИ ═════════ */
+  var wayOut = document.getElementById('wayOut'), wayIn = document.getElementById('wayIn');
+  var ofTable = document.getElementById('of-table');
+  var ofName = document.getElementById('of-name'), ofPhone = document.getElementById('of-phone');
+  var whenNow = document.getElementById('whenNow'), whenAt = document.getElementById('whenAt');
+  var whenBox = document.getElementById('whenBox'), dateWrap = document.getElementById('dateWrap');
+  var datesBox = document.getElementById('dates'), timesBox = document.getElementById('times');
+  var way = 'З собою', when = 'зараз', atDate = '', atTime = '';
+
+  /* номер столика з QR: ?t=5 */
+  var qTable = (function(){
+    var m = location.search.match(/[?&]t=(\d{1,2})(?!\d)/) || location.hash.match(/t=(\d{1,2})(?!\d)/);
+    return m ? m[1] : '';
+  })();
+  if (qTable){
+    oTable.value = qTable;
+    document.getElementById('tableNo').textContent = qTable;
+    document.getElementById('tablebar').hidden = false;
+    document.getElementById('tableHint').textContent = 'Підставлено з QR-коду на вашому столі.';
+  }
+
+  function setWay(v){
+    way = v;
+    var atTable = (v === 'За столиком');
+    wayOut.setAttribute('aria-pressed', atTable ? 'false' : 'true');
+    wayIn.setAttribute('aria-pressed', atTable ? 'true' : 'false');
+    ofTable.hidden = !atTable;
+    /* за столиком нас знаходить номер столика, телефон не потрібен */
+    ofName.hidden = atTable;
+    ofPhone.hidden = atTable;
+    dateWrap.hidden = !atTable;      /* дату обирають лише для столика */
+    if (!atTable) atDate = '';
+    else if (!atDate) drawDates();
+    checkOrder();
+  }
+  wayOut.addEventListener('click', function(){ setWay('З собою'); });
+  wayIn.addEventListener('click', function(){ setWay('За столиком'); });
+
+  function dayList(){
+    var out = [], base = new Date();
+    for (var i = 0; i < 7; i++){
+      var d = new Date(base.getTime() + i * 86400000);
+      var label = i === 0 ? 'Сьогодні' : (i === 1 ? 'Завтра' : (d.getDate() + '.' + two(d.getMonth() + 1)));
+      out.push({v:two(d.getDate()) + '.' + two(d.getMonth() + 1), l:label});
+    }
+    return out;
+  }
+  function drawDates(){
+    var list = dayList();
+    if (!atDate) atDate = list[0].v;
+    datesBox.innerHTML = list.map(function(d){
+      return '<button type="button" class="chip' + (d.v === atDate ? ' on' : '') +
+             '" data-d="' + d.v + '">' + d.l + '</button>';
+    }).join('');
+  }
+  datesBox.addEventListener('click', function(e){
+    var c = e.target.closest('.chip');
+    if (!c) return;
+    atDate = c.getAttribute('data-d');
+    drawDates(); drawTimes(); checkOrder();
+  });
+
+  function slots(){
+    var t = kyiv(), list = [], start;
+    var todayLabel = two(parseInt(t.d, 10)) + '.' + two(parseInt(t.mo, 10));
+    var isToday = (!atDate || atDate === todayLabel);
+    if (!isToday) start = 7 * 60;
+    else if (t.h < 7) start = 7 * 60;
+    else if (t.h >= 23) start = 7 * 60;
+    else start = t.h * 60 + t.m + 20;
+    start = Math.ceil(start / 15) * 15;
+    for (var m = start; m <= 22 * 60 + 45; m += 15) list.push(two(Math.floor(m / 60)) + ':' + two(m % 60));
+    return list;
+  }
+  function drawTimes(){
+    var list = slots();
+    if (!list.length){
+      timesBox.innerHTML = '<p class="hintline">На сьогодні вже пізно — оберіть іншу дату або напишіть час у коментарі.</p>';
+      atTime = '';
+      return;
+    }
+    if (list.indexOf(atTime) < 0) atTime = list[0];
+    timesBox.innerHTML = list.map(function(v){
+      return '<button type="button" class="chip' + (v === atTime ? ' on' : '') + '" data-t="' + v + '">' + v + '</button>';
+    }).join('');
+  }
+  timesBox.addEventListener('click', function(e){
+    var c = e.target.closest('.chip');
+    if (!c) return;
+    atTime = c.getAttribute('data-t');
+    drawTimes(); checkOrder();
+  });
+  function setWhen(v){
+    when = v;
+    whenNow.setAttribute('aria-pressed', v === 'зараз' ? 'true' : 'false');
+    whenAt.setAttribute('aria-pressed', v === 'час' ? 'true' : 'false');
+    whenBox.hidden = (v !== 'час');
+    if (v === 'час'){
+      if (way === 'За столиком') drawDates();
+      drawTimes();
+    }
+    checkOrder();
+  }
+  whenNow.addEventListener('click', function(){ setWhen('зараз'); });
+  whenAt.addEventListener('click', function(){ setWhen('час'); });
+
+  /* ── телефон ── */
+  function digits(v){ return String(v).replace(/\D/g, ''); }
+  function fmtPhone(raw){
+    var d = digits(raw);
+    if (d.indexOf('380') === 0) d = d.slice(3);
+    else if (d.indexOf('80') === 0) d = d.slice(2);
+    else if (d.charAt(0) === '0') d = d.slice(1);
+    d = d.slice(0, 9);
+    var out = '+380';
+    if (d.length) out += ' ' + d.slice(0, 2);
+    if (d.length > 2) out += ' ' + d.slice(2, 5);
+    if (d.length > 5) out += ' ' + d.slice(5, 7);
+    if (d.length > 7) out += ' ' + d.slice(7, 9);
+    return out;
+  }
+  oPhone.value = '+380';
+  oPhone.addEventListener('input', function(){
+    var atEnd = oPhone.selectionStart === oPhone.value.length;
+    oPhone.value = fmtPhone(oPhone.value);
+    if (atEnd) oPhone.setSelectionRange(oPhone.value.length, oPhone.value.length);
+    checkOrder();
+  });
+  oName.addEventListener('input', checkOrder);
+  oNote.addEventListener('input', checkOrder);
+  oTable.addEventListener('input', checkOrder);
+
+  /* лічильники − / + замість системних стрілок */
+  document.addEventListener('click', function(e){
+    var b = e.target.closest('[data-num]');
+    if (!b) return;
+    var inp = document.getElementById(b.getAttribute('data-for'));
+    if (!inp) return;
+    var min = parseInt(inp.min, 10), max = parseInt(inp.max, 10);
+    var v = parseInt(inp.value, 10);
+    if (isNaN(v)) v = isNaN(min) ? 1 : min;
+    v += parseInt(b.getAttribute('data-num'), 10);
+    if (!isNaN(min) && v < min) v = min;
+    if (!isNaN(max) && v > max) v = max;
+    inp.value = String(v);
+    inp.dispatchEvent(new Event('input', {bubbles:true}));
+  });
+
+  /* ═════════ НОМЕР ЗАМОВЛЕННЯ ═════════ */
+  function readOrders(){
+    try { return JSON.parse(localStorage.getItem(STORE) || '[]'); }
+    catch(e){ return []; }
+  }
+  function saveOrders(list){
+    try { localStorage.setItem(STORE, JSON.stringify(list.slice(0, 30))); } catch(e){}
+  }
+  /* Ф-3007-014-K9 : дата + лічильник пристрою + випадкові символи.
+     Такий номер не повториться ні в межах телефона, ні на кухні. */
+  function makeNo(){
+    var t = kyiv();
+    var prev = readOrders();
+    var seq = prev.length + 1;
+    try {
+      seq = (parseInt(localStorage.getItem('filin_seq') || '0', 10) || 0) + 1;
+      localStorage.setItem('filin_seq', String(seq));
+    } catch(e){}
+    var A = 'ABCEHKMPTX';
+    var rnd = A.charAt(Math.floor(Math.random() * A.length)) + Math.floor(Math.random() * 10);
+    return 'Ф-' + t.d + t.mo + '-' + ('00' + (seq % 1000)).slice(-3) + '-' + rnd;
+  }
+
+  /* ═════════ ТЕКСТ І ПЕРЕВІРКА ═════════ */
+  function whenText(){
+    if (when === 'зараз') return 'на зараз';
+    if (way === 'За столиком' && atDate) return 'на ' + atDate + ', ' + atTime;
+    return 'на ' + atTime;
+  }
+  function orderText(no){
+    var out = 'Замовлення з меню «Філін»\n№ ' + no + '\n';
+    Object.keys(cart).forEach(function(k){
+      var it = BY_KEY[k];
+      out += '• ' + it.n + ' × ' + cart[k] + ' — ' + (cart[k] * it.p) + ' ₴\n';
+    });
+    out += 'Разом: ' + total() + ' ₴\n';
+    out += 'Куди: ' + way + (way === 'За столиком' ? ' №' + (oTable.value || '—') : '') + '\n';
+    out += 'Коли: ' + whenText() + '\n';
+    if (way !== 'За столиком'){
+      out += "Ім'я: " + oName.value.trim() + '\n';
+      out += 'Телефон: ' + oPhone.value.trim();
+    }
+    var n = oNote.value.trim();
+    if (n) out += (way === 'За столиком' ? '' : '\n') + 'Коментар: ' + n;
+    return out.trim();
+  }
+  function checkOrder(){
+    var okCart = count() > 0;
+    var okWhen = (when === 'зараз') || !!atTime;
+    var atTable = (way === 'За столиком');
+    var tableN = parseInt(oTable.value, 10);
+    var okTable = !atTable || (!isNaN(tableN) && tableN >= 1 && tableN <= 99);
+    var okName = atTable || oName.value.trim().length >= 2;
+    var okPhone = atTable || digits(oPhone.value).length === 12;
+
+    ofName.classList.toggle('bad', !okName && oName.value.length > 0);
+    ofPhone.classList.toggle('bad', !okPhone && digits(oPhone.value).length > 3);
+    ofTable.classList.toggle('bad', !okTable && oTable.value.length > 0);
+
+    var ok = okCart && okWhen && okTable && okName && okPhone;
+    sendBtn.classList.toggle('off', !ok);
+    oWarn.classList.toggle('on', !ok);
+    if (!ok){
+      oWarn.textContent =
+        !okCart  ? 'Оберіть хоча б одну страву' :
+        !okWhen  ? 'Оберіть час' :
+        !okTable ? 'Вкажіть номер столика' :
+                   "Впишіть ім'я та телефон";
+    }
+    sendBtn.href = 'viber://chat?number=' + encodeURIComponent(SEND_TO) +
+                   '&text=' + encodeURIComponent(orderText('—'));
+  }
+
+  /* ═════════ ВІДПРАВКА ═════════ */
+  var orderForm = document.getElementById('orderForm');
+  var doneBox   = document.getElementById('done');
+  var histView  = document.getElementById('histView');
+  var sheetTitle= document.getElementById('sheetTitle');
+
+  sendBtn.addEventListener('click', function(){
+    if (sendBtn.classList.contains('off')) return;
+    var no = makeNo();
+    var items = Object.keys(cart).map(function(k){
+      return {n:BY_KEY[k].n, q:cart[k], p:BY_KEY[k].p};
+    });
+    var rec = {
+      id:no, sum:total(), items:items, way:way,
+      table:(way === 'За столиком' ? (oTable.value || '') : ''),
+      when:whenText(),
+      at:kyiv().d + '.' + kyiv().mo + ' ' + two(kyiv().h) + ':' + two(kyiv().m)
+    };
+    var list = readOrders();
+    list.unshift(rec);
+    saveOrders(list);
+
+    /* саме цей номер летить у повідомленні */
+    sendBtn.href = 'viber://chat?number=' + encodeURIComponent(SEND_TO) +
+                   '&text=' + encodeURIComponent(orderText(no));
+
+    document.getElementById('orderNo').textContent = no;
+    orderForm.hidden = true;
+    doneBox.hidden = false;
+    sheetTitle.textContent = 'Готово';
+    histLink();
+
+    /* кошик чистимо — замовлення вже пішло */
+    setTimeout(function(){
+      Object.keys(cart).forEach(function(k){ delete cart[k]; paintTile(k); });
+      paintDock();
+    }, 400);
+  });
+
+  document.getElementById('doneClose').addEventListener('click', closeSheet);
+  document.getElementById('doneHist').addEventListener('click', showHist);
+  document.getElementById('histBack').addEventListener('click', closeSheet);
+  document.getElementById('histBtn').addEventListener('click', showHist);
+
+  function drawHist(){
+    var list = readOrders();
+    document.getElementById('histList').innerHTML = list.length
+      ? list.map(function(o){
+          return '<div class="hist-row"><div><b>' + esc(o.id) + '</b>' +
+            '<span>' + esc(o.at) + ' · ' + esc(o.way) + (o.table ? ' №' + esc(o.table) : '') +
+            ' · ' + esc(o.when) + '</span></div><em>' + o.sum + ' ₴</em></div>';
+        }).join('')
+      : '<p class="hist-empty">Тут з’являться номери ваших замовлень.</p>';
+  }
+  function showHist(){
+    drawHist();
+    orderForm.hidden = true;
+    doneBox.hidden = true;
+    histView.hidden = false;
+    sheetTitle.textContent = 'Мої замовлення';
+    sheet.hidden = false;
+  }
+  function openSheet(){
+    paintSheet();
+    orderForm.hidden = false;
+    doneBox.hidden = true;
+    histView.hidden = true;
+    sheetTitle.textContent = 'Ваше замовлення';
+    sheet.hidden = false;
+  }
+  function closeSheet(){ sheet.hidden = true; }
+
+  openOrder.addEventListener('click', openSheet);
+  document.getElementById('sheetX').addEventListener('click', closeSheet);
+  sheet.addEventListener('click', function(e){ if (e.target === sheet) closeSheet(); });
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape') closeSheet(); });
+
+  function histLink(){
+    document.getElementById('histBtn').hidden = readOrders().length === 0;
+  }
+
+  /* ── старт ── */
+  /* прийшли з QR на столі — одразу «За столиком», інакше «З собою» */
+  setWay(qTable ? 'За столиком' : 'З собою');
+  setWhen('зараз');
+  paintDock();
+  histLink();
+
+  /* ── нижня смуга з'являється при прокрутці ── */
+  window.addEventListener('scroll', function(){
+    if (count() === 0) dock.classList.toggle('up', window.pageYOffset > 240);
+  }, {passive:true});
+})();
+</script>
+</body>
+</html>

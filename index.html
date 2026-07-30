@@ -1,0 +1,2183 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ФІЛІН — мотель і сауна в Кобеляках</title>
+<meta name="description" content="Мотель і сауна «Філін» у Кобеляках: затишні номери для нічлігу в дорозі та прогріта сауна. Бронювання за хвилину. Заселення до 23:00. Тел. 068 155 85 95, 066 278 38 88.">
+<meta name="theme-color" content="#f7f2e9">
+<meta property="og:title" content="ФІЛІН — мотель і сауна в Кобеляках">
+<meta property="og:description" content="Затишні номери для нічлігу та сауна. Бронювання за хвилину.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Manrope:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23f7f2e9'/><text x='50' y='69' font-family='Georgia,serif' font-size='58' fill='%23b0602b' text-anchor='middle'>Ф</text></svg>">
+
+<style>
+/* ═══════════ TOKENS ═══════════ */
+:root{
+  /* «паперова» палітра — та сама, що в меню кухні */
+  --void:#f7f2e9;       /* папір — тло сторінки */
+  --coal:#f2ebdf;       /* легкий тон для секцій */
+  --coal-2:#efe7d9;
+  --ink:#eee5d6;        /* підвал */
+  --field:#fffdf8;      /* поля, картки */
+  --field-2:#ffffff;
+  --ember:#b0602b;      /* мідь — акцент */
+  --ember-dk:#8f4a1e;
+  --ember-lt:#d98d55;
+  --jade:#3f7d54;       /* «відчинено» */
+  --bone:#191410;       /* основний текст */
+  --ash:#8c8175;        /* другорядний текст */
+  --emb-rgb:176,96,43;
+  --embdk-rgb:143,74,30;
+  --bone-rgb:25,20,16;
+  --hair:rgba(var(--bone-rgb),.13);
+  --hair-warm:rgba(var(--emb-rgb),.3);
+  --bad:#b3402a;
+  --display:'Cormorant Garamond',Georgia,serif;
+  --text:'Manrope','Segoe UI',system-ui,sans-serif;
+  --e:cubic-bezier(.19,.72,.28,1);
+  --rail:76px;
+  --gut:clamp(20px,4.5vw,64px);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+/* атрибут hidden має перемагати будь-який display у класах */
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+section[id]{scroll-margin-top:92px}
+body{
+  background:var(--void);color:var(--bone);
+  font-family:var(--text);font-weight:300;line-height:1.65;
+  overflow-x:hidden;-webkit-font-smoothing:antialiased;
+  background-image:
+    radial-gradient(circle at 10% 4%,rgba(var(--emb-rgb),.06),transparent 40%),
+    radial-gradient(circle at 92% 96%,rgba(var(--emb-rgb),.05),transparent 44%);
+}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+input,select,textarea{font:inherit;color:inherit}
+::selection{background:var(--ember);color:var(--void)}
+
+/* ═══════════ SHELL ═══════════ */
+.rail{
+  position:fixed;left:0;top:0;bottom:0;width:var(--rail);z-index:70;
+  border-right:1px solid var(--hair);
+  display:flex;flex-direction:column;align-items:center;justify-content:space-between;
+  padding:24px 0;background:rgba(247,242,233,.78);backdrop-filter:blur(10px);
+}
+.mono{
+  width:38px;height:38px;display:grid;place-items:center;flex:none;
+  border:1px solid var(--hair-warm);
+  font-family:var(--display);font-size:1.25rem;color:var(--ember);line-height:1;
+  transition:background .45s,color .45s;
+}
+.mono:hover{background:var(--ember);color:var(--void)}
+.rail-vert{
+  writing-mode:vertical-rl;transform:rotate(180deg);
+  font-size:.62rem;letter-spacing:.42em;text-transform:uppercase;color:var(--ash);
+  white-space:nowrap;
+}
+.rail-vert b{color:var(--ember);font-weight:500}
+.rail-dots{display:flex;flex-direction:column;gap:9px;align-items:center}
+.rail-dots i{width:5px;height:5px;border-radius:50%;background:var(--hair);transition:background .4s,transform .4s}
+.rail-dots i.on{background:var(--ember);transform:scale(1.5)}
+.page{margin-left:var(--rail)}
+.inner{width:100%;max-width:1180px;margin:0 auto;padding:0 var(--gut)}
+
+/* ═══════════ TOP BAR ═══════════ */
+.top{
+  position:fixed;top:0;left:var(--rail);right:0;z-index:65;
+  display:flex;align-items:center;justify-content:space-between;gap:18px;
+  padding:20px var(--gut);
+  transition:padding .5s var(--e),background .5s,border-color .5s;
+  border-bottom:1px solid transparent;
+}
+.top.stuck{
+  padding:12px var(--gut);background:rgba(247,242,233,.93);
+  backdrop-filter:blur(16px);border-color:var(--hair);
+}
+.wordmark{font-family:var(--display);font-size:1.15rem;letter-spacing:.42em;color:var(--bone)}
+.wordmark span{color:var(--ember)}
+.links{display:flex;gap:26px;align-items:center}
+.links a{
+  position:relative;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;
+  font-weight:500;color:#574d43;padding:4px 0;transition:color .35s;white-space:nowrap;
+}
+.links a::after{content:'';position:absolute;left:0;bottom:-2px;height:1px;width:0;background:var(--ember);transition:width .45s var(--e)}
+.links a:hover,.links a[aria-current]{color:var(--ember)}
+.links a:hover::after,.links a[aria-current]::after{width:100%}
+.links a.out::before{content:'↗';margin-right:5px;color:var(--ember);font-size:.9em}
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:9px;
+  padding:14px 24px;background:var(--ember);color:var(--void);
+  font-size:.73rem;letter-spacing:.14em;font-weight:600;text-transform:uppercase;
+  transition:background .35s,transform .45s var(--e),opacity .3s;text-align:center;
+}
+.btn:hover{background:var(--ember-lt);transform:translateY(-2px)}
+.btn.line{background:none;color:var(--ember);border:1px solid var(--hair-warm)}
+.btn.line:hover{background:rgba(var(--emb-rgb),.1);color:var(--ember-dk)}
+.btn.sm{padding:11px 18px;font-size:.68rem}
+.btn svg{width:14px;height:14px;flex:none}
+.hamb{display:none;width:40px;height:40px;position:relative;z-index:120}
+.hamb i{position:absolute;left:9px;width:22px;height:1.4px;background:var(--bone);transition:transform .45s var(--e),opacity .3s}
+.hamb i:nth-child(1){top:15px}.hamb i:nth-child(2){top:21px}.hamb i:nth-child(3){top:27px}
+body.open .hamb i:nth-child(1){transform:translateY(6px) rotate(45deg)}
+body.open .hamb i:nth-child(2){opacity:0}
+body.open .hamb i:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
+
+/* ═══════════ HERO ═══════════ */
+.hero{
+  position:relative;min-height:100svh;display:flex;flex-direction:column;
+  justify-content:flex-end;padding:128px 0 0;overflow:hidden;
+  background:
+    radial-gradient(110% 74% at 88% 14%,rgba(var(--emb-rgb),.16),transparent 58%),
+    radial-gradient(76% 58% at 0% 100%,rgba(var(--embdk-rgb),.1),transparent 62%),
+    linear-gradient(168deg,#fffdf8 0%,var(--void) 46%,#efe6d6 100%);
+}
+.hero-photo{position:absolute;inset:0;z-index:0}
+.hero-photo img{width:100%;height:100%;object-fit:cover}
+.scrim{
+  position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:
+    linear-gradient(90deg,rgba(247,242,233,.97) 0%,rgba(247,242,233,.86) 44%,rgba(247,242,233,.35) 100%),
+    linear-gradient(0deg,rgba(247,242,233,.94) 0%,rgba(247,242,233,.1) 58%);
+}
+/* архітектурний мотив замість фото: тонкі «прольоти» будинку */
+.bays{
+  position:absolute;right:clamp(-30px,2vw,70px);bottom:0;z-index:1;
+  display:flex;gap:clamp(10px,1.6vw,22px);align-items:flex-end;
+  pointer-events:none;transition:opacity .6s;
+}
+.hero.has-photo .bays{opacity:0}
+.bays b{
+  display:block;width:clamp(48px,6.5vw,96px);
+  border:1px solid var(--hair-warm);border-bottom:0;
+  background:linear-gradient(180deg,rgba(var(--emb-rgb),.14),rgba(var(--emb-rgb),.02));
+}
+.bays b:nth-child(1){height:clamp(110px,24vh,240px)}
+.bays b:nth-child(2){height:clamp(170px,36vh,360px)}
+.bays b:nth-child(3){height:clamp(84px,18vh,180px)}
+
+.hero-body{position:relative;z-index:3;padding-bottom:clamp(30px,4.4vh,58px)}
+.hero h1{
+  font-family:var(--display);font-weight:300;
+  font-size:clamp(2.9rem,8.2vw,7rem);line-height:.98;letter-spacing:-.005em;max-width:16ch;
+}
+.hero h1 em{
+  display:block;font-style:italic;font-weight:300;
+  background:linear-gradient(96deg,var(--ember-lt),var(--ember) 55%,var(--ember-dk));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.hero-sub{margin-top:24px;max-width:44ch;font-size:clamp(.98rem,1.3vw,1.1rem);color:#574d43}
+.hero-sub b{color:var(--bone);font-weight:500}
+
+.desk{
+  margin-top:clamp(26px,4.2vh,48px);
+  border-top:1px solid var(--hair-warm);border-bottom:1px solid var(--hair);
+  display:grid;grid-template-columns:auto 1px 1fr auto;align-items:center;
+  gap:clamp(16px,2.6vw,38px);padding:20px 0;
+}
+.desk-status{display:flex;align-items:center;gap:12px;white-space:nowrap}
+.beacon{position:relative;width:9px;height:9px;border-radius:50%;background:var(--jade);flex:none}
+.beacon::after{content:'';position:absolute;inset:-6px;border-radius:50%;border:1px solid var(--jade);opacity:.5;animation:ring 2.6s ease-out infinite}
+.beacon.shut{background:var(--ember)}
+.beacon.shut::after{border-color:var(--ember)}
+@keyframes ring{0%{transform:scale(.5);opacity:.7}100%{transform:scale(1.5);opacity:0}}
+.desk-status span{font-size:.82rem;letter-spacing:.05em;color:#3f382f}
+.desk-status b{color:var(--bone);font-weight:600}
+.desk-rule{background:var(--hair);align-self:stretch}
+.desk-phones{display:flex;flex-wrap:wrap;gap:4px 24px}
+.desk-phones a{
+  font-family:var(--display);font-size:clamp(1.1rem,1.8vw,1.5rem);
+  color:var(--bone);transition:color .35s;white-space:nowrap;
+}
+.desk-phones a:hover{color:var(--ember)}
+
+.hero-foot{
+  position:relative;z-index:3;display:flex;align-items:center;justify-content:space-between;
+  gap:18px;border-top:1px solid var(--hair);padding:15px 0;
+  font-size:.67rem;letter-spacing:.22em;text-transform:uppercase;color:var(--ash);
+}
+.hero-foot a{transition:color .35s}
+.hero-foot a:hover{color:var(--ember)}
+.hero-foot .sep{color:var(--ember-dk)}
+
+/* ═══════════ SECTION FURNITURE ═══════════ */
+.band{position:relative;padding:clamp(76px,10vw,140px) 0}
+.head{display:grid;grid-template-columns:auto 1fr;gap:clamp(20px,4vw,54px);align-items:start;margin-bottom:clamp(38px,5.5vw,72px)}
+.head .no{
+  display:flex;align-items:center;gap:clamp(10px,1.4vw,16px);
+  font-family:var(--display);font-size:clamp(1.6rem,3vw,2.4rem);color:var(--ember-dk);
+  line-height:1;padding-top:.3em;white-space:nowrap;
+}
+/* смужка — повноцінний елемент у своїй колонці, тому ніколи не налізе на заголовок */
+.head .no::after{content:'';display:block;width:clamp(18px,3vw,48px);height:1px;background:var(--ember-dk);opacity:.6}
+.head h2{font-family:var(--display);font-weight:300;line-height:1.04;font-size:clamp(2rem,4.6vw,3.5rem);max-width:24ch}
+.head h2 em{font-style:italic;color:var(--ember)}
+.head p{margin-top:20px;max-width:56ch;color:var(--ash);font-size:1rem}
+
+/* ═══════════ 01 · SLABS ═══════════ */
+.duo{display:grid;grid-template-columns:1.35fr 1fr;gap:clamp(16px,2.4vw,30px);align-items:stretch}
+.slab{
+  position:relative;overflow:hidden;border:1px solid var(--hair);
+  background:var(--field);
+  padding:clamp(30px,3.6vw,48px);display:flex;flex-direction:column;justify-content:flex-end;
+  min-height:clamp(280px,34vw,420px);
+  transition:border-color .5s,box-shadow .5s,transform .6s var(--e);
+}
+.slab:hover{border-color:var(--hair-warm);box-shadow:0 24px 44px -26px rgba(var(--bone-rgb),.3);transform:translateY(-5px)}
+.slab .glow{position:absolute;inset:0;background:radial-gradient(110% 70% at 70% 0%,rgba(var(--emb-rgb),.1),transparent 62%);opacity:0;transition:opacity .6s}
+.slab:hover .glow{opacity:1}
+.slab>*{position:relative}
+.slab h3{margin-top:22px;font-family:var(--display);font-weight:400;font-size:clamp(1.5rem,2.6vw,2.1rem);line-height:1.1}
+.slab p{margin-top:14px;color:var(--ash);font-size:.95rem;max-width:42ch}
+/* icon sits in the flow and is pushed to the top — never over the title */
+.slab .ico{width:31px;height:31px;flex:none;margin-bottom:auto;color:var(--ember);opacity:.9}
+.slab-col{display:grid;gap:clamp(16px,2.4vw,30px)}
+.slab-col .slab{min-height:0}
+.slab .arrow{margin-top:22px;display:inline-flex;align-items:center;gap:10px;font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ember)}
+.slab .arrow svg{width:16px;height:16px;transition:transform .45s var(--e)}
+.slab:hover .arrow svg{transform:translateX(6px)}
+
+/* ═══════════ 02 · ROOMS ═══════════ */
+.sheet{border-top:1px solid var(--hair)}
+.row{
+  display:grid;
+  grid-template-columns:auto minmax(0,1fr) auto minmax(160px,230px);
+  grid-template-areas:
+    "no main cap photo"
+    "no btn  btn photo";
+  gap:clamp(12px,2vw,26px) clamp(14px,2.4vw,32px);
+  align-items:center;padding:clamp(20px,2.6vw,30px) 4px;border-bottom:1px solid var(--hair);
+  transition:background .5s,padding-left .5s var(--e);
+}
+.row{cursor:zoom-in}
+.row .btn,.row a{cursor:pointer}
+.row:hover{background:linear-gradient(90deg,rgba(var(--emb-rgb),.07),transparent 65%);padding-left:16px}
+.row:hover .row-thumb::after{opacity:1}
+.row-no{grid-area:no;font-family:var(--display);font-size:1.5rem;color:var(--ember-dk);line-height:1}
+.row-main{grid-area:main}
+.row-cap{grid-area:cap}
+.row .btn{grid-area:btn;justify-self:start}
+.row-thumb{grid-area:photo;width:100%;aspect-ratio:4/3;overflow:hidden;border:1px solid var(--hair)}
+.row-main h3{font-family:var(--display);font-weight:400;font-size:clamp(1.25rem,2.1vw,1.7rem);line-height:1.15}
+.row-main p{color:var(--ash);font-size:.9rem;margin-top:6px;max-width:46ch}
+.tags{display:flex;flex-wrap:wrap;gap:7px;margin-top:12px}
+.tags span{font-size:.64rem;letter-spacing:.14em;text-transform:uppercase;color:#6b6055;border:1px solid var(--hair);padding:5px 11px}
+.row-cap{text-align:right;white-space:nowrap}
+.row-cap b{display:block;font-family:var(--display);font-size:1.9rem;color:var(--bone);line-height:1}
+.row-cap span{font-size:.63rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ash)}
+.row-cap .price{
+  display:block;margin-top:12px;font-family:var(--display);font-size:1.35rem;
+  letter-spacing:0;text-transform:none;color:var(--ember);
+}
+.row-cap .price i{
+  display:block;margin-top:2px;font-style:normal;font-family:var(--text);
+  font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ash);
+}
+.strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(168px,1fr));gap:1px;background:var(--hair);border:1px solid var(--hair);margin-top:clamp(28px,4vw,44px)}
+.strip div{background:var(--void);padding:24px 20px;display:flex;gap:13px;align-items:center}
+.strip svg{width:21px;height:21px;color:var(--ember);flex:none}
+.strip span{font-size:.85rem;color:#574d43}
+
+/* ═══════════ 03 · SAUNA ═══════════ */
+.sauna{
+  position:relative;overflow:hidden;
+  background:radial-gradient(72% 100% at 78% 46%,rgba(var(--embdk-rgb),.16),transparent 62%),var(--coal);
+  border-top:1px solid var(--hair);border-bottom:1px solid var(--hair);
+}
+.sauna .inner{position:relative;z-index:2}
+.sauna-split{display:grid;grid-template-columns:1fr .92fr;gap:clamp(30px,5vw,74px);align-items:center}
+.sauna h2{font-family:var(--display);font-weight:300;font-size:clamp(2.1rem,5.4vw,4rem);line-height:1.02}
+.sauna h2 em{font-style:italic;color:var(--ember)}
+.sauna p{margin-top:22px;max-width:48ch;color:#574d43}
+.heat{display:flex;flex-wrap:wrap;gap:10px;margin-top:28px}
+.heat span{border:1px solid var(--hair-warm);padding:9px 16px;font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ember)}
+.frame{position:relative}
+.frame .shot{aspect-ratio:5/6}
+.frame::after{content:'';position:absolute;inset:-13px;border:1px solid var(--hair-warm);pointer-events:none}
+
+/* ═══════════ 04 · FILMSTRIP ═══════════ */
+.strip-head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap;width:100%}
+.arrows{display:flex;gap:10px}
+.arrows button{width:48px;height:48px;border:1px solid var(--hair);display:grid;place-items:center;color:#574d43;transition:all .4s var(--e)}
+.arrows button:hover{background:var(--ember);border-color:var(--ember);color:var(--void)}
+.arrows svg{width:18px;height:18px}
+.film{
+  display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;
+  padding:0 0 18px;margin-top:clamp(28px,4vw,44px);
+  scrollbar-width:thin;scrollbar-color:var(--ember-dk) transparent;
+}
+.film::-webkit-scrollbar{height:3px}
+.film::-webkit-scrollbar-thumb{background:var(--ember-dk)}
+.film::-webkit-scrollbar-track{background:var(--hair)}
+.cell{position:relative;flex:0 0 clamp(230px,30vw,360px);scroll-snap-align:start;border:1px solid var(--hair);overflow:hidden}
+.cell .shot{aspect-ratio:4/5}
+.cell figcaption{
+  position:absolute;inset:auto 0 0;padding:44px 18px 16px;
+  background:linear-gradient(0deg,rgba(7,10,11,.92),transparent);
+  font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:#dce1df;
+}
+
+/* ═══════════ 05 · BOOKING ═══════════ */
+.bk{display:grid;grid-template-columns:1.15fr .85fr;gap:clamp(20px,3vw,34px);align-items:start}
+.bk-form{border:1px solid var(--hair);background:var(--coal);padding:clamp(24px,3.4vw,44px)}
+.pick-lead{font-size:.88rem;color:var(--ash);margin-bottom:14px}
+.pick{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.pick-btn{
+  position:relative;display:flex;align-items:center;gap:13px;text-align:left;
+  padding:17px 18px;border:1px solid var(--hair);background:var(--field);
+  transition:border-color .4s,background .4s;
+}
+.pick-btn:hover{border-color:var(--hair-warm)}
+.pick-btn .box{
+  width:21px;height:21px;flex:none;display:grid;place-items:center;
+  border:1px solid var(--hair-warm);color:var(--void);transition:background .3s,border-color .3s;
+}
+.pick-btn .box svg{width:13px;height:13px;opacity:0;transform:scale(.4);transition:all .3s var(--e)}
+.pick-btn .t{display:flex;flex-direction:column;line-height:1.25;min-width:0}
+.pick-btn .t b{font-size:.95rem;font-weight:600;letter-spacing:.02em}
+.pick-btn .t i{font-style:normal;font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ash)}
+.pick-ico{width:22px;height:22px;margin-left:auto;color:var(--hair-warm);flex:none;transition:color .4s}
+.pick-btn[aria-pressed="true"]{border-color:var(--ember);background:rgba(var(--emb-rgb),.09)}
+.pick-btn[aria-pressed="true"] .box{background:var(--ember);border-color:var(--ember)}
+.pick-btn[aria-pressed="true"] .box svg{opacity:1;transform:none}
+.pick-btn[aria-pressed="true"] .pick-ico{color:var(--ember)}
+.err-pick{display:none;margin-top:12px;font-size:.78rem;color:var(--bad)}
+.err-pick.on{display:block}
+.grp{margin-top:6px}
+.grp[hidden]{display:none}
+.grp.first .grp-title{margin-top:0}
+
+/* ── date tiles ── */
+.dpick{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.dpick.one{grid-template-columns:1fr}
+.dpick[hidden]{display:none}
+.daywrap{position:relative}
+.daybtn{
+  position:relative;width:100%;display:flex;align-items:center;gap:13px;
+  padding:15px 16px;border:1px solid var(--hair);background:var(--field);text-align:left;
+  transition:border-color .35s,background .35s;
+}
+.daybtn:hover{border-color:var(--hair-warm);background:var(--field-2)}
+.daybtn[aria-expanded="true"]{border-color:var(--ember);background:rgba(var(--emb-rgb),.09)}
+.daybtn svg{width:19px;height:19px;color:var(--ember);flex:none}
+.daybtn .t{display:flex;flex-direction:column;line-height:1.25;min-width:0}
+.daybtn .t i{font-style:normal;font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ash)}
+.daybtn .t b{font-size:1rem;font-weight:500;white-space:nowrap}
+.daywrap.bad .daybtn{border-color:var(--bad)}
+
+/* ── calendar ── */
+.cal{margin-top:12px;border:1px solid var(--hair-warm);background:var(--field);padding:16px 16px 14px}
+.cal[hidden]{display:none}
+.cal-top{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}
+.cal-top b{font-family:var(--display);font-size:1.15rem;font-weight:400;text-transform:capitalize}
+.cal-nav{width:34px;height:34px;display:grid;place-items:center;border:1px solid var(--hair);color:#574d43;transition:background .3s,color .3s,border-color .3s,opacity .3s}
+.cal-nav:hover:not(:disabled){background:var(--ember);border-color:var(--ember);color:var(--void)}
+.cal-nav:disabled{opacity:.22;cursor:default}
+.cal-nav svg{width:15px;height:15px}
+.cal-wd{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;margin-bottom:4px}
+.cal-wd span{text-align:center;font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ash);padding:4px 0}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px}
+.cal-grid .d{
+  position:relative;height:38px;display:grid;place-items:center;
+  font-size:.9rem;font-weight:300;color:var(--bone);
+  transition:background .2s,color .2s;
+}
+.cal-grid .d.pad{pointer-events:none}
+.cal-grid .d:not(.off):not(.pad):hover{background:rgba(var(--emb-rgb),.18)}
+.cal-grid .d.off{color:#bcb1a3;pointer-events:none}
+.cal-grid .d.now::after{content:'';position:absolute;bottom:5px;width:4px;height:4px;border-radius:50%;background:var(--ember)}
+.cal-grid .d.mid{background:rgba(var(--emb-rgb),.14)}
+.cal-grid .d.start,.cal-grid .d.end{background:var(--ember);color:var(--void);font-weight:600}
+.cal-grid .d.start.now::after,.cal-grid .d.end.now::after{background:var(--void)}
+.cal-hint{margin-top:12px;font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ember)}
+
+/* ── nights read-out ── */
+.nights-read{margin-top:12px;text-align:center}
+.nights-read b{
+  display:inline-block;padding:8px 20px;border:1px solid var(--hair-warm);
+  font-family:var(--display);font-size:1.1rem;font-weight:400;color:var(--ember);
+}
+
+/* ── custom dropdowns ── */
+.sel{position:relative}
+.sel-btn{
+  width:100%;display:flex;align-items:center;justify-content:space-between;gap:12px;
+  padding:14px 15px;border:1px solid var(--hair);background:var(--field);
+  font-size:.95rem;font-weight:300;text-align:left;transition:border-color .3s,background .3s;
+}
+.sel-btn:hover{border-color:var(--hair-warm)}
+.sel-btn[aria-expanded="true"]{border-color:var(--ember);background:var(--field-2)}
+.sel-arr{width:15px;height:15px;flex:none;color:var(--ember);transition:transform .35s var(--e)}
+.sel-btn[aria-expanded="true"] .sel-arr{transform:rotate(180deg)}
+.sel-list{
+  position:absolute;z-index:20;left:0;right:0;top:calc(100% + 5px);
+  border:1px solid var(--hair-warm);background:var(--field);
+  box-shadow:0 22px 44px -18px rgba(25,20,16,.16);
+  max-height:236px;overflow-y:auto;
+}
+.sel-list[hidden]{display:none}
+.sel-opt{
+  display:block;width:100%;text-align:left;padding:12px 15px;
+  font-size:.92rem;font-weight:300;color:#574d43;
+  transition:background .2s,color .2s;
+}
+.sel-opt:hover{background:rgba(var(--emb-rgb),.14);color:var(--bone)}
+.sel-opt.on{color:var(--ember);font-weight:500}
+.sel-opt.on::after{content:'✓';float:right;color:var(--ember)}
+
+/* ── sauna day chips ── */
+.sdate-lab{font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ash);margin-bottom:10px}
+.sdate-lab i{font-style:normal;color:var(--ember)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips[hidden]{display:none}
+.chip{
+  padding:11px 15px;border:1px solid var(--hair);background:var(--field);
+  font-size:.8rem;color:#574d43;white-space:nowrap;
+  transition:background .3s,color .3s,border-color .3s;
+}
+.chip:hover{border-color:var(--hair-warm);color:var(--bone)}
+.chip.on{background:var(--ember);border-color:var(--ember);color:var(--void);font-weight:600}
+.sdate.bad .chips,.sdate.bad .daybtn{outline:1px solid var(--bad);outline-offset:3px}
+.sdate-note{margin-top:11px;font-size:.75rem;color:var(--ash);line-height:1.5}
+.grp-title{
+  display:flex;align-items:center;gap:11px;margin:24px 0 14px;
+  font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ember);
+}
+.grp-title svg{width:16px;height:16px;flex:none}
+.grp-title::after{content:'';flex:1;height:1px;background:var(--hair)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.fld{display:flex;flex-direction:column;gap:8px}
+.fld.wide{grid-column:1/-1}
+.fld label{font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ash)}
+.fld label i{color:var(--ember);font-style:normal}
+.fld input,.fld select,.fld textarea{
+  width:100%;background:var(--field);border:1px solid var(--hair);
+  padding:14px 15px;font-size:.95rem;font-weight:300;
+  transition:border-color .35s,background .35s;
+}
+.fld textarea{resize:vertical;min-height:88px}
+.fld input:focus,.fld select:focus,.fld textarea:focus{
+  outline:none;border-color:var(--ember);background:var(--field-2);
+}
+.fld select{appearance:none;background-image:linear-gradient(45deg,transparent 50%,var(--ember) 50%),linear-gradient(135deg,var(--ember) 50%,transparent 50%);background-position:calc(100% - 19px) 22px,calc(100% - 13px) 22px;background-size:6px 6px;background-repeat:no-repeat;padding-right:40px}
+.fld select option{background:#141210;color:var(--bone)}
+/* число з власними кнопками замість системних стрілок */
+.num{display:flex;align-items:stretch;border:1px solid var(--hair);background:var(--field)}
+.num input{
+  flex:1;min-width:0;height:50px;border:0;background:none;text-align:center;
+  font-size:1.05rem;font-weight:400;-moz-appearance:textfield;appearance:textfield;
+}
+.num input::-webkit-outer-spin-button,
+.num input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.num input:focus{outline:none}
+.num button{
+  width:48px;flex:none;display:grid;place-items:center;
+  font-size:1.25rem;line-height:1;color:var(--ember);transition:background .25s;
+}
+.num button:hover{background:rgba(var(--emb-rgb),.12)}
+.num button:first-child{border-right:1px solid var(--hair)}
+.num button:last-child{border-left:1px solid var(--hair)}
+.fld.bad .num{border-color:var(--bad)}
+.num:focus-within{border-color:var(--ember)}
+
+/* «обрати самому» — список складається, замість нього поле */
+.sel.folded{display:none}
+.own{display:flex;align-items:center;gap:12px}
+.own[hidden]{display:none}
+.own .num{flex:1}
+.own-back{
+  flex:none;font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--ash);border-bottom:1px solid var(--hair);padding:4px 0;transition:color .3s;
+}
+.own-back:hover{color:var(--ember)}
+
+.fld .err{font-size:.72rem;color:var(--bad);display:none}
+.fld.bad input,.fld.bad select{border-color:var(--bad)}
+.fld.bad .err{display:block}
+.bk-form>.btn{width:100%;margin-top:24px;padding:18px}
+.bk-hint{margin-top:16px;font-size:.78rem;color:var(--ash);line-height:1.6}
+
+.bk-out{border:1px solid var(--hair-warm);background:linear-gradient(165deg,rgba(var(--emb-rgb),.07),rgba(var(--bone-rgb),.015));padding:clamp(24px,3.4vw,40px);position:sticky;top:96px}
+.bk-out h3{font-family:var(--display);font-weight:400;font-size:1.5rem;line-height:1.15}
+.bk-live{
+  margin-top:10px;display:flex;align-items:center;gap:10px;
+  font-size:.74rem;letter-spacing:.06em;color:var(--ash);
+}
+.bk-live .tick{
+  width:7px;height:7px;border-radius:50%;background:var(--ember);flex:none;
+  animation:blip 2.4s ease-in-out infinite;
+}
+@keyframes blip{0%,100%{opacity:.35;transform:scale(.8)}50%{opacity:1;transform:scale(1)}}
+.slip{margin-top:20px;border-top:1px solid var(--hair)}
+.slip div{display:flex;justify-content:space-between;gap:16px;padding:11px 0;border-bottom:1px solid var(--hair);font-size:.88rem}
+.slip div span{color:var(--ash);flex:none}
+.slip div b{font-weight:500;text-align:right;color:var(--bone);transition:color .3s}
+.slip div b.wait{color:var(--ember-dk);font-weight:400}
+.bk-acts{display:grid;gap:10px;margin-top:26px;grid-template-columns:1fr;transition:opacity .4s}
+.bk-acts .btn{padding:18px}
+.bk-acts.off{opacity:.4;pointer-events:none}
+.bk-warn{display:none;margin-top:14px;font-size:.76rem;color:var(--ember);line-height:1.5}
+.bk-warn.on{display:block}
+
+/* ═══════════ CAFE TEASER ═══════════ */
+.teaser{
+  position:relative;overflow:hidden;border:1px solid var(--hair-warm);
+  background:linear-gradient(100deg,rgba(var(--emb-rgb),.1),rgba(var(--bone-rgb),.02) 55%);
+  padding:clamp(34px,5vw,64px);
+  display:grid;grid-template-columns:1fr auto;gap:clamp(24px,4vw,48px);align-items:center;
+}
+.teaser h3{font-family:var(--display);font-weight:300;font-size:clamp(1.7rem,3.6vw,2.8rem);line-height:1.08}
+.teaser h3 em{font-style:italic;color:var(--ember)}
+.teaser p{margin-top:16px;max-width:52ch;color:var(--ash)}
+.teaser .plate{position:absolute;right:-40px;top:-40px;width:220px;color:var(--ember);opacity:.07;pointer-events:none}
+
+/* ═══════════ CONTACT ═══════════ */
+.contact-split{display:grid;grid-template-columns:1.15fr 1fr;gap:clamp(30px,5vw,72px);align-items:start}
+.big-phones{display:grid;gap:6px}
+.big-phones a{
+  font-family:var(--display);font-weight:300;font-size:clamp(2rem,5.6vw,3.6rem);
+  line-height:1.12;color:var(--bone);transition:color .4s;
+  display:inline-flex;align-items:center;gap:18px;
+}
+.big-phones a:hover{color:var(--ember)}
+.big-phones a svg{width:22px;height:22px;color:var(--ember-dk);opacity:0;transform:translateX(-10px);transition:all .45s var(--e)}
+.big-phones a:hover svg{opacity:1;transform:none}
+.contact-note{margin-top:24px;color:var(--ash);max-width:44ch;font-size:.95rem}
+.ledger{border-top:1px solid var(--hair)}
+.ledger div{display:flex;justify-content:space-between;gap:18px;padding:16px 2px;border-bottom:1px solid var(--hair);font-size:.92rem}
+.ledger span{color:var(--ash)}
+.ledger b{color:var(--ember);font-weight:500;white-space:nowrap}
+.ig{display:inline-flex;align-items:center;gap:9px;font-size:.78rem;letter-spacing:.1em;color:#574d43;transition:color .35s}
+.ig:hover{color:var(--ember)}
+.ig svg{width:17px;height:17px}
+
+/* ═══════════ FOOTER ═══════════ */
+footer{border-top:1px solid var(--hair);background:var(--ink);padding:44px 0 30px}
+.f-line{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:18px}
+.f-nav{display:flex;flex-wrap:wrap;gap:22px}
+.f-nav a{font-size:.76rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ash);transition:color .35s}
+.f-nav a:hover{color:var(--ember)}
+.f-meta{margin-top:26px;padding-top:20px;border-top:1px solid var(--hair);display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;font-size:.72rem;color:#8c8175}
+
+/* ═══════════ LIGHTBOX ═══════════ */
+.row-thumb{cursor:zoom-in;position:relative}
+.row-thumb::after{
+  content:'Дивитись фото';position:absolute;inset:auto 0 0;padding:22px 10px 8px;
+  background:linear-gradient(0deg,rgba(var(--bone-rgb),.75),transparent);
+  color:#fff;font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;text-align:center;
+  opacity:0;transition:opacity .35s;
+}
+.row-thumb:hover::after{opacity:1}
+.lb{
+  position:fixed;inset:0;z-index:130;display:flex;align-items:center;justify-content:center;
+  background:rgba(var(--bone-rgb),.62);backdrop-filter:blur(4px);padding:16px;
+}
+.lb[hidden]{display:none}
+.lb-box{
+  position:relative;width:100%;max-width:min(1020px,96vw);max-height:94vh;overflow-y:auto;
+  background:var(--void);border:1px solid var(--hair-warm);
+  padding:18px clamp(14px,3vw,28px) clamp(18px,3vw,28px);
+}
+.lb-main{display:grid;grid-template-columns:minmax(0,1fr);gap:18px}
+.lb-left,.lb-right{min-width:0}
+@media (min-width:820px){
+  .lb-main{grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:28px;align-items:start}
+}
+.lb-name{
+  display:block;font-family:var(--display);font-weight:400;line-height:1.05;
+  font-size:clamp(1.6rem,4vw,2.4rem);padding-right:52px;
+}
+.lb-desc{margin-top:12px;color:var(--ash);font-size:.95rem;max-width:44ch}
+.lb-tags{display:flex;flex-wrap:wrap;gap:7px;margin-top:16px}
+.lb-tags span{
+  font-size:.64rem;letter-spacing:.14em;text-transform:uppercase;color:#6b6055;
+  border:1px solid var(--hair);padding:6px 12px;
+}
+.lb-facts{display:flex;align-items:flex-end;gap:26px;margin-top:20px;padding-top:16px;border-top:1px solid var(--hair)}
+.lb-facts b{display:block;font-family:var(--display);font-size:1.7rem;line-height:1}
+.lb-facts .cap b{color:var(--bone)}
+.lb-facts .pr b{color:var(--ember)}
+.lb-facts span{display:block;margin-top:5px;font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;color:var(--ash)}
+.lb-book{
+  display:flex;align-items:center;justify-content:center;gap:9px;width:100%;margin-top:18px;
+  padding:16px;background:var(--ember);color:var(--void);
+  font-size:.73rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
+  transition:background .3s;
+}
+.lb-book:hover{background:var(--ember-dk);color:#fff}
+.lb-book svg{width:15px;height:15px}
+.lb-x{position:absolute;top:14px;right:14px;z-index:3;width:40px;height:40px;display:grid;place-items:center;border:1px solid var(--hair);background:var(--field);color:var(--ash);transition:all .3s}
+.lb-x:hover{border-color:var(--ember);color:var(--ember)}
+.lb-x svg{width:15px;height:15px}
+.lb-stage{position:relative;background:var(--coal);border:1px solid var(--hair)}
+.lb-img{aspect-ratio:4/3;display:grid;place-items:center;overflow:hidden}
+.lb-img img{width:100%;height:100%;object-fit:cover}
+.lb-empty{text-align:center;padding:26px;color:var(--ash);font-size:.9rem;max-width:34ch}
+.lb-empty b{display:block;font-family:var(--display);font-size:1.5rem;color:var(--bone);margin-bottom:8px}
+.lb-nav{
+  position:absolute;top:50%;transform:translateY(-50%);width:44px;height:44px;
+  display:grid;place-items:center;background:rgba(247,242,233,.9);border:1px solid var(--hair);
+  color:var(--bone);transition:background .3s,color .3s;
+}
+.lb-nav:hover{background:var(--ember);color:#fff}
+.lb-nav svg{width:16px;height:16px}
+.lb-nav.prev{left:10px}
+.lb-nav.next{right:10px}
+.lb-nav[hidden]{display:none}
+.lb-count{
+  position:absolute;right:12px;bottom:12px;padding:5px 11px;
+  background:rgba(var(--bone-rgb),.72);color:#fff;font-size:.68rem;letter-spacing:.1em;
+}
+.lb-thumbs{display:flex;gap:8px;overflow-x:auto;padding:10px 0 2px}
+.lb-thumbs button{flex:none;width:78px;aspect-ratio:4/3;border:1px solid var(--hair);overflow:hidden;opacity:.55;transition:opacity .3s,border-color .3s}
+.lb-thumbs button img{width:100%;height:100%;object-fit:cover}
+.lb-thumbs button.on{opacity:1;border-color:var(--ember)}
+.lb-more{margin-top:16px;padding-top:14px;border-top:1px solid var(--hair)}
+.lb-more p{font-size:.64rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ash);margin-bottom:10px}
+.lb-rooms{display:flex;flex-wrap:wrap;gap:8px}
+.lb-rooms button{
+  padding:11px 16px;border:1px solid var(--hair);background:var(--field);
+  font-size:.8rem;color:var(--bone);transition:all .3s;
+}
+.lb-rooms button:hover{border-color:var(--ember);color:var(--ember)}
+
+/* ═══════════ PHOTO SLOT ═══════════ */
+.shot{
+  position:relative;width:100%;height:100%;overflow:hidden;display:grid;place-items:center;
+  background:radial-gradient(78% 78% at 32% 22%,rgba(var(--emb-rgb),.1),transparent 60%),linear-gradient(152deg,#f0e7d8,var(--field-2));
+}
+.shot img{width:100%;height:100%;object-fit:cover;position:relative;z-index:2}
+.shot .wm{
+  position:absolute;z-index:1;font-family:var(--display);
+  font-size:clamp(1.5rem,3.4vw,2.6rem);color:rgba(var(--emb-rgb),.3);
+  letter-spacing:.1em;line-height:1;
+}
+.shot.filled .wm{display:none}
+
+/* ═══════════ REVEAL ═══════════ */
+.up{opacity:0;transform:translateY(26px);transition:opacity .95s var(--e),transform .95s var(--e)}
+.up.seen{opacity:1;transform:none}
+.up.a1{transition-delay:.08s}.up.a2{transition-delay:.16s}.up.a3{transition-delay:.24s}
+
+/* ═══════════ DRAWER ═══════════ */
+.drawer{
+  position:fixed;inset:0;z-index:110;background:rgba(247,242,233,.98);backdrop-filter:blur(14px);
+  display:flex;flex-direction:column;justify-content:center;padding:96px 32px 40px;
+  opacity:0;visibility:hidden;transition:opacity .5s var(--e),visibility .5s;overflow-y:auto;
+}
+body.open .drawer{opacity:1;visibility:visible}
+body.open{overflow:hidden}
+/* the bar must sit above the drawer so its X is reachable */
+body.open .top{z-index:120;background:transparent;backdrop-filter:none;border-color:transparent}
+body.open .top .btn{display:none}
+/* the burger turns into the ✕ that closes it */
+body.open .hamb i{background:var(--ember)}
+.drawer a{
+  font-family:var(--display);font-size:1.75rem;font-weight:300;color:var(--bone);
+  padding:12px 0;border-bottom:1px solid var(--hair);
+  opacity:0;transform:translateY(14px);transition:all .55s var(--e);
+}
+body.open .drawer a{opacity:1;transform:none}
+body.open .drawer a:nth-child(1){transition-delay:.06s}
+body.open .drawer a:nth-child(2){transition-delay:.1s}
+body.open .drawer a:nth-child(3){transition-delay:.14s}
+body.open .drawer a:nth-child(4){transition-delay:.18s}
+body.open .drawer a:nth-child(5){transition-delay:.22s}
+body.open .drawer a:nth-child(6){transition-delay:.26s}
+.drawer .dp{margin-top:30px;display:grid;gap:6px}
+.drawer .dp a{font-size:1.45rem;color:var(--ember);border:0;padding:3px 0}
+
+/* ═══════════ TO TOP ═══════════ */
+.up-btn{
+  position:fixed;right:18px;bottom:18px;z-index:60;width:52px;height:52px;
+  display:grid;place-items:center;background:var(--ember);color:var(--void);
+  transform:translateY(90px);transition:transform .5s var(--e),background .3s;
+}
+.up-btn.show{transform:none}
+.up-btn:hover{background:var(--ember-lt)}
+.up-btn svg{width:20px;height:20px}
+
+/* ═══════════ RESPONSIVE ═══════════ */
+@media (max-width:1180px){
+  .links{display:none}
+  .hamb{display:block}
+  .duo{grid-template-columns:1fr}
+  .sauna-split,.contact-split,.bk{grid-template-columns:1fr}
+  .bk-out{position:static}
+}
+@media (max-width:820px){
+  :root{--rail:0px}
+  .rail{display:none}
+  .top{left:0}
+  .row{
+    grid-template-columns:auto minmax(0,1fr);
+    grid-template-areas:
+      "photo photo"
+      "no main"
+      "no cap"
+      "no btn";
+    gap:12px 14px;align-items:start;
+  }
+  .row-thumb{aspect-ratio:16/10;margin-bottom:6px}
+  .row-cap{text-align:left}
+  .row-cap b{display:inline;font-size:1.3rem;margin-right:8px}
+  .row-cap .price{display:inline-block;margin-top:0;margin-left:2px;font-size:1.15rem}
+  .row-cap .price i{display:inline;margin-left:6px}
+  .row .btn{margin-top:6px}
+  .desk{grid-template-columns:1fr;gap:16px;padding:18px 0}
+  .desk-rule{display:none}
+  .desk .btn{width:100%}
+  .teaser{grid-template-columns:1fr}
+  .hero-foot{font-size:.6rem;letter-spacing:.14em}
+  .bays{right:-30px;opacity:.6}
+}
+@media (max-width:560px){
+  .hero{padding-top:104px}
+  .hero-foot{flex-direction:column;align-items:flex-start;gap:7px}
+  .hero-foot .sep{display:none}
+  .strip-head .arrows{display:none}
+  .grid2{grid-template-columns:1fr}
+  .pick{grid-template-columns:1fr}
+  .dpick{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+}
+</style>
+</head>
+<body>
+
+<svg style="display:none" aria-hidden="true">
+  <symbol id="ph" viewBox="0 0 24 24"><path fill="currentColor" d="M6.6 10.8c1.2 2.3 3.1 4.2 5.4 5.4l1.8-1.8c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.5.6.6 0 1 .4 1 1V19c0 .6-.4 1-1 1-8.3 0-15-6.7-15-15 0-.6.4-1 1-1h3.2c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.5.1.4 0 .8-.2 1z"/></symbol>
+  <symbol id="bed" viewBox="0 0 24 24"><path fill="currentColor" d="M3 7v10h2v-3h14v3h2v-6a3 3 0 0 0-3-3h-8v5H5V7zm4 1a2 2 0 1 1 0 4 2 2 0 0 1 0-4z"/></symbol>
+  <symbol id="steam" viewBox="0 0 24 24"><path fill="currentColor" d="M8 3c1.5 1.8 1.5 3.2 0 5s-1.5 3.2 0 5l1.5-1.2c-.8-1-.8-1.6 0-2.6 1.9-2.3 1.9-4.4 0-6.7zM15 3c1.5 1.8 1.5 3.2 0 5s-1.5 3.2 0 5l1.5-1.2c-.8-1-.8-1.6 0-2.6 1.9-2.3 1.9-4.4 0-6.7zM4 15h16a8 8 0 0 1-16 0z"/></symbol>
+  <symbol id="pin" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.3 7 13 7 13s7-7.7 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></symbol>
+  <symbol id="wifi" viewBox="0 0 24 24"><path fill="currentColor" d="M12 18.5a1.7 1.7 0 1 0 0-3.4 1.7 1.7 0 0 0 0 3.4zM12 11c1.9 0 3.6.7 4.9 2l1.6-1.7A9.9 9.9 0 0 0 12 8.6c-2.6 0-5 1-6.6 2.7L7 13c1.3-1.3 3-2 5-2zm0-5c3.1 0 6 1.2 8.1 3.3l1.6-1.7A14.3 14.3 0 0 0 12 3.4c-4 0-7.6 1.6-10.2 4.2l1.7 1.7C5.6 7.2 8.6 6 12 6z"/></symbol>
+  <symbol id="car" viewBox="0 0 24 24"><path fill="currentColor" d="M5 11l1.5-4.5A2 2 0 0 1 8.4 5h7.2a2 2 0 0 1 1.9 1.5L19 11h1v6h-2v2h-2v-2H8v2H6v-2H4v-6zm2.2-1h9.6l-1-3H8.2zM7 13.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm10 0a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3z"/></symbol>
+  <symbol id="shower" viewBox="0 0 24 24"><path fill="currentColor" d="M12 3a5 5 0 0 0-5 5H4v2h16V8h-3a5 5 0 0 0-5-5zm-4 10a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm4 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm4 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-8 4a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm4 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm4 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/></symbol>
+  <symbol id="key" viewBox="0 0 24 24"><path fill="currentColor" d="M14 2a6 6 0 0 0-5.7 7.9L2 16.2V22h5.8l1.4-1.4-1.4-1.4 1.8-1.8 1.4 1.4 1.8-1.8-1.4-1.4 2.7-2.7A6 6 0 1 0 14 2zm2.5 3a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3z"/></symbol>
+  <symbol id="fork" viewBox="0 0 24 24"><path fill="currentColor" d="M7 2v7a2 2 0 0 0 1 1.7V22h2V10.7A2 2 0 0 0 11 9V2H9.5v6h-1V2zM15 2c-1.7 0-3 2-3 5 0 2.4.9 4.2 2.2 4.8V22h2V11.8C17.1 11.2 18 9.4 18 7c0-3-1.3-5-3-5z"/></symbol>
+  <symbol id="ig" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2.2c3.2 0 3.6 0 4.9.1 1.2.1 1.8.2 2.2.4.6.2 1 .5 1.4.9.4.4.7.8.9 1.4.2.4.3 1 .4 2.2.1 1.3.1 1.7.1 4.9s0 3.6-.1 4.9c-.1 1.2-.2 1.8-.4 2.2-.2.6-.5 1-.9 1.4-.4.4-.8.7-1.4.9-.4.2-1 .3-2.2.4-1.3.1-1.7.1-4.9.1s-3.6 0-4.9-.1c-1.2-.1-1.8-.2-2.2-.4-.6-.2-1-.5-1.4-.9-.4-.4-.7-.8-.9-1.4-.2-.4-.3-1-.4-2.2-.1-1.3-.1-1.7-.1-4.9s0-3.6.1-4.9c.1-1.2.2-1.8.4-2.2.2-.6.5-1 .9-1.4.4-.4.8-.7 1.4-.9.4-.2 1-.3 2.2-.4 1.3-.1 1.7-.1 4.9-.1zm0 3.2A6.6 6.6 0 1 0 12 18.6 6.6 6.6 0 0 0 12 5.4zm0 10.9a4.3 4.3 0 1 1 0-8.6 4.3 4.3 0 0 1 0 8.6zm6.9-11.2a1.55 1.55 0 1 1-3.1 0 1.55 1.55 0 0 1 3.1 0z"/></symbol>
+  <symbol id="arr" viewBox="0 0 24 24"><path fill="currentColor" d="M13.2 4.6l7.4 7.4-7.4 7.4-1.4-1.4 5-5H3.4v-2h13.4l-5-5z"/></symbol>
+  <symbol id="arr-l" viewBox="0 0 24 24"><path fill="currentColor" d="M10.8 4.6l1.4 1.4-5 5h13.4v2H7.2l5 5-1.4 1.4L3.4 12z"/></symbol>
+  <symbol id="arr-up" viewBox="0 0 24 24"><path fill="currentColor" d="M12 4l8 8-1.4 1.4L13 7.8V20h-2V7.8L5.4 13.4 4 12z"/></symbol>
+  <symbol id="msg" viewBox="0 0 24 24"><path fill="currentColor" d="M4 3h16a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H8l-5 4V5a2 2 0 0 1 2-2zm3 5v2h10V8zm0 4v2h7v-2z"/></symbol>
+  <symbol id="check" viewBox="0 0 24 24"><path fill="currentColor" d="M9.6 17.2l-4.8-4.8L6.2 11l3.4 3.4L17.8 6.2l1.4 1.4z"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path fill="currentColor" d="M18.3 5.7L12 12l6.3 6.3-1.4 1.4L10.6 13.4 5.7 18.3 4.3 16.9 10.6 12 4.3 5.7l1.4-1.4L12 10.6l4.9-4.9z"/></symbol>
+  <symbol id="i-chev" viewBox="0 0 24 24"><path fill="currentColor" d="M12 15.4l-6-6L7.4 8 12 12.6 16.6 8 18 9.4z"/></symbol>
+  <symbol id="i-cal" viewBox="0 0 24 24"><path fill="currentColor" d="M7 2v2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-2V2h-2v2H9V2zm12 8v10H5V10zM7 12v2h2v-2zm4 0v2h2v-2zm4 0v2h2v-2zM7 16v2h2v-2zm4 0v2h2v-2z"/></symbol>
+</svg>
+
+<!-- ══════ LEFT RAIL ══════ -->
+<aside class="rail">
+  <a class="mono" href="#hero" aria-label="На початок">Ф</a>
+  <p class="rail-vert"><b>МОТЕЛЬ</b> · САУНА &nbsp;—&nbsp; КОБЕЛЯКИ, ПОЛТАВЩИНА</p>
+  <div class="rail-dots" id="dots" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+</aside>
+
+<!-- ══════ TOP BAR ══════ -->
+<div class="top" id="top">
+  <a class="wordmark" href="#hero">ФІЛІ<span>Н</span></a>
+  <nav class="links" id="links">
+    <a href="#rooms">Номери</a>
+    <a href="#sauna">Сауна</a>
+    <a href="#photos">Фото</a>
+    <a href="#booking">Бронювання</a>
+    <a href="cafe/index.html" class="out">Кафе</a>
+    <a href="#contact">Контакти</a>
+  </nav>
+  <a class="btn sm" href="#booking">Забронювати</a>
+  <button class="hamb" id="hamb" aria-label="Меню" aria-expanded="false"><i></i><i></i><i></i></button>
+</div>
+
+<div class="drawer" id="drawer">
+  <a href="#rooms">Номери</a>
+  <a href="#sauna">Сауна</a>
+  <a href="#photos">Фото</a>
+  <a href="#booking">Бронювання</a>
+  <a href="cafe/index.html">Кафе ↗</a>
+  <a href="#contact">Контакти</a>
+  <div class="dp">
+    <a href="tel:+380681558595">068 155 85 95</a>
+    <a href="tel:+380662783888">066 278 38 88</a>
+  </div>
+</div>
+
+<main class="page">
+
+<!-- ══════ HERO ══════ -->
+<section class="hero" id="hero">
+  <div class="hero-photo"><div class="shot bare" data-src="photos/hero.jpg" data-alt="Мотель «Філін» увечері" data-hero="1"></div></div>
+  <div class="bays" aria-hidden="true"><b></b><b></b><b></b></div>
+  <div class="scrim"></div>
+
+  <div class="inner hero-body">
+    <h1 class="up">Зупиніться<em>на теплу ніч</em></h1>
+    <p class="hero-sub up a1"><b>Мотель і сауна «Філін»</b> — Кобеляки, Полтавщина.
+      Зупиніться на ніч, прогрійтеся в сауні й вирушайте далі відпочилими.</p>
+
+    <div class="desk up a2">
+      <div class="desk-status">
+        <span class="beacon" id="beacon"></span>
+        <span id="statusTxt"><b>Рецепція</b> — 07:00–23:00</span>
+      </div>
+      <div class="desk-rule"></div>
+      <div class="desk-phones">
+        <a href="tel:+380681558595">068 155 85 95</a>
+        <a href="tel:+380662783888">066 278 38 88</a>
+      </div>
+      <a class="btn" href="#booking">Забронювати</a>
+    </div>
+  </div>
+
+  <div class="inner">
+    <div class="hero-foot">
+      <span>Номери · Сауна · Парковка</span>
+      <span class="sep">◆</span>
+      <a href="cafe/index.html">Меню кухні «Філін» ↗</a>
+      <span class="sep">◆</span>
+      <a href="#rooms">Дивитись номери</a>
+    </div>
+  </div>
+</section>
+
+<!-- ══════ 01 · ABOUT ══════ -->
+<section class="band" id="about">
+  <div class="inner">
+    <div class="head">
+      <span class="no up">01</span>
+      <div>
+        <h2 class="up">Відпочити<br><em>і поїхати далі</em></h2>
+        <p class="up a1">Мотель, сауна й місце для авто — усе в одному дворі в Кобеляках.
+          Без довгих формальностей на рецепції: ключ у руки — і відпочивайте.</p>
+      </div>
+    </div>
+
+    <div class="duo">
+      <article class="slab up">
+        <span class="glow"></span>
+        <svg class="ico"><use href="#bed"/></svg>
+        <h3>Мотель</h3>
+        <p>Чисті номери на 1–3 особи з душем. Заселення в будь-який час до 23:00 —
+          навіть якщо ви приїхали останнім рейсом.</p>
+        <a class="arrow" href="#rooms">Номери <svg><use href="#arr"/></svg></a>
+      </article>
+
+      <div class="slab-col">
+        <article class="slab up a1">
+          <span class="glow"></span>
+          <svg class="ico"><use href="#steam"/></svg>
+          <h3>Сауна</h3>
+          <p>Прогріта парна й кімната відпочинку. Замовляйте за годинами.</p>
+          <a class="arrow" href="#sauna">Детальніше <svg><use href="#arr"/></svg></a>
+        </article>
+        <article class="slab up a2">
+          <span class="glow"></span>
+          <svg class="ico"><use href="#car"/></svg>
+          <h3>Парковка</h3>
+          <p>Місце для авто просто біля входу — машина завжди на очах.</p>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════ 02 · ROOMS ══════ -->
+<section class="band" id="rooms" style="background:linear-gradient(180deg,var(--void),var(--coal) 50%,var(--void))">
+  <div class="inner">
+    <div class="head">
+      <span class="no up">02</span>
+      <div>
+        <h2 class="up">Номери</h2>
+        <p class="up a1">Три типи — від короткої зупинки до родинної поїздки.
+          Оберіть свій і надішліть заявку: підтвердимо дзвінком.</p>
+      </div>
+    </div>
+
+    <div class="sheet up a1">
+      <article class="row" data-room="single">
+        <span class="row-no">01</span>
+        <div class="row-main">
+          <h3>Одномісний</h3>
+          <p>Компактна кімната для однієї особи — переночувати й рушити далі.</p>
+          <div class="tags"><span>Душ</span><span>Wi-Fi</span><span>Рушники</span></div>
+        </div>
+        <div class="row-cap"><b>1</b><span>особа</span><span class="price">від 600 ₴<i>за ніч</i></span></div>
+        <button class="btn line sm" data-book="Одномісний">Забронювати</button>
+      <div class="row-thumb" role="button" tabindex="0" data-room="single" aria-label="Фото одномісного номера"><div class="shot" data-src="photos/room-single.jpg" data-alt="Одномісний номер"><span class="wm">Ф</span></div></div>
+        </article>
+
+      <article class="row" data-room="double">
+        <span class="row-no">02</span>
+        <div class="row-main">
+          <h3>Двомісний</h3>
+          <p>Двоспальне ліжко або два окремих — скажіть, як зручніше, коли бронюєте.</p>
+          <div class="tags"><span>Душ</span><span>Wi-Fi</span><span>ТВ</span></div>
+        </div>
+        <div class="row-cap"><b>2</b><span>особи</span><span class="price">від 750 ₴<i>за ніч</i></span></div>
+        <button class="btn line sm" data-book="Двомісний">Забронювати</button>
+      <div class="row-thumb" role="button" tabindex="0" data-room="double" aria-label="Фото двомісного номера"><div class="shot" data-src="photos/room-double.jpg" data-alt="Двомісний номер"><span class="wm">Ф</span></div></div>
+        </article>
+
+      <article class="row" data-room="family">
+        <span class="row-no">03</span>
+        <div class="row-main">
+          <h3>Сімейний</h3>
+          <p>Просторіший номер із додатковим ліжком — місце для речей і для дитини.</p>
+          <div class="tags"><span>Душ</span><span>Wi-Fi</span><span>Додаткове ліжко</span></div>
+        </div>
+        <div class="row-cap"><b>3</b><span>особи</span><span class="price">від 950 ₴<i>за ніч</i></span></div>
+        <button class="btn line sm" data-book="Сімейний">Забронювати</button>
+      <div class="row-thumb" role="button" tabindex="0" data-room="family" aria-label="Фото сімейного номера"><div class="shot" data-src="photos/room-family.jpg" data-alt="Сімейний номер"><span class="wm">Ф</span></div></div>
+        </article>
+    </div>
+
+    <div class="strip up a2">
+      <div><svg><use href="#wifi"/></svg><span>Безкоштовний Wi-Fi</span></div>
+      <div><svg><use href="#shower"/></svg><span>Душ у номері</span></div>
+      <div><svg><use href="#car"/></svg><span>Парковка біля входу</span></div>
+      <div><svg><use href="#key"/></svg><span>Заселення до 23:00</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════ 03 · SAUNA ══════ -->
+<section class="band sauna" id="sauna">
+  <div class="inner sauna-split">
+    <div>
+      <span class="up" style="font-family:var(--display);font-size:2rem;color:var(--ember-dk);display:block;margin-bottom:16px">03</span>
+      <h2 class="up">Сауна</h2>
+      <p class="up a1">Прогріта парна, прохолодний душ і кімната відпочинку, де можна довго
+        сидіти й розмовляти. Беріть компанію або приходьте вдвох — прогріємо до вашого приходу,
+        просто скажіть час.</p>
+      <div class="heat up a1">
+        <span>Парна</span><span>Душ</span><span>Кімната відпочинку</span><span>Оренда за годинами</span>
+      </div>
+      <div class="up a2" style="margin-top:28px;display:flex;flex-wrap:wrap;gap:12px">
+        <button class="btn" data-book="Сауна">Забронювати сауну</button>
+        <a class="btn line" href="tel:+380662783888"><svg><use href="#ph"/></svg>066 278 38 88</a>
+      </div>
+    </div>
+    <div class="frame up a1">
+      <div class="shot" data-src="photos/sauna.jpg" data-alt="Сауна «Філін»"><span class="wm">Ф</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════ 04 · PHOTOS ══════ -->
+<section class="band" id="photos">
+  <div class="inner">
+    <div class="head" style="margin-bottom:0">
+      <span class="no up">04</span>
+      <div class="strip-head">
+        <div>
+          <h2 class="up">Як у нас</h2>
+          <p class="up a1">Номери, сауна й сам будинок — без прикрас.</p>
+        </div>
+        <div class="arrows up a1">
+          <button id="prev" aria-label="Назад"><svg><use href="#arr-l"/></svg></button>
+          <button id="next" aria-label="Далі"><svg><use href="#arr"/></svg></button>
+        </div>
+      </div>
+    </div>
+
+    <div class="film" id="film">
+      <figure class="cell"><div class="shot" data-src="photos/gallery-1.jpg" data-alt="Будівля «Філін» увечері"><span class="wm">Ф</span></div><figcaption>Наш дім увечері</figcaption></figure>
+      <figure class="cell"><div class="shot" data-src="photos/gallery-2.jpg" data-alt="Номер мотелю"><span class="wm">Ф</span></div><figcaption>Номер</figcaption></figure>
+      <figure class="cell"><div class="shot" data-src="photos/gallery-3.jpg" data-alt="Парна"><span class="wm">Ф</span></div><figcaption>Парна</figcaption></figure>
+      <figure class="cell"><div class="shot" data-src="photos/gallery-4.jpg" data-alt="Кімната відпочинку"><span class="wm">Ф</span></div><figcaption>Кімната відпочинку</figcaption></figure>
+      <figure class="cell"><div class="shot" data-src="photos/gallery-5.jpg" data-alt="Душ"><span class="wm">Ф</span></div><figcaption>Душ</figcaption></figure>
+      <figure class="cell"><div class="shot" data-src="photos/gallery-6.jpg" data-alt="Парковка"><span class="wm">Ф</span></div><figcaption>Парковка</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<!-- ══════ 05 · BOOKING ══════ -->
+<section class="band" id="booking" style="background:linear-gradient(180deg,var(--void),var(--coal) 55%,var(--void))">
+  <div class="inner">
+    <div class="head">
+      <span class="no up">05</span>
+      <div>
+        <h2 class="up">Бронювання</h2>
+        <p class="up a1">Відмітьте, що вам потрібно — номер, сауну або одразу і те, і те.
+          Заявка складеться сама, а ви надішлете її однією кнопкою.
+          Ми підтвердимо й запишемо вас.</p>
+      </div>
+    </div>
+
+    <div class="bk">
+      <form class="bk-form up a1" id="bkForm" novalidate>
+        <div class="grp first">
+          <p class="grp-title"><svg><use href="#ph"/></svg>Як з вами зв'язатись</p>
+          <div class="grid2">
+            <div class="fld" id="f-name">
+              <label for="name">Ваше ім'я <i>*</i></label>
+              <input type="text" id="name" autocomplete="name" placeholder="Як до вас звертатись" required>
+              <span class="err">Напишіть, будь ласка, ім'я</span>
+            </div>
+            <div class="fld" id="f-phone">
+              <label for="phone">Телефон <i>*</i></label>
+              <input type="tel" id="phone" autocomplete="tel" inputmode="tel" placeholder="+380 68 155 85 95" required>
+              <span class="err">Після +380 потрібно ще 9 цифр</span>
+            </div>
+          </div>
+        </div>
+
+        <p class="pick-lead">Що бронюємо? Можна відмітити і номер, і сауну — однією заявкою.</p>
+        <div class="pick" role="group" aria-label="Що бронюємо">
+          <button type="button" class="pick-btn" id="pickRoom" aria-pressed="true">
+            <span class="box"><svg><use href="#check"/></svg></span>
+            <span class="t"><b>Номер</b><i>нічліг</i></span>
+            <svg class="pick-ico"><use href="#bed"/></svg>
+          </button>
+          <button type="button" class="pick-btn" id="pickSauna" aria-pressed="false">
+            <span class="box"><svg><use href="#check"/></svg></span>
+            <span class="t"><b>Сауна</b><i>за годинами</i></span>
+            <svg class="pick-ico"><use href="#steam"/></svg>
+          </button>
+        </div>
+        <p class="err-pick" id="errPick">Відмітьте номер, сауну — або одразу обидве</p>
+
+        <div class="grp">
+          <div class="grid2">
+            <div class="fld" id="f-guests">
+              <label for="guests">Скільки вас буде <i>*</i></label>
+              <div class="num">
+                <button type="button" data-num="-1" data-for="guests" aria-label="Менше">−</button>
+                <input type="number" id="guests" min="1" max="20" step="1" value="2" required inputmode="numeric">
+                <button type="button" data-num="1" data-for="guests" aria-label="Більше">+</button>
+              </div>
+              <span class="err">Від 1 до 20</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="grp" id="grpRoom">
+          <p class="grp-title"><svg><use href="#bed"/></svg>Номер</p>
+          <div class="dpick">
+            <div class="daywrap" id="f-in">
+              <button type="button" class="daybtn" id="btnIn" aria-expanded="false">
+                <svg><use href="#i-cal"/></svg>
+                <span class="t"><i>Заїзд</i><b id="lblIn">—</b></span>
+              </button>
+            </div>
+            <div class="daywrap" id="f-out">
+              <button type="button" class="daybtn" id="btnOut" aria-expanded="false">
+                <svg><use href="#i-cal"/></svg>
+                <span class="t"><i>Виїзд</i><b id="lblOut">—</b></span>
+              </button>
+            </div>
+          </div>
+
+          <div class="cal" id="cal" hidden>
+            <div class="cal-top">
+              <button type="button" class="cal-nav" id="calPrev" aria-label="Попередній місяць"><svg><use href="#arr-l"/></svg></button>
+              <b id="calTitle"></b>
+              <button type="button" class="cal-nav" id="calNext" aria-label="Наступний місяць"><svg><use href="#arr"/></svg></button>
+            </div>
+            <div class="cal-wd"><span>Пн</span><span>Вт</span><span>Ср</span><span>Чт</span><span>Пт</span><span>Сб</span><span>Нд</span></div>
+            <div class="cal-grid" id="calGrid"></div>
+            <p class="cal-hint" id="calHint"></p>
+          </div>
+
+          <p class="nights-read"><b id="nightsVal">—</b></p>
+
+          <input type="date" id="dIn" hidden>
+          <input type="date" id="dOut" hidden>
+
+          <div class="grid2">
+            <div class="fld" id="f-kind">
+              <label id="lab-kind">Тип номера</label>
+              <div class="sel">
+                <button type="button" class="sel-btn" aria-expanded="false" aria-labelledby="lab-kind">
+                  <span class="sel-val"></span><svg class="sel-arr"><use href="#i-chev"/></svg>
+                </button>
+                <div class="sel-list" role="listbox" hidden>
+                  <button type="button" class="sel-opt" data-v="Одномісний">Одномісний — 1 особа</button>
+                  <button type="button" class="sel-opt" data-v="Двомісний">Двомісний — 2 особи</button>
+                  <button type="button" class="sel-opt" data-v="Сімейний">Сімейний — 3 особи</button>
+                  <button type="button" class="sel-opt" data-v="Порадьте">Порадьте, будь ласка</button>
+                </div>
+                <input type="hidden" id="kind" value="Двомісний">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="grp" id="grpSauna" hidden>
+          <p class="grp-title"><svg><use href="#steam"/></svg>Сауна</p>
+          <div class="sdate" id="f-sdate">
+            <p class="sdate-lab">Дата сауни <i>*</i></p>
+            <div class="chips" id="sChips"></div>
+
+            <div class="dpick one" id="sBtnWrap" hidden>
+              <div class="daywrap">
+                <button type="button" class="daybtn" id="btnSDate" aria-expanded="false">
+                  <svg><use href="#i-cal"/></svg>
+                  <span class="t"><i>Дата сауни</i><b id="lblSDate">—</b></span>
+                </button>
+              </div>
+            </div>
+
+            <div class="cal" id="calS" hidden>
+              <div class="cal-top">
+                <button type="button" class="cal-nav" id="calSPrev" aria-label="Попередній місяць"><svg><use href="#arr-l"/></svg></button>
+                <b id="calSTitle"></b>
+                <button type="button" class="cal-nav" id="calSNext" aria-label="Наступний місяць"><svg><use href="#arr"/></svg></button>
+              </div>
+              <div class="cal-wd"><span>Пн</span><span>Вт</span><span>Ср</span><span>Чт</span><span>Пт</span><span>Сб</span><span>Нд</span></div>
+              <div class="cal-grid" id="calSGrid"></div>
+            </div>
+
+            <p class="sdate-note" id="sNote"></p>
+            <input type="date" id="sDate" hidden>
+          </div>
+
+          <div class="grid2" style="margin-top:12px">
+            <div class="fld" id="f-time">
+              <label id="lab-time">На який час прогріти</label>
+              <div class="sel">
+                <button type="button" class="sel-btn" aria-expanded="false" aria-labelledby="lab-time">
+                  <span class="sel-val"></span><svg class="sel-arr"><use href="#i-chev"/></svg>
+                </button>
+                <div class="sel-list" role="listbox" hidden>
+                  <button type="button" class="sel-opt" data-v="15:00">15:00</button>
+                  <button type="button" class="sel-opt" data-v="16:00">16:00</button>
+                  <button type="button" class="sel-opt" data-v="17:00">17:00</button>
+                  <button type="button" class="sel-opt" data-v="18:00">18:00</button>
+                  <button type="button" class="sel-opt" data-v="19:00">19:00</button>
+                  <button type="button" class="sel-opt" data-v="20:00">20:00</button>
+                  <button type="button" class="sel-opt" data-v="21:00">21:00</button>
+                </div>
+                <input type="hidden" id="time" value="18:00">
+              </div>
+            </div>
+            <div class="fld" id="f-hours">
+              <label id="lab-hours">На скільки годин</label>
+              <div class="sel" id="selHours">
+                <button type="button" class="sel-btn" aria-expanded="false" aria-labelledby="lab-hours">
+                  <span class="sel-val"></span><svg class="sel-arr"><use href="#i-chev"/></svg>
+                </button>
+                <div class="sel-list" role="listbox" hidden>
+                  <button type="button" class="sel-opt" data-v="2 години">2 години</button>
+                  <button type="button" class="sel-opt" data-v="3 години">3 години</button>
+                  <button type="button" class="sel-opt" data-v="4 години">4 години</button>
+                  <button type="button" class="sel-opt" data-v="__own" data-reveal="hoursOwnBox">Обрати самому</button>
+                </div>
+                <input type="hidden" id="hours" value="2 години">
+              </div>
+              <div class="own" id="hoursOwnBox" hidden>
+                <div class="num">
+                  <button type="button" data-num="-1" data-for="hoursOwn" aria-label="Менше">−</button>
+                  <input type="number" id="hoursOwn" min="1" max="12" step="1" value="5" inputmode="numeric">
+                  <button type="button" data-num="1" data-for="hoursOwn" aria-label="Більше">+</button>
+                </div>
+                <button type="button" class="own-back" data-back="selHours">до списку</button>
+              </div>
+              <span class="err">Від 1 до 12 годин</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="grp">
+          <div class="grid2">
+            <div class="fld wide">
+              <label for="note">Побажання</label>
+              <textarea id="note" placeholder="Приїдемо близько 22:00, сауну після заселення…"></textarea>
+            </div>
+          </div>
+        </div>
+
+        <div class="bk-acts" id="bkActs">
+          <a class="btn" id="actSend" href="#"><svg><use href="#msg"/></svg>Надіслати заявку</a>
+        </div>
+        <p class="bk-warn" id="bkWarn">Впишіть ім'я та телефон — і кнопка надсилання увімкнеться</p>
+
+        <p class="bk-hint">Заявка збирається сама, поки ви заповнюєте. Онлайн-календаря
+          ми не тримаємо й передоплати не беремо: отримаємо заявку
+          та підтвердимо дзвінком.</p>
+      </form>
+
+      <aside class="bk-out up a2">
+        <h3>Ваша заявка</h3>
+        <p class="bk-live"><span class="tick"></span>Складається просто зараз, поки ви заповнюєте</p>
+
+        <div class="slip" id="slip"></div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ══════ CAFE TEASER ══════ -->
+<section class="band" id="cafe" style="padding-top:0">
+  <div class="inner">
+    <div class="teaser up">
+      <svg class="plate" viewBox="0 0 24 24"><use href="#fork"/></svg>
+      <div>
+        <h3>А поїсти — <em>у кухні «Філін»</em></h3>
+        <p>Кафе з домашньою кухнею працює в тій самій будівлі. Повне меню з цінами —
+          на окремому сайті кухні: сніданки з 07:00, перші страви, гриль і власна випічка.</p>
+      </div>
+      <a class="btn" href="cafe/index.html" style="padding:16px 26px"><svg><use href="#fork"/></svg>Меню кухні</a>
+    </div>
+  </div>
+</section>
+
+<!-- ══════ 06 · CONTACT ══════ -->
+<section class="band" id="contact" style="background:linear-gradient(180deg,var(--void),var(--coal-2))">
+  <div class="inner">
+    <div class="head">
+      <span class="no up">06</span>
+      <div><h2 class="up">Зателефонуйте —<br><em>і місце ваше</em></h2></div>
+    </div>
+
+    <div class="contact-split">
+      <div>
+        <div class="big-phones up">
+          <a href="tel:+380681558595"><svg><use href="#arr"/></svg>068 155 85 95</a>
+          <a href="tel:+380662783888"><svg><use href="#arr"/></svg>066 278 38 88</a>
+        </div>
+        <p class="contact-note up a1">Номери й сауна — за будь-яким із номерів.
+          Якщо приїжджаєте пізно, попередьте: чекатимемо.</p>
+        <a class="ig up a1" style="margin-top:22px" href="https://www.instagram.com/cafe__filin__" target="_blank" rel="noopener">
+          <svg><use href="#ig"/></svg>@cafe__filin__
+        </a>
+      </div>
+
+      <div class="up a1">
+        <div class="ledger">
+          <div><span>Рецепція</span><b>07:00 – 23:00</b></div>
+          <div><span>Заселення</span><b>до 23:00</b></div>
+          <div><span>Сауна</span><b>за домовленістю</b></div>
+          <div><span>Вихідні</span><b>без вихідних</b></div>
+          <div><span>Де ми</span><b>м. Кобеляки, Полтавська обл.</b></div>
+        </div>
+        <a class="btn line" style="margin-top:24px" href="https://www.google.com/maps/search/%D0%A4%D1%96%D0%BB%D1%96%D0%BD+%D0%9A%D0%BE%D0%B1%D0%B5%D0%BB%D1%8F%D0%BA%D0%B8" target="_blank" rel="noopener">
+          <svg><use href="#pin"/></svg>Прокласти маршрут
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="inner">
+    <div class="f-line">
+      <a class="wordmark" href="#hero" style="font-size:1rem">ФІЛІ<span>Н</span></a>
+      <nav class="f-nav">
+        <a href="#rooms">Номери</a>
+        <a href="#sauna">Сауна</a>
+        <a href="#photos">Фото</a>
+        <a href="#booking">Бронювання</a>
+        <a href="cafe/index.html">Кафе</a>
+        <a href="#contact">Контакти</a>
+      </nav>
+      <a class="ig" href="https://www.instagram.com/cafe__filin__" target="_blank" rel="noopener"><svg><use href="#ig"/></svg>Instagram</a>
+    </div>
+    <div class="f-meta">
+      <span>© <b id="yr">2026</b> «Філін» — мотель і сауна, Кобеляки</span>
+      <span>068 155 85 95 · 066 278 38 88</span>
+    </div>
+  </div>
+</footer>
+</main>
+
+<a class="up-btn" id="upBtn" href="#hero" aria-label="Вгору"><svg><use href="#arr-up"/></svg></a>
+
+<div class="lb" id="lb" hidden>
+  <div class="lb-box">
+    <button type="button" class="lb-x" id="lbX" aria-label="Закрити"><svg><use href="#i-x"/></svg></button>
+    <div class="lb-main">
+      <div class="lb-left">
+        <div class="lb-stage">
+          <button type="button" class="lb-nav prev" id="lbPrev" aria-label="Попереднє фото"><svg><use href="#arr-l"/></svg></button>
+          <div class="lb-img" id="lbImg"></div>
+          <button type="button" class="lb-nav next" id="lbNext" aria-label="Наступне фото"><svg><use href="#arr"/></svg></button>
+          <span class="lb-count" id="lbCount" hidden></span>
+        </div>
+        <div class="lb-thumbs" id="lbThumbs"></div>
+      </div>
+
+      <div class="lb-right">
+        <b class="lb-name" id="lbTitle"></b>
+        <p class="lb-desc" id="lbDesc"></p>
+        <div class="lb-tags" id="lbTags"></div>
+        <div class="lb-facts">
+          <span class="cap"><b id="lbCap">—</b><span id="lbCapL">осіб</span></span>
+          <span class="pr"><b id="lbPrice">—</b><span id="lbPriceL">за ніч</span></span>
+        </div>
+        <button type="button" class="lb-book" id="lbBook"><svg><use href="#bed"/></svg>Забронювати цей номер</button>
+        <div class="lb-more">
+          <p>Подивитись інші номери</p>
+          <div class="lb-rooms" id="lbRooms"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  'use strict';
+  var MAIN_PHONE = '+380681558595';
+
+  /* ── photo slots ── */
+  document.querySelectorAll('.shot[data-src]').forEach(function(box){
+    var src = box.getAttribute('data-src');
+    if (!src) return;
+    var im = new Image();
+    im.onload = function(){
+      im.alt = box.getAttribute('data-alt') || '';
+      im.loading = 'lazy';
+      box.appendChild(im);
+      box.classList.add('filled');
+      if (box.getAttribute('data-hero')) document.getElementById('hero').classList.add('has-photo');
+    };
+    im.src = src;
+  });
+
+  /* ── open / closed countdown (07:00–23:00, київський час) ── */
+  var OPEN = 7, SHUT = 23;
+  function two(n){ return (n<10?'0':'')+n; }
+
+  /* час і дата в Кобеляках, а не на пристрої гостя */
+  function kyiv(){
+    try {
+      var f = new Intl.DateTimeFormat('en-CA', {
+        timeZone:'Europe/Kyiv', year:'numeric', month:'2-digit', day:'2-digit',
+        hour:'2-digit', minute:'2-digit', hour12:false
+      });
+      var p = {};
+      f.formatToParts(new Date()).forEach(function(x){ if (x.type !== 'literal') p[x.type] = x.value; });
+      return {
+        h:parseInt(p.hour,10) % 24, m:parseInt(p.minute,10),
+        ymd:p.year + '-' + p.month + '-' + p.day
+      };
+    } catch(e){
+      var d = new Date();
+      return {
+        h:d.getHours(), m:d.getMinutes(),
+        ymd:d.getFullYear() + '-' + two(d.getMonth()+1) + '-' + two(d.getDate())
+      };
+    }
+  }
+
+  function status(){
+    var now = kyiv(), h = now.h, m = now.m;
+    var beacon = document.getElementById('beacon'), txt = document.getElementById('statusTxt');
+    if (!beacon || !txt) return;
+    if (h >= OPEN && h < SHUT){
+      var mins = (SHUT - h) * 60 - m, hh = Math.floor(mins/60), mm = mins % 60;
+      beacon.classList.remove('shut');
+      txt.innerHTML = '<b>Відчинено</b> — до 23:00 залишилось ' + (hh ? hh + ' год ' : '') + two(mm) + ' хв';
+    } else {
+      var uh = (h >= SHUT) ? (24 - h + OPEN - 1) : (OPEN - h - 1), um = 60 - m;
+      if (um === 60){ um = 0; uh += 1; }
+      beacon.classList.add('shut');
+      txt.innerHTML = '<b>Зараз зачинено</b> — відчинимось о 07:00, через ' + (uh ? uh + ' год ' : '') + two(um) + ' хв';
+    }
+  }
+  status();
+  setInterval(status, 30000);
+
+  /* ══════ ГАЛЕРЕЯ НОМЕРА ══════
+     Фото шукаються самі: photos/room-<тип>.jpg і photos/room-<тип>-1..6.jpg.
+     Скільки файлів покладете — стільки й буде в галереї. */
+  var ROOMS = [
+    {k:'single', t:'Одномісний'},
+    {k:'double', t:'Двомісний'},
+    {k:'family', t:'Сімейний'}
+  ];
+  var shots = {};          /* кеш знайдених фото */
+  var lb      = document.getElementById('lb');
+  var lbImg   = document.getElementById('lbImg');
+  var lbTitle = document.getElementById('lbTitle');
+  var lbCount = document.getElementById('lbCount');
+  var lbThumbs= document.getElementById('lbThumbs');
+  var lbRooms = document.getElementById('lbRooms');
+  var lbPrev  = document.getElementById('lbPrev');
+  var lbNext  = document.getElementById('lbNext');
+  var curRoom = null, curIdx = 0;
+
+  function findShots(key, done){
+    if (shots[key]) return done(shots[key]);
+    var cands = ['photos/room-' + key + '.jpg'];
+    for (var i = 1; i <= 6; i++) cands.push('photos/room-' + key + '-' + i + '.jpg');
+    var found = [], left = cands.length;
+    cands.forEach(function(src, idx){
+      var im = new Image();
+      im.onload = function(){ found.push({i:idx, src:src}); step(); };
+      im.onerror = step;
+      im.src = src;
+      function step(){
+        if (--left) return;
+        found.sort(function(a, b){ return a.i - b.i; });
+        shots[key] = found.map(function(x){ return x.src; });
+        done(shots[key]);
+      }
+    });
+  }
+
+  function drawLb(){
+    var list = shots[curRoom.k] || [];
+    lbTitle.textContent = curRoom.t;
+
+    /* опис, зручності, місткість і ціна — беремо з самого рядка номера,
+       щоб текст був в одному місці й не розходився */
+    var row = document.querySelector('.row[data-room="' + curRoom.k + '"]');
+    if (row){
+      var p = row.querySelector('.row-main p');
+      document.getElementById('lbDesc').textContent = p ? p.textContent.trim() : '';
+      document.getElementById('lbTags').innerHTML =
+        Array.prototype.map.call(row.querySelectorAll('.tags span'), function(s){
+          return '<span>' + s.textContent + '</span>';
+        }).join('');
+      var cap = row.querySelector('.row-cap');
+      if (cap){
+        var capN = cap.querySelector('b'), capL = cap.querySelector('span');
+        document.getElementById('lbCap').textContent  = capN ? capN.textContent : '—';
+        document.getElementById('lbCapL').textContent = capL ? capL.textContent : '';
+        var pr = cap.querySelector('.price');
+        if (pr){
+          var per = pr.querySelector('i') ? pr.querySelector('i').textContent : '';
+          document.getElementById('lbPrice').textContent  = pr.textContent.replace(per, '').trim();
+          document.getElementById('lbPriceL').textContent = per;
+        }
+      }
+    }
+
+    if (!list.length){
+      lbImg.innerHTML = '<div class="lb-empty"><b>Фото готуємо</b>' +
+        'Цей номер ще не сфотографований — зателефонуйте, і ми розкажемо про нього все.</div>';
+      lbCount.hidden = true;
+      lbPrev.hidden = lbNext.hidden = true;
+      lbThumbs.innerHTML = '';
+    } else {
+      if (curIdx >= list.length) curIdx = 0;
+      if (curIdx < 0) curIdx = list.length - 1;
+      lbImg.innerHTML = '<img src="' + list[curIdx] + '" alt="' + curRoom.t + '">';
+      lbCount.hidden = false;
+      lbCount.textContent = (curIdx + 1) + ' / ' + list.length;
+      lbPrev.hidden = lbNext.hidden = (list.length < 2);
+      lbThumbs.innerHTML = list.map(function(src, i){
+        return '<button type="button" class="' + (i === curIdx ? 'on' : '') +
+               '" data-i="' + i + '"><img src="' + src + '" alt=""></button>';
+      }).join('');
+    }
+
+    lbRooms.innerHTML = ROOMS.filter(function(r){ return r.k !== curRoom.k; })
+      .map(function(r){ return '<button type="button" data-go="' + r.k + '">' + r.t + ' →</button>'; })
+      .join('');
+  }
+
+  function openLb(key){
+    curRoom = ROOMS.filter(function(r){ return r.k === key; })[0] || ROOMS[0];
+    curIdx = 0;
+    lb.hidden = false;
+    document.body.style.overflow = 'hidden';
+    lbTitle.textContent = curRoom.t;
+    lbImg.innerHTML = '<div class="lb-empty">Шукаємо фото…</div>';
+    findShots(curRoom.k, drawLb);
+  }
+  function closeLb(){
+    lb.hidden = true;
+    document.body.style.overflow = '';
+  }
+
+  document.addEventListener('click', function(e){
+    if (!document.contains(e.target)) return;
+    /* клік будь-де по рядку номера відкриває фото — крім кнопок */
+    var th = e.target.closest('[data-room]');
+    if (th && !e.target.closest('.btn, [data-book], a, input, select, textarea')){
+      openLb(th.getAttribute('data-room'));
+      return;
+    }
+    var go = e.target.closest('[data-go]');
+    if (go && lb.contains(go)){ openLb(go.getAttribute('data-go')); return; }
+    var tb = e.target.closest('.lb-thumbs button');
+    if (tb){ curIdx = parseInt(tb.getAttribute('data-i'), 10); drawLb(); return; }
+    if (e.target.closest('#lbX') || e.target === lb) closeLb();
+  });
+  document.addEventListener('keydown', function(e){
+    var el0 = document.activeElement;
+    if ((e.key === 'Enter' || e.key === ' ') && el0 && el0.hasAttribute && el0.hasAttribute('data-room')){
+      e.preventDefault();
+      openLb(el0.getAttribute('data-room'));
+      return;
+    }
+    if (lb.hidden) return;
+    if (e.key === 'Escape') closeLb();
+    if (e.key === 'ArrowLeft'){ curIdx--; drawLb(); }
+    if (e.key === 'ArrowRight'){ curIdx++; drawLb(); }
+  });
+  lbPrev.addEventListener('click', function(){ curIdx--; drawLb(); });
+  lbNext.addEventListener('click', function(){ curIdx++; drawLb(); });
+
+  /* «Забронювати цей номер» — та сама дія, що й кнопка в рядку */
+  document.getElementById('lbBook').addEventListener('click', function(){
+    var row = document.querySelector('.row[data-room="' + (curRoom ? curRoom.k : '') + '"]');
+    closeLb();
+    var b = row && row.querySelector('[data-book]');
+    if (b) b.click();
+  });
+
+  /* ── sticky bar + to-top ── */
+  var bar = document.getElementById('top'), upBtn = document.getElementById('upBtn');
+  function onScroll(){
+    var y = window.pageYOffset;
+    bar.classList.toggle('stuck', y > 40);
+    upBtn.classList.toggle('show', y > 800);
+  }
+  window.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+
+  /* ── drawer ── */
+  var hamb = document.getElementById('hamb'), drawer = document.getElementById('drawer');
+  function shut(){ document.body.classList.remove('open'); hamb.setAttribute('aria-expanded','false'); }
+  hamb.addEventListener('click', function(){
+    var on = document.body.classList.toggle('open');
+    hamb.setAttribute('aria-expanded', on ? 'true' : 'false');
+  });
+  drawer.addEventListener('click', function(e){
+    if (e.target.tagName === 'A' || e.target === drawer) shut();
+  });
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape') shut(); });
+
+  /* ── reveal ── */
+  var ups = document.querySelectorAll('.up');
+  if ('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(list){
+      list.forEach(function(en){ if (en.isIntersecting){ en.target.classList.add('seen'); io.unobserve(en.target); } });
+    }, {rootMargin:'0px 0px -7% 0px', threshold:.06});
+    ups.forEach(function(el){ io.observe(el); });
+  } else {
+    ups.forEach(function(el){ el.classList.add('seen'); });
+  }
+
+  /* ── rail dots + active link ── */
+  var ids = ['rooms','sauna','photos','booking','contact'];
+  var secs = ids.map(function(id){ return document.getElementById(id); });
+  var dots = document.querySelectorAll('#dots i');
+  var navLinks = document.querySelectorAll('#links a[href^="#"]');
+  if ('IntersectionObserver' in window){
+    var io2 = new IntersectionObserver(function(list){
+      list.forEach(function(en){
+        if (!en.isIntersecting) return;
+        var idx = secs.indexOf(en.target);
+        dots.forEach(function(d,i){ d.classList.toggle('on', i === idx); });
+        navLinks.forEach(function(a){
+          if (a.getAttribute('href') === '#' + en.target.id) a.setAttribute('aria-current','true');
+          else a.removeAttribute('aria-current');
+        });
+      });
+    }, {rootMargin:'-42% 0px -52% 0px'});
+    secs.forEach(function(s){ if (s) io2.observe(s); });
+  }
+
+  /* ── filmstrip ── */
+  var film = document.getElementById('film');
+  function step(dir){
+    var cell = film.querySelector('.cell');
+    var w = cell ? cell.getBoundingClientRect().width + 14 : 300;
+    film.scrollBy({left: dir * w, behavior: 'smooth'});
+  }
+  document.getElementById('prev').addEventListener('click', function(){ step(-1); });
+  document.getElementById('next').addEventListener('click', function(){ step(1); });
+
+  /* ═══════════ BOOKING ═══════════ */
+  var form   = document.getElementById('bkForm');
+  var pickR  = document.getElementById('pickRoom');
+  var pickS  = document.getElementById('pickSauna');
+  var grpR   = document.getElementById('grpRoom');
+  var grpS   = document.getElementById('grpSauna');
+  var errPick= document.getElementById('errPick');
+  var slip   = document.getElementById('slip');
+  var acts   = document.getElementById('bkActs');
+  var warn   = document.getElementById('bkWarn');
+  var send   = document.getElementById('actSend');
+  var letter = '';   /* current text of the заявка */
+
+  /* both services can be on at the same time */
+  var want = {room:true, sauna:false};
+
+  var el = {
+    dIn:    document.getElementById('dIn'),
+    dOut:   document.getElementById('dOut'),
+    kind:   document.getElementById('kind'),
+    guests: document.getElementById('guests'),
+    sDate:  document.getElementById('sDate'),
+    time:   document.getElementById('time'),
+    hours:  document.getElementById('hours'),
+    hoursOwn: document.getElementById('hoursOwn'),
+    name:   document.getElementById('name'),
+    phone:  document.getElementById('phone'),
+    note:   document.getElementById('note')
+  };
+
+  /* dates: today / tomorrow by default, nothing in the past */
+  function ymd(d){ return d.getFullYear()+'-'+two(d.getMonth()+1)+'-'+two(d.getDate()); }
+  function shift(v, days){
+    var d = new Date(v + 'T00:00');
+    d.setDate(d.getDate() + days);
+    return ymd(d);
+  }
+  function nightsOf(a, b){
+    if (!a || !b) return 0;
+    return Math.round((new Date(b+'T00:00') - new Date(a+'T00:00')) / 86400000);
+  }
+  function plural(n, one, few, many){
+    var a = n % 10, b = n % 100;
+    if (a === 1 && b !== 11) return one;
+    if (a >= 2 && a <= 4 && (b < 12 || b > 14)) return few;
+    return many;
+  }
+
+  var today = kyiv().ymd;   /* «сьогодні» рахуємо за Кобеляками */
+  el.dIn.min = today;
+  el.dIn.value = today;
+  el.dOut.min = shift(today, 1);
+  el.dOut.value = shift(today, 1);
+  el.sDate.min = today;
+  el.sDate.value = today;
+
+  /* ══════ CALENDARS ══════ */
+  var MON  = ['січ','лют','бер','кві','тра','чер','лип','сер','вер','жов','лис','гру'];
+  var MONF = ['січень','лютий','березень','квітень','травень','червень','липень','серпень','вересень','жовтень','листопад','грудень'];
+  var MONG = ['січня','лютого','березня','квітня','травня','червня','липня','серпня','вересня','жовтня','листопада','грудня'];
+  var WD   = ['нд','пн','вт','ср','чт','пт','сб'];
+
+  function dayLabel(v){
+    if (!v) return '—';
+    var d = new Date(v + 'T00:00');
+    if (isNaN(d)) return '—';
+    return d.getDate() + ' ' + MON[d.getMonth()] + ' · ' + WD[d.getDay()];
+  }
+  function longDay(v){
+    var d = new Date(v + 'T00:00');
+    return d.getDate() + ' ' + MONG[d.getMonth()];
+  }
+  /* Monday-first offset of the 1st of a month */
+  function offsetOf(y, m){ return (new Date(y, m, 1).getDay() + 6) % 7; }
+  function firstOfMonth(v){ var d = new Date(v + 'T00:00'); d.setDate(1); return d; }
+  function monthKey(d){ return d.getFullYear() + '-' + two(d.getMonth() + 1); }
+
+  /* ---------- room range calendar ---------- */
+  var calBox   = document.getElementById('cal');
+  var calGrid  = document.getElementById('calGrid');
+  var calTitle = document.getElementById('calTitle');
+  var calHint  = document.getElementById('calHint');
+  var btnIn    = document.getElementById('btnIn');
+  var btnOut   = document.getElementById('btnOut');
+  var view     = firstOfMonth(today);
+  var picking  = 'in';
+  var hoverD   = '';
+
+  function drawCal(){
+    var y = view.getFullYear(), m = view.getMonth();
+    calTitle.textContent = MONF[m] + ' ' + y;
+    document.getElementById('calPrev').disabled = (monthKey(view) <= today.slice(0, 7));
+
+    var days = new Date(y, m + 1, 0).getDate(), html = '', i;
+    for (i = 0; i < offsetOf(y, m); i++) html += '<span class="d pad"></span>';
+
+    var a = el.dIn.value;
+    var b = el.dOut.value || ((picking === 'out' && a && hoverD > a) ? hoverD : '');
+    for (var dd = 1; dd <= days; dd++){
+      var v = y + '-' + two(m + 1) + '-' + two(dd), cls = 'd';
+      if (v < today) cls += ' off';
+      if (v === today) cls += ' now';
+      if (v === a) cls += ' start';
+      if (v === el.dOut.value) cls += ' end';
+      if (a && b && v > a && v < b) cls += ' mid';
+      html += '<button type="button" class="' + cls + '" data-d="' + v + '"' +
+              (v < today ? ' disabled' : '') + '>' + dd + '</button>';
+    }
+    calGrid.innerHTML = html;
+    calHint.textContent = (picking === 'in')
+      ? 'Оберіть дату заїзду'
+      : 'Тепер оберіть дату виїзду';
+  }
+
+  function openCal(which){
+    picking = (which === 'out' && !el.dIn.value) ? 'in' : which;
+    var anchor = (picking === 'out' ? (el.dOut.value || el.dIn.value) : el.dIn.value) || today;
+    view = firstOfMonth(anchor);
+    hoverD = '';
+    calS.hidden = true;
+    setExpanded(btnSDate, false);
+    calBox.hidden = false;
+    setExpanded(btnIn, picking === 'in');
+    setExpanded(btnOut, picking === 'out');
+    drawCal();
+  }
+  function closeCal(){
+    calBox.hidden = true;
+    setExpanded(btnIn, false);
+    setExpanded(btnOut, false);
+  }
+  function setExpanded(b, on){ if (b) b.setAttribute('aria-expanded', on ? 'true' : 'false'); }
+
+  btnIn.addEventListener('click', function(){
+    if (!calBox.hidden && picking === 'in') closeCal(); else openCal('in');
+  });
+  btnOut.addEventListener('click', function(){
+    if (!calBox.hidden && picking === 'out') closeCal(); else openCal('out');
+  });
+  document.getElementById('calPrev').addEventListener('click', function(){
+    view.setMonth(view.getMonth() - 1); drawCal();
+  });
+  document.getElementById('calNext').addEventListener('click', function(){
+    view.setMonth(view.getMonth() + 1); drawCal();
+  });
+
+  calGrid.addEventListener('click', function(e){
+    var cell = e.target.closest('.d[data-d]');
+    if (!cell || cell.disabled) return;
+    /* the grid is redrawn below, which detaches this node — keep the
+       outside-click handler from mistaking that for a click elsewhere */
+    e.stopPropagation();
+    var v = cell.getAttribute('data-d');
+    hoverD = '';
+    if (picking === 'in' || !el.dIn.value || v <= el.dIn.value){
+      el.dIn.value = v;
+      el.dOut.value = '';
+      picking = 'out';
+      setExpanded(btnIn, false);
+      setExpanded(btnOut, true);
+      syncSauna(); render(); drawCal();
+    } else {
+      el.dOut.value = v;
+      picking = 'in';
+      syncSauna(); render(); closeCal();
+    }
+  });
+  calGrid.addEventListener('mouseover', function(e){
+    if (picking !== 'out' || !el.dIn.value) return;
+    var cell = e.target.closest('.d[data-d]');
+    if (!cell || cell.disabled) return;
+    var v = cell.getAttribute('data-d');
+    if (v !== hoverD){ hoverD = v; drawCal(); }
+  });
+
+  /* ---------- our own dropdowns (no OS-styled <select>) ---------- */
+  document.querySelectorAll('.sel').forEach(function(sel){
+    var btn  = sel.querySelector('.sel-btn');
+    var list = sel.querySelector('.sel-list');
+    var val  = sel.querySelector('.sel-val');
+    var store= sel.querySelector('input[type=hidden]');
+    var opts = Array.prototype.slice.call(sel.querySelectorAll('.sel-opt'));
+
+    function apply(o){
+      store.value = o.getAttribute('data-v');
+      val.textContent = o.textContent;
+      opts.forEach(function(x){ x.classList.toggle('on', x === o); });
+      /* «обрати самому»: список складається, а замість нього — своє поле */
+      var folds = false;
+      opts.forEach(function(x){
+        var rid = x.getAttribute('data-reveal');
+        if (!rid) return;
+        var box = document.getElementById(rid);
+        if (box) box.hidden = (x !== o);
+        if (x === o) folds = true;
+      });
+      sel.classList.toggle('folded', folds);
+    }
+    /* «до списку» повертає звичайний вибір */
+    sel._reset = function(){ apply(opts[0]); render(); };
+    /* show whatever the markup starts with */
+    var initial = opts.filter(function(o){ return o.getAttribute('data-v') === store.value; })[0] || opts[0];
+    apply(initial);
+
+    function close(){ list.hidden = true; btn.setAttribute('aria-expanded','false'); }
+    function open(){
+      document.querySelectorAll('.sel-list').forEach(function(l){
+        if (l !== list){ l.hidden = true; }
+      });
+      document.querySelectorAll('.sel-btn').forEach(function(b){
+        if (b !== btn) b.setAttribute('aria-expanded','false');
+      });
+      list.hidden = false;
+      btn.setAttribute('aria-expanded','true');
+    }
+    btn.addEventListener('click', function(e){
+      e.stopPropagation();
+      if (list.hidden) open(); else close();
+    });
+    list.addEventListener('click', function(e){
+      var o = e.target.closest('.sel-opt');
+      if (!o) return;
+      e.stopPropagation();
+      apply(o);
+      close();
+      render();
+    });
+    sel.addEventListener('keydown', function(e){
+      if (e.key === 'Escape'){ close(); btn.focus(); return; }
+      if (list.hidden) return;
+      if (e.key === 'ArrowDown' || e.key === 'ArrowUp'){
+        e.preventDefault();
+        var here = opts.indexOf(document.activeElement);
+        var next = (e.key === 'ArrowDown') ? here + 1 : here - 1;
+        if (next < 0) next = opts.length - 1;
+        if (next >= opts.length) next = 0;
+        opts[next].focus();
+      }
+    });
+    document.addEventListener('click', function(e){
+      if (!document.contains(e.target)) return;
+      if (!sel.contains(e.target)) close();
+    });
+  });
+
+  /* ---------- number steppers (− / +) ---------- */
+  document.addEventListener('click', function(e){
+    var b = e.target.closest('[data-num]');
+    if (b){
+      var inp = document.getElementById(b.getAttribute('data-for'));
+      if (!inp) return;
+      var min = parseInt(inp.min, 10), max = parseInt(inp.max, 10);
+      var v = parseInt(inp.value, 10);
+      if (isNaN(v)) v = isNaN(min) ? 1 : min;
+      v += parseInt(b.getAttribute('data-num'), 10);
+      if (!isNaN(min) && v < min) v = min;
+      if (!isNaN(max) && v > max) v = max;
+      inp.value = String(v);
+      inp.dispatchEvent(new Event('input', {bubbles:true}));
+      return;
+    }
+    var back = e.target.closest('[data-back]');
+    if (back){
+      var s = document.getElementById(back.getAttribute('data-back'));
+      if (s && s._reset) s._reset();
+    }
+  });
+
+  /* ---------- phone: always starts with +380 ---------- */
+  var PREFIX = '+380';
+  function fmtPhone(raw){
+    var d = String(raw).replace(/\D/g, '');
+    if (d.indexOf('380') === 0) d = d.slice(3);
+    else if (d.indexOf('80') === 0) d = d.slice(2);
+    else if (d.charAt(0) === '0') d = d.slice(1);
+    d = d.slice(0, 9);
+    var out = PREFIX;
+    if (d.length) out += ' ' + d.slice(0, 2);
+    if (d.length > 2) out += ' ' + d.slice(2, 5);
+    if (d.length > 5) out += ' ' + d.slice(5, 7);
+    if (d.length > 7) out += ' ' + d.slice(7, 9);
+    return out;
+  }
+  el.phone.value = PREFIX;
+  el.phone.addEventListener('input', function(){
+    var atEnd = el.phone.selectionStart === el.phone.value.length;
+    el.phone.value = fmtPhone(el.phone.value);
+    if (atEnd) el.phone.setSelectionRange(el.phone.value.length, el.phone.value.length);
+  });
+  /* never let the prefix be wiped */
+  el.phone.addEventListener('blur', function(){
+    if (digits(el.phone.value).length < 3) el.phone.value = PREFIX;
+  });
+  el.phone.addEventListener('focus', function(){
+    if (!el.phone.value) el.phone.value = PREFIX;
+  });
+
+  /* ---------- sauna: only days of the booked stay ---------- */
+  var sChips   = document.getElementById('sChips');
+  var sNote    = document.getElementById('sNote');
+  var sBtnWrap = document.getElementById('sBtnWrap');
+  var btnSDate = document.getElementById('btnSDate');
+  var calS     = document.getElementById('calS');
+  var calSGrid = document.getElementById('calSGrid');
+  var viewS    = firstOfMonth(today);
+
+  function stayDays(){
+    var out = [];
+    if (!el.dIn.value || !el.dOut.value) return out;
+    var v = el.dIn.value, guard = 0;
+    while (v <= el.dOut.value && guard++ < 60){ out.push(v); v = shift(v, 1); }
+    return out;
+  }
+  function syncSauna(){
+    var days = stayDays();
+    if (want.room && days.length && days.indexOf(el.sDate.value) < 0){
+      el.sDate.value = days[0];
+    }
+  }
+  function drawChips(){
+    var days = want.room ? stayDays() : [];
+    var useChips = days.length > 0;
+
+    sChips.hidden = !useChips;
+    sBtnWrap.hidden = useChips;
+    if (useChips) calS.hidden = true;
+
+    if (useChips){
+      sChips.innerHTML = days.map(function(v){
+        return '<button type="button" class="chip' + (v === el.sDate.value ? ' on' : '') +
+               '" data-d="' + v + '">' + dayLabel(v) + '</button>';
+      }).join('');
+      sNote.textContent = days.length > 1
+        ? ('Доступні лише дні вашого проживання: ' + longDay(days[0]) + ' – ' + longDay(days[days.length - 1]) + '.')
+        : ('Доступний лише день вашого проживання — ' + longDay(days[0]) + '.');
+    } else {
+      sChips.innerHTML = '';
+      sNote.textContent = want.room
+        ? 'Спочатку оберіть дати заїзду та виїзду — і тут з’являться доступні дні.'
+        : 'Оберіть будь-який зручний день.';
+    }
+  }
+  sChips.addEventListener('click', function(e){
+    var c = e.target.closest('.chip[data-d]');
+    if (!c) return;
+    el.sDate.value = c.getAttribute('data-d');
+    render();
+  });
+
+  function drawCalS(){
+    var y = viewS.getFullYear(), m = viewS.getMonth();
+    document.getElementById('calSTitle').textContent = MONF[m] + ' ' + y;
+    document.getElementById('calSPrev').disabled = (monthKey(viewS) <= today.slice(0, 7));
+
+    var days = new Date(y, m + 1, 0).getDate(), html = '', i;
+    for (i = 0; i < offsetOf(y, m); i++) html += '<span class="d pad"></span>';
+    for (var dd = 1; dd <= days; dd++){
+      var v = y + '-' + two(m + 1) + '-' + two(dd), cls = 'd';
+      if (v < today) cls += ' off';
+      if (v === today) cls += ' now';
+      if (v === el.sDate.value) cls += ' start';
+      html += '<button type="button" class="' + cls + '" data-d="' + v + '"' +
+              (v < today ? ' disabled' : '') + '>' + dd + '</button>';
+    }
+    calSGrid.innerHTML = html;
+  }
+  btnSDate.addEventListener('click', function(){
+    if (!calS.hidden){ calS.hidden = true; setExpanded(btnSDate, false); return; }
+    closeCal();
+    viewS = firstOfMonth(el.sDate.value || today);
+    calS.hidden = false;
+    setExpanded(btnSDate, true);
+    drawCalS();
+  });
+  document.getElementById('calSPrev').addEventListener('click', function(){
+    viewS.setMonth(viewS.getMonth() - 1); drawCalS();
+  });
+  document.getElementById('calSNext').addEventListener('click', function(){
+    viewS.setMonth(viewS.getMonth() + 1); drawCalS();
+  });
+  calSGrid.addEventListener('click', function(e){
+    var cell = e.target.closest('.d[data-d]');
+    if (!cell || cell.disabled) return;
+    el.sDate.value = cell.getAttribute('data-d');
+    calS.hidden = true;
+    setExpanded(btnSDate, false);
+    render();
+  });
+
+  /* close calendars on outside click / Escape */
+  document.addEventListener('click', function(e){
+    if (!document.contains(e.target)) return;   /* node was redrawn away */
+    if (e.target.closest('.cal') || e.target.closest('.daybtn')) return;
+    closeCal();
+    calS.hidden = true;
+    setExpanded(btnSDate, false);
+  });
+  document.addEventListener('keydown', function(e){
+    if (e.key !== 'Escape') return;
+    closeCal();
+    calS.hidden = true;
+    setExpanded(btnSDate, false);
+  });
+
+  function paint(){
+    pickR.setAttribute('aria-pressed', want.room ? 'true' : 'false');
+    pickS.setAttribute('aria-pressed', want.sauna ? 'true' : 'false');
+    grpR.hidden = !want.room;
+    grpS.hidden = !want.sauna;
+    if (want.room || want.sauna) errPick.classList.remove('on');
+    render();
+  }
+  pickR.addEventListener('click', function(){ want.room = !want.room; paint(); });
+  pickS.addEventListener('click', function(){ want.sauna = !want.sauna; paint(); });
+
+  /* quick-book buttons: start from the thing that was clicked,
+     the guest can still tick the other one in the form */
+  document.querySelectorAll('[data-book]').forEach(function(b){
+    b.addEventListener('click', function(){
+      var what = b.getAttribute('data-book');
+      var seats = {'Одномісний':'1','Двомісний':'2','Сімейний':'3'};
+      if (what === 'Сауна'){
+        want.room = false; want.sauna = true;
+      } else {
+        want.room = true; want.sauna = false;
+        el.kind.value = what;
+        if (seats[what]) el.guests.value = seats[what];
+      }
+      paint();
+      document.getElementById('booking').scrollIntoView({behavior:'smooth', block:'start'});
+      setTimeout(function(){ el.name.focus({preventScroll:true}); }, 700);
+    });
+  });
+
+  Object.keys(el).forEach(function(k){
+    ['input','change'].forEach(function(ev){
+      el[k].addEventListener(ev, function(){
+        var box = el[k].closest('.fld, .daywrap, .sdate');
+        if (box) box.classList.remove('bad');
+        render();
+      });
+    });
+  });
+
+  function dateUA(v){
+    var p = (v||'').split('-');
+    return p.length === 3 ? p[2]+'.'+p[1]+'.'+p[0] : v;
+  }
+  function digits(v){ return (v||'').replace(/\D/g,''); }
+
+  /* checks: pass true to also paint the fields red */
+  function validate(mark){
+    var bad = [];
+    function test(key, good){
+      if (!good) bad.push(key);
+      if (mark){
+        var box = el[key].closest('.fld, .daywrap, .sdate');
+        if (box) box.classList.toggle('bad', !good);
+      }
+    }
+    if (!want.room && !want.sauna){
+      bad.push('pick');
+      if (mark) errPick.classList.add('on');
+    }
+    var g = parseInt(el.guests.value, 10);
+    test('guests', !isNaN(g) && g >= 1 && g <= 20);
+    if (want.room){
+      test('dIn', !!el.dIn.value);
+      test('dOut', !!el.dOut.value && nightsOf(el.dIn.value, el.dOut.value) >= 1);
+    }
+    if (want.sauna){
+      test('sDate', !!el.sDate.value);
+      if (el.hours.value === '__own'){
+        var hh = parseInt(el.hoursOwn.value, 10);
+        test('hoursOwn', !isNaN(hh) && hh >= 1 && hh <= 12);
+      }
+    }
+    test('name', el.name.value.trim().length >= 2);
+    test('phone', digits(el.phone.value).length === 12);
+    return bad;
+  }
+
+  /* every row: [label, value, waiting?] */
+  function build(){
+    var rows = [];
+    var what = [];
+    if (want.room) what.push('номер');
+    if (want.sauna) what.push('сауна');
+    rows.push(['Що', what.join(' + '), !what.length]);
+    rows.push(['Гостей', el.guests.value, !el.guests.value]);
+    if (want.room){
+      rows.push(['Заїзд', el.dIn.value ? dateUA(el.dIn.value) : '', !el.dIn.value]);
+      rows.push(['Виїзд', el.dOut.value ? dateUA(el.dOut.value) : '', !el.dOut.value]);
+      var nn = nightsOf(el.dIn.value, el.dOut.value);
+      rows.push(['Ночей', nn > 0 ? (nn + ' ' + plural(nn, 'ніч', 'ночі', 'ночей')) : '', nn < 1,
+                 (el.dIn.value && el.dOut.value) ? 'перевірте дати' : '']);
+      rows.push(['Номер · тип', el.kind.value]);
+    }
+    if (want.sauna){
+      rows.push(['Сауна · дата', el.sDate.value ? dateUA(el.sDate.value) : '', !el.sDate.value]);
+      rows.push(['Сауна · час', el.time.value]);
+      var hn = parseInt(el.hoursOwn.value, 10);
+      var hrs = (el.hours.value === '__own')
+        ? (hn >= 1 ? hn + ' ' + plural(hn, 'година', 'години', 'годин') : '')
+        : el.hours.value;
+      rows.push(['Сауна · тривалість', hrs, !hrs]);
+    }
+    var nm = el.name.value.trim(), tel = el.phone.value.trim();
+    var telReady = digits(tel).length === 12;
+    rows.push(["Ім'я", nm, !nm]);
+    rows.push(['Телефон', tel, !telReady]);
+    var n = el.note.value.trim();
+    if (n) rows.push(['Побажання', n]);
+    return rows;
+  }
+
+  /* live panel — redrawn on every keystroke and toggle */
+  function render(){
+    /* date tiles */
+    document.getElementById('lblIn').textContent = dayLabel(el.dIn.value);
+    document.getElementById('lblOut').textContent = dayLabel(el.dOut.value);
+    document.getElementById('lblSDate').textContent = dayLabel(el.sDate.value);
+
+    /* nights read-out */
+    var nGot = nightsOf(el.dIn.value, el.dOut.value);
+    document.getElementById('nightsVal').textContent = (nGot > 0)
+      ? (nGot + ' ' + plural(nGot, 'ніч', 'ночі', 'ночей'))
+      : 'оберіть дати заїзду та виїзду';
+
+    /* sauna days */
+    drawChips();
+
+    var rows = build();
+
+    slip.innerHTML = rows.map(function(){ return '<div><span></span><b></b></div>'; }).join('');
+    slip.querySelectorAll('div').forEach(function(line, i){
+      line.querySelector('span').textContent = rows[i][0];
+      var b = line.querySelector('b');
+      if (rows[i][2]){
+        b.textContent = rows[i][3] || 'ще не вказано';
+        b.className = 'wait';
+      } else {
+        b.textContent = rows[i][1];
+        b.className = '';
+      }
+    });
+
+    letter = asText(rows);
+    send.href = 'viber://chat?number=' + encodeURIComponent(MAIN_PHONE) +
+                '&text=' + encodeURIComponent(letter);
+
+    var bad = validate(false);
+    acts.classList.toggle('off', bad.length > 0);
+    warn.classList.toggle('on', bad.length > 0);
+    if (bad.length){
+      var dateIssue = ['dIn','dOut','sDate'].some(function(k){ return bad.indexOf(k) > -1; });
+      var numIssue  = ['guests','hoursOwn'].some(function(k){ return bad.indexOf(k) > -1; });
+      warn.textContent =
+        (bad.indexOf('pick') > -1) ? 'Відмітьте номер або сауну — і кнопка надсилання увімкнеться' :
+        dateIssue ? 'Перевірте дати: виїзд має бути пізніше за заїзд' :
+        numIssue  ? 'Перевірте кількість гостей і тривалість сауни' :
+        "Впишіть ім'я та телефон — і кнопка надсилання увімкнеться";
+    }
+  }
+
+  function asText(rows){
+    var out = 'Заявка з сайту «Філін»\n';
+    rows.forEach(function(r){ if (!r[2]) out += r[0] + ': ' + r[1] + '\n'; });
+    return out.trim();
+  }
+
+  /* Enter inside the form = the same as pressing the send button */
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    var bad = validate(true);
+    if (bad.length){
+      var first = form.querySelector('.fld.bad input, .fld.bad select, .daywrap.bad .daybtn');
+      if (first) first.focus();
+      else pickR.focus();
+      return;
+    }
+    send.click();
+  });
+
+  paint();   /* first draw — the panel is filled from the very start */
+
+  document.getElementById('yr').textContent = new Date().getFullYear();
+})();
+</script>
+</body>
+</html>
