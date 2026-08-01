@@ -668,16 +668,6 @@ footer{border-top:1px solid var(--hair);background:var(--ink);padding:44px 0 30p
 @keyframes vtIn{from{opacity:0;transform:translateY(14px)}}
 .wordmark{view-transition-name:brand}
 
-/* ═══════════ ЗАГОЛОВКИ РЯДКАМИ ═══════════ */
-.ln{display:block;overflow:hidden;padding-bottom:.04em}
-.ln>i{
-  display:block;font-style:normal;
-  transform:translateY(112%);opacity:0;
-  transition:transform 1s var(--e),opacity .75s var(--e);
-}
-.ln.go>i{transform:none;opacity:1}
-.lines.up{opacity:1;transform:none;transition:none}
-
 /* ═══════════ ЗЕРНО ПАПЕРУ ═══════════ */
 .grain{
   position:fixed;inset:-60px;z-index:400;pointer-events:none;
@@ -1604,52 +1594,6 @@ body.open .drawer a:nth-child(6){transition-delay:.26s}
     if (e.target.tagName === 'A' || e.target === drawer) shut();
   });
   document.addEventListener('keydown', function(e){ if (e.key === 'Escape') shut(); });
-
-  /* ══════ ЗАГОЛОВКИ ВИЇЖДЖАЮТЬ РЯДКАМИ ══════
-     Розрізаємо заголовок на смислові рядки (по <br> і по <em>),
-     кожен ховаємо в маску й піднімаємо з-під неї по черзі. */
-  function maskLines(el){
-    var lines = [], buf = '';
-    Array.prototype.forEach.call(el.childNodes, function(n){
-      if (n.nodeName === 'BR'){ lines.push(buf); buf = ''; return; }
-      if (n.nodeName === 'EM'){
-        if (buf.trim()) lines.push(buf);
-        buf = '';
-        lines.push(n.outerHTML);
-        return;
-      }
-      buf += (n.nodeType === 3)
-        ? n.textContent.replace(/&/g,'&amp;').replace(/</g,'&lt;')
-        : (n.outerHTML || '');
-    });
-    if (buf.trim()) lines.push(buf);
-    if (lines.length < 1) return;
-
-    el.innerHTML = lines.map(function(l, i){
-      return '<span class="ln"><i style="transition-delay:' + (i * 0.11).toFixed(2) + 's">' +
-             l + '</i></span>';
-    }).join('');
-    el.classList.add('lines');
-  }
-
-  var heads = document.querySelectorAll('.hero h1, .head h2, .sauna h2, .teaser h3');
-  Array.prototype.forEach.call(heads, maskLines);
-
-  function runLines(el){
-    Array.prototype.forEach.call(el.querySelectorAll('.ln'), function(l){ l.classList.add('go'); });
-  }
-  if ('IntersectionObserver' in window){
-    var lineIo = new IntersectionObserver(function(list){
-      list.forEach(function(en){
-        if (!en.isIntersecting) return;
-        runLines(en.target);
-        lineIo.unobserve(en.target);
-      });
-    }, {rootMargin:'0px 0px -12% 0px', threshold:.15});
-    Array.prototype.forEach.call(heads, function(h){ lineIo.observe(h); });
-  } else {
-    Array.prototype.forEach.call(heads, runLines);
-  }
 
   /* ── reveal ── */
   var ups = document.querySelectorAll('.up');

@@ -80,15 +80,6 @@ img{display:block;max-width:100%}
 @keyframes vtIn{from{opacity:0;transform:translateY(14px)}}
 .brand-t b{view-transition-name:brand}
 
-/* ═══════ ЗАГОЛОВКИ РЯДКАМИ ═══════ */
-.ln{display:block;overflow:hidden;padding-bottom:.04em}
-.ln>i{
-  display:block;font-style:normal;
-  transform:translateY(112%);opacity:0;
-  transition:transform 1s var(--e),opacity .75s var(--e);
-}
-.ln.go>i{transform:none;opacity:1}
-
 /* ═══════ ЗЕРНО ПАПЕРУ ═══════ */
 .grain{
   position:fixed;inset:-60px;z-index:400;pointer-events:none;
@@ -838,43 +829,6 @@ footer{border-top:1px solid var(--line);padding:26px 0 100px;margin-top:clamp(26
     };
     im.src = 'photos/' + it.img + '.jpg';
   });
-
-  /* ══════ ЗАГОЛОВКИ ВИЇЖДЖАЮТЬ РЯДКАМИ ══════ */
-  function maskLines(el){
-    var lines = [], buf = '';
-    Array.prototype.forEach.call(el.childNodes, function(n){
-      if (n.nodeName === 'BR'){ lines.push(buf); buf = ''; return; }
-      if (n.nodeName === 'EM'){
-        if (buf.trim()) lines.push(buf);
-        buf = '';
-        lines.push(n.outerHTML);
-        return;
-      }
-      buf += (n.nodeType === 3) ? esc(n.textContent) : (n.outerHTML || '');
-    });
-    if (buf.trim()) lines.push(buf);
-    if (!lines.length) return;
-    el.innerHTML = lines.map(function(l, i){
-      return '<span class="ln"><i style="transition-delay:' + (i * 0.11).toFixed(2) + 's">' + l + '</i></span>';
-    }).join('');
-  }
-  function runLines(el){
-    Array.prototype.forEach.call(el.querySelectorAll('.ln'), function(l){ l.classList.add('go'); });
-  }
-  var heads = document.querySelectorAll('.head h1, .sec-head h2, .note h3');
-  Array.prototype.forEach.call(heads, maskLines);
-  if ('IntersectionObserver' in window){
-    var lineIo = new IntersectionObserver(function(list){
-      list.forEach(function(en){
-        if (!en.isIntersecting) return;
-        runLines(en.target);
-        lineIo.unobserve(en.target);
-      });
-    }, {rootMargin:'0px 0px -12% 0px', threshold:.15});
-    Array.prototype.forEach.call(heads, function(h){ lineIo.observe(h); });
-  } else {
-    Array.prototype.forEach.call(heads, runLines);
-  }
 
   /* ── категорії ── */
   var tabBtns = Array.prototype.slice.call(tabsRow.querySelectorAll('.tab'));
