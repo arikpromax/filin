@@ -72,6 +72,41 @@ img{display:block;max-width:100%}
 ::selection{background:var(--acc);color:var(--paper)}
 .wrap{width:100%;max-width:1000px;margin:0 auto;padding:0 var(--pad)}
 
+/* ═══════ ПЕРЕХІД МІЖ СТОРІНКАМИ ═══════ */
+@view-transition{navigation:auto}
+::view-transition-old(root){animation:vtOut .3s ease both}
+::view-transition-new(root){animation:vtIn .42s cubic-bezier(.19,.72,.28,1) both}
+@keyframes vtOut{to{opacity:0;transform:scale(.985)}}
+@keyframes vtIn{from{opacity:0;transform:translateY(14px)}}
+.brand-t b{view-transition-name:brand}
+
+/* ═══════ ЗАГОЛОВКИ РЯДКАМИ ═══════ */
+.ln{display:block;overflow:hidden;padding-bottom:.04em}
+.ln>i{
+  display:block;font-style:normal;
+  transform:translateY(112%);opacity:0;
+  transition:transform 1s var(--e),opacity .75s var(--e);
+}
+.ln.go>i{transform:none;opacity:1}
+
+/* ═══════ ЗЕРНО ПАПЕРУ ═══════ */
+.grain{
+  position:fixed;inset:-60px;z-index:400;pointer-events:none;
+  opacity:.34;mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='.4'/%3E%3C/svg%3E");
+}
+@media (min-width:900px){
+  .grain{animation:grain 7s steps(5) infinite}
+}
+@keyframes grain{
+  0%{transform:translate(0,0)}
+  20%{transform:translate(-14px,8px)}
+  40%{transform:translate(10px,-12px)}
+  60%{transform:translate(-8px,-6px)}
+  80%{transform:translate(12px,10px)}
+  100%{transform:translate(0,0)}
+}
+
 /* ═══════ ШАПКА ═══════ */
 .top{
   position:sticky;top:0;z-index:40;background:rgba(247,242,233,.94);
@@ -524,6 +559,8 @@ footer{border-top:1px solid var(--line);padding:26px 0 100px;margin-top:clamp(26
   </div>
 </footer>
 
+<div class="grain" aria-hidden="true"></div>
+
 <div class="dock" id="dock">
   <button type="button" class="a1" id="openOrder" hidden><svg><use href="#i-bag"/></svg><span id="dockTxt">Замовлення</span></button>
   <a class="a1" id="dockCall" href="tel:+380681558595"><svg><use href="#i-ph"/></svg>Подзвонити</a>
@@ -802,6 +839,43 @@ footer{border-top:1px solid var(--line);padding:26px 0 100px;margin-top:clamp(26
     im.src = 'photos/' + it.img + '.jpg';
   });
 
+  /* ══════ ЗАГОЛОВКИ ВИЇЖДЖАЮТЬ РЯДКАМИ ══════ */
+  function maskLines(el){
+    var lines = [], buf = '';
+    Array.prototype.forEach.call(el.childNodes, function(n){
+      if (n.nodeName === 'BR'){ lines.push(buf); buf = ''; return; }
+      if (n.nodeName === 'EM'){
+        if (buf.trim()) lines.push(buf);
+        buf = '';
+        lines.push(n.outerHTML);
+        return;
+      }
+      buf += (n.nodeType === 3) ? esc(n.textContent) : (n.outerHTML || '');
+    });
+    if (buf.trim()) lines.push(buf);
+    if (!lines.length) return;
+    el.innerHTML = lines.map(function(l, i){
+      return '<span class="ln"><i style="transition-delay:' + (i * 0.11).toFixed(2) + 's">' + l + '</i></span>';
+    }).join('');
+  }
+  function runLines(el){
+    Array.prototype.forEach.call(el.querySelectorAll('.ln'), function(l){ l.classList.add('go'); });
+  }
+  var heads = document.querySelectorAll('.head h1, .sec-head h2, .note h3');
+  Array.prototype.forEach.call(heads, maskLines);
+  if ('IntersectionObserver' in window){
+    var lineIo = new IntersectionObserver(function(list){
+      list.forEach(function(en){
+        if (!en.isIntersecting) return;
+        runLines(en.target);
+        lineIo.unobserve(en.target);
+      });
+    }, {rootMargin:'0px 0px -12% 0px', threshold:.15});
+    Array.prototype.forEach.call(heads, function(h){ lineIo.observe(h); });
+  } else {
+    Array.prototype.forEach.call(heads, runLines);
+  }
+
   /* ── категорії ── */
   var tabBtns = Array.prototype.slice.call(tabsRow.querySelectorAll('.tab'));
   var secs = MENU.map(function(s){ return document.getElementById(s.id); });
@@ -1029,14 +1103,31 @@ footer{border-top:1px solid var(--line);padding:26px 0 100px;margin-top:clamp(26
     }
   }
 
-  function openDish(key){
-    if (!BY_KEY[key]) return;
+  function showDish(key){
     dKey = key; dIdx = 0;
     dlb.hidden = false;
     document.body.style.overflow = 'hidden';
     document.getElementById('dlbName').textContent = BY_KEY[key].n;
     dlbImg.innerHTML = '<div class="dlb-none">Шукаємо фото…</div>';
     dishShots(key, drawDlb);
+  }
+  /* фото плитки «виростає» у велике — якщо браузер уміє */
+  function openDish(key){
+    if (!BY_KEY[key]) return;
+    var from = menuBox.querySelector('.tile[data-key="' + key + '"] .tile-ph');
+    if (!document.startViewTransition || !from || !dlb.hidden) return showDish(key);
+    from.style.viewTransitionName = 'dishshot';
+    var stage = document.querySelector('.dlb-stage');
+    var t = document.startViewTransition(function(){
+      from.style.viewTransitionName = '';
+      stage.style.viewTransitionName = 'dishshot';
+      showDish(key);
+    });
+    t.finished.then(clean, clean);
+    function clean(){
+      from.style.viewTransitionName = '';
+      stage.style.viewTransitionName = '';
+    }
   }
   function closeDish(){
     dlb.hidden = true;

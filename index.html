@@ -130,8 +130,8 @@ body.open .hamb i:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
 
 /* ═══════════ HERO ═══════════ */
 .hero{
-  position:relative;min-height:100svh;display:flex;flex-direction:column;
-  justify-content:flex-end;padding:128px 0 0;overflow:hidden;
+  position:relative;min-height:auto;display:flex;flex-direction:column;
+  justify-content:flex-end;padding:clamp(104px,13vh,150px) 0 0;overflow:hidden;
   background:
     radial-gradient(110% 74% at 88% 14%,rgba(var(--emb-rgb),.16),transparent 58%),
     radial-gradient(76% 58% at 0% 100%,rgba(var(--embdk-rgb),.1),transparent 62%),
@@ -145,7 +145,7 @@ body.open .hamb i:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
     linear-gradient(90deg,rgba(247,242,233,.97) 0%,rgba(247,242,233,.86) 44%,rgba(247,242,233,.35) 100%),
     linear-gradient(0deg,rgba(247,242,233,.94) 0%,rgba(247,242,233,.1) 58%);
 }
-/* архітектурний мотив замість фото: тонкі «прольоти» будинку */
+/* архітектурний мотив — тонкі «прольоти» будинку позаду сцени */
 .bays{
   position:absolute;right:clamp(-30px,2vw,70px);bottom:0;z-index:1;
   display:flex;gap:clamp(10px,1.6vw,22px);align-items:flex-end;
@@ -161,10 +161,11 @@ body.open .hamb i:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
 .bays b:nth-child(2){height:clamp(170px,36vh,360px)}
 .bays b:nth-child(3){height:clamp(84px,18vh,180px)}
 
-.hero-body{position:relative;z-index:3;padding-bottom:clamp(30px,4.4vh,58px)}
+
+.hero-body{position:relative;z-index:3;padding-bottom:clamp(24px,3.4vh,44px)}
 .hero h1{
   font-family:var(--display);font-weight:300;
-  font-size:clamp(2.9rem,8.2vw,7rem);line-height:.98;letter-spacing:-.005em;max-width:16ch;
+  font-size:clamp(2.7rem,7vw,5.8rem);line-height:1;letter-spacing:-.005em;max-width:14ch;
 }
 .hero h1 em{
   display:block;font-style:italic;font-weight:300;
@@ -659,6 +660,42 @@ footer{border-top:1px solid var(--hair);background:var(--ink);padding:44px 0 30p
 }
 .shot.filled .wm{display:none}
 
+/* ═══════════ ПЕРЕХІД МІЖ СТОРІНКАМИ ═══════════ */
+@view-transition{navigation:auto}
+::view-transition-old(root){animation:vtOut .3s ease both}
+::view-transition-new(root){animation:vtIn .42s cubic-bezier(.19,.72,.28,1) both}
+@keyframes vtOut{to{opacity:0;transform:scale(.985)}}
+@keyframes vtIn{from{opacity:0;transform:translateY(14px)}}
+.wordmark{view-transition-name:brand}
+
+/* ═══════════ ЗАГОЛОВКИ РЯДКАМИ ═══════════ */
+.ln{display:block;overflow:hidden;padding-bottom:.04em}
+.ln>i{
+  display:block;font-style:normal;
+  transform:translateY(112%);opacity:0;
+  transition:transform 1s var(--e),opacity .75s var(--e);
+}
+.ln.go>i{transform:none;opacity:1}
+.lines.up{opacity:1;transform:none;transition:none}
+
+/* ═══════════ ЗЕРНО ПАПЕРУ ═══════════ */
+.grain{
+  position:fixed;inset:-60px;z-index:400;pointer-events:none;
+  opacity:.34;mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='.4'/%3E%3C/svg%3E");
+}
+@media (min-width:900px){
+  .grain{animation:grain 7s steps(5) infinite}
+}
+@keyframes grain{
+  0%{transform:translate(0,0)}
+  20%{transform:translate(-14px,8px)}
+  40%{transform:translate(10px,-12px)}
+  60%{transform:translate(-8px,-6px)}
+  80%{transform:translate(12px,10px)}
+  100%{transform:translate(0,0)}
+}
+
 /* ═══════════ REVEAL ═══════════ */
 .up{opacity:0;transform:translateY(26px);transition:opacity .95s var(--e),transform .95s var(--e)}
 .up.seen{opacity:1;transform:none}
@@ -734,7 +771,6 @@ body.open .drawer a:nth-child(6){transition-delay:.26s}
   .desk .btn{width:100%}
   .teaser{grid-template-columns:1fr}
   .hero-foot{font-size:.6rem;letter-spacing:.14em}
-  .bays{right:-30px;opacity:.6}
 }
 @media (max-width:560px){
   .hero{padding-top:104px}
@@ -821,6 +857,7 @@ body.open .drawer a:nth-child(6){transition-delay:.26s}
     <h1 class="up">Зупиніться<em>на теплу ніч</em></h1>
     <p class="hero-sub up a1"><b>Мотель і сауна «Філін»</b> — Кобеляки, Полтавщина.
       Зупиніться на ніч, прогрійтеся в сауні й вирушайте далі відпочилими.</p>
+
 
     <div class="desk up a2">
       <div class="desk-status">
@@ -1290,6 +1327,8 @@ body.open .drawer a:nth-child(6){transition-delay:.26s}
 
 <a class="up-btn" id="upBtn" href="#hero" aria-label="Вгору"><svg><use href="#arr-up"/></svg></a>
 
+<div class="grain" aria-hidden="true"></div>
+
 <div class="lb" id="lb" hidden>
   <div class="lb-box">
     <button type="button" class="lb-x" id="lbX" aria-label="Закрити"><svg><use href="#i-x"/></svg></button>
@@ -1476,7 +1515,7 @@ body.open .drawer a:nth-child(6){transition-delay:.26s}
       .join('');
   }
 
-  function openLb(key){
+  function showLb(key){
     curRoom = ROOMS.filter(function(r){ return r.k === key; })[0] || ROOMS[0];
     curIdx = 0;
     lb.hidden = false;
@@ -1484,6 +1523,23 @@ body.open .drawer a:nth-child(6){transition-delay:.26s}
     lbTitle.textContent = curRoom.t;
     lbImg.innerHTML = '<div class="lb-empty">Шукаємо фото…</div>';
     findShots(curRoom.k, drawLb);
+  }
+  /* фото з рядка «виростає» у велике — якщо браузер уміє */
+  function openLb(key){
+    var from = document.querySelector('.row[data-room="' + key + '"] .row-thumb');
+    if (!document.startViewTransition || !from) return showLb(key);
+    from.style.viewTransitionName = 'roomshot';
+    var stage = document.querySelector('.lb-stage');
+    var t = document.startViewTransition(function(){
+      from.style.viewTransitionName = '';
+      stage.style.viewTransitionName = 'roomshot';
+      showLb(key);
+    });
+    t.finished.then(clean, clean);
+    function clean(){
+      from.style.viewTransitionName = '';
+      stage.style.viewTransitionName = '';
+    }
   }
   function closeLb(){
     lb.hidden = true;
@@ -1548,6 +1604,52 @@ body.open .drawer a:nth-child(6){transition-delay:.26s}
     if (e.target.tagName === 'A' || e.target === drawer) shut();
   });
   document.addEventListener('keydown', function(e){ if (e.key === 'Escape') shut(); });
+
+  /* ══════ ЗАГОЛОВКИ ВИЇЖДЖАЮТЬ РЯДКАМИ ══════
+     Розрізаємо заголовок на смислові рядки (по <br> і по <em>),
+     кожен ховаємо в маску й піднімаємо з-під неї по черзі. */
+  function maskLines(el){
+    var lines = [], buf = '';
+    Array.prototype.forEach.call(el.childNodes, function(n){
+      if (n.nodeName === 'BR'){ lines.push(buf); buf = ''; return; }
+      if (n.nodeName === 'EM'){
+        if (buf.trim()) lines.push(buf);
+        buf = '';
+        lines.push(n.outerHTML);
+        return;
+      }
+      buf += (n.nodeType === 3)
+        ? n.textContent.replace(/&/g,'&amp;').replace(/</g,'&lt;')
+        : (n.outerHTML || '');
+    });
+    if (buf.trim()) lines.push(buf);
+    if (lines.length < 1) return;
+
+    el.innerHTML = lines.map(function(l, i){
+      return '<span class="ln"><i style="transition-delay:' + (i * 0.11).toFixed(2) + 's">' +
+             l + '</i></span>';
+    }).join('');
+    el.classList.add('lines');
+  }
+
+  var heads = document.querySelectorAll('.hero h1, .head h2, .sauna h2, .teaser h3');
+  Array.prototype.forEach.call(heads, maskLines);
+
+  function runLines(el){
+    Array.prototype.forEach.call(el.querySelectorAll('.ln'), function(l){ l.classList.add('go'); });
+  }
+  if ('IntersectionObserver' in window){
+    var lineIo = new IntersectionObserver(function(list){
+      list.forEach(function(en){
+        if (!en.isIntersecting) return;
+        runLines(en.target);
+        lineIo.unobserve(en.target);
+      });
+    }, {rootMargin:'0px 0px -12% 0px', threshold:.15});
+    Array.prototype.forEach.call(heads, function(h){ lineIo.observe(h); });
+  } else {
+    Array.prototype.forEach.call(heads, runLines);
+  }
 
   /* ── reveal ── */
   var ups = document.querySelectorAll('.up');
