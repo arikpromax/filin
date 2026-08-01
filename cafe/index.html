@@ -133,6 +133,10 @@ img{display:block;max-width:100%}
   font-size:.92rem;font-weight:400;transition:border-color .3s,box-shadow .3s;
 }
 .seek input::placeholder{color:var(--ink-3);font-weight:300}
+/* прибираємо власний хрестик браузера — свій у нас уже є */
+.seek input::-webkit-search-cancel-button,
+.seek input::-webkit-search-decoration{-webkit-appearance:none;display:none}
+.seek input::-ms-clear{display:none;width:0;height:0}
 .seek input:focus{outline:none;border-color:var(--acc);box-shadow:0 0 0 4px var(--acc-soft)}
 .seek .clear{position:absolute;right:8px;top:50%;transform:translateY(-50%);width:28px;height:28px;display:none;place-items:center;color:var(--ink-3)}
 .seek .clear.on{display:grid}
@@ -484,7 +488,7 @@ footer{border-top:1px solid var(--line);padding:26px 0 100px;margin-top:clamp(26
 
   <div class="seek">
     <svg><use href="#i-seek"/></svg>
-    <input type="search" id="seek" placeholder="Знайти страву — борщ, вареники, кава…" aria-label="Пошук по меню" autocomplete="off">
+    <input type="text" id="seek" placeholder="Знайти страву — борщ, вареники, кава…" aria-label="Пошук по меню" autocomplete="off">
     <button type="button" class="clear" id="seekClear" aria-label="Очистити"><svg><use href="#i-x"/></svg></button>
   </div>
 </div>
@@ -591,11 +595,6 @@ footer{border-top:1px solid var(--line);padding:26px 0 100px;margin-top:clamp(26
       </div>
 
       <div id="whenBox" hidden style="margin-top:10px">
-        <div id="dateWrap" hidden>
-          <p class="olab" style="margin-top:6px">Дата</p>
-          <div class="chips" id="dates"></div>
-        </div>
-        <p class="olab" style="margin-top:6px">Час</p>
         <div class="chips" id="times"></div>
       </div>
 
@@ -834,12 +833,23 @@ footer{border-top:1px solid var(--line);padding:26px 0 100px;margin-top:clamp(26
   var emptyMsg = document.getElementById('empty');
   var tiles = Array.prototype.slice.call(menuBox.querySelectorAll('.tile'));
 
+  /* шукаємо за першими буквами: кожне введене слово має збігтися
+     з початком якогось слова в назві або описі страви */
+  var SPLIT = /[\s,.;:«»"'()\/\\—–-]+/;
+  function matches(hay, q){
+    if (!q) return true;
+    var words = hay.split(SPLIT).filter(Boolean);
+    return q.split(SPLIT).filter(Boolean).every(function(term){
+      return words.some(function(w){ return w.lastIndexOf(term, 0) === 0; });
+    });
+  }
+
   function filter(){
     var q = seek.value.trim().toLowerCase();
     clearBtn.classList.toggle('on', q.length > 0);
     var found = 0;
     tiles.forEach(function(t){
-      var hit = !q || t.getAttribute('data-find').indexOf(q) > -1;
+      var hit = matches(t.getAttribute('data-find'), q);
       t.hidden = !hit;
       if (hit) found++;
     });
@@ -1080,9 +1090,9 @@ footer{border-top:1px solid var(--line);padding:26px 0 100px;margin-top:clamp(26
   var ofTable = document.getElementById('of-table');
   var ofName = document.getElementById('of-name'), ofPhone = document.getElementById('of-phone');
   var whenNow = document.getElementById('whenNow'), whenAt = document.getElementById('whenAt');
-  var whenBox = document.getElementById('whenBox'), dateWrap = document.getElementById('dateWrap');
-  var datesBox = document.getElementById('dates'), timesBox = document.getElementById('times');
-  var way = 'З собою', when = 'зараз', atDate = '', atTime = '';
+  var whenBox = document.getElementById('whenBox');
+  var timesBox = document.getElementById('times');
+  var way = 'За столиком', when = 'зараз', atTime = '';
 
   /* номер столика з QR: ?t=5 */
   var qTable = (function(){
@@ -1105,46 +1115,15 @@ footer{border-top:1px solid var(--line);padding:26px 0 100px;margin-top:clamp(26
     /* за столиком нас знаходить номер столика, телефон не потрібен */
     ofName.hidden = atTable;
     ofPhone.hidden = atTable;
-    dateWrap.hidden = !atTable;      /* дату обирають лише для столика */
-    if (!atTable) atDate = '';
-    else if (!atDate) drawDates();
     checkOrder();
   }
   wayOut.addEventListener('click', function(){ setWay('З собою'); });
   wayIn.addEventListener('click', function(){ setWay('За столиком'); });
 
-  function dayList(){
-    var out = [], base = new Date();
-    for (var i = 0; i < 7; i++){
-      var d = new Date(base.getTime() + i * 86400000);
-      var label = i === 0 ? 'Сьогодні' : (i === 1 ? 'Завтра' : (d.getDate() + '.' + two(d.getMonth() + 1)));
-      out.push({v:two(d.getDate()) + '.' + two(d.getMonth() + 1), l:label});
-    }
-    return out;
-  }
-  function drawDates(){
-    var list = dayList();
-    if (!atDate) atDate = list[0].v;
-    datesBox.innerHTML = list.map(function(d){
-      return '<button type="button" class="chip' + (d.v === atDate ? ' on' : '') +
-             '" data-d="' + d.v + '">' + d.l + '</button>';
-    }).join('');
-  }
-  datesBox.addEventListener('click', function(e){
-    var c = e.target.closest('.chip');
-    if (!c) return;
-    atDate = c.getAttribute('data-d');
-    drawDates(); drawTimes(); checkOrder();
-  });
-
   function slots(){
     var t = kyiv(), list = [], start;
-    var todayLabel = two(parseInt(t.d, 10)) + '.' + two(parseInt(t.mo, 10));
-    var isToday = (!atDate || atDate === todayLabel);
-    if (!isToday) start = 7 * 60;
-    else if (t.h < 7) start = 7 * 60;
-    else if (t.h >= 23) start = 7 * 60;
-    else start = t.h * 60 + t.m + 20;
+    if (t.h < 7 || t.h >= 23) start = 7 * 60;          /* зачинено — від відкриття */
+    else start = t.h * 60 + t.m + 20;                   /* +20 хв на приготування */
     start = Math.ceil(start / 15) * 15;
     for (var m = start; m <= 22 * 60 + 45; m += 15) list.push(two(Math.floor(m / 60)) + ':' + two(m % 60));
     return list;
@@ -1152,7 +1131,7 @@ footer{border-top:1px solid var(--line);padding:26px 0 100px;margin-top:clamp(26
   function drawTimes(){
     var list = slots();
     if (!list.length){
-      timesBox.innerHTML = '<p class="hintline">На сьогодні вже пізно — оберіть іншу дату або напишіть час у коментарі.</p>';
+      timesBox.innerHTML = '<p class="hintline">На сьогодні вже пізно — напишіть потрібний час у коментарі.</p>';
       atTime = '';
       return;
     }
@@ -1172,10 +1151,7 @@ footer{border-top:1px solid var(--line);padding:26px 0 100px;margin-top:clamp(26
     whenNow.setAttribute('aria-pressed', v === 'зараз' ? 'true' : 'false');
     whenAt.setAttribute('aria-pressed', v === 'час' ? 'true' : 'false');
     whenBox.hidden = (v !== 'час');
-    if (v === 'час'){
-      if (way === 'За столиком') drawDates();
-      drawTimes();
-    }
+    if (v === 'час') drawTimes();
     checkOrder();
   }
   whenNow.addEventListener('click', function(){ setWhen('зараз'); });
@@ -1248,9 +1224,7 @@ footer{border-top:1px solid var(--line);padding:26px 0 100px;margin-top:clamp(26
 
   /* ═════════ ТЕКСТ І ПЕРЕВІРКА ═════════ */
   function whenText(){
-    if (when === 'зараз') return 'на зараз';
-    if (way === 'За столиком' && atDate) return 'на ' + atDate + ', ' + atTime;
-    return 'на ' + atTime;
+    return (when === 'зараз') ? 'на зараз' : ('на ' + atTime);
   }
   function orderText(no){
     var out = 'Замовлення з меню «Філін»\n№ ' + no + '\n';
@@ -1378,8 +1352,7 @@ footer{border-top:1px solid var(--line);padding:26px 0 100px;margin-top:clamp(26
   }
 
   /* ── старт ── */
-  /* прийшли з QR на столі — одразу «За столиком», інакше «З собою» */
-  setWay(qTable ? 'За столиком' : 'З собою');
+  setWay('За столиком');   /* меню в першу чергу для гостей за столом */
   setWhen('зараз');
   paintDock();
   histLink();
