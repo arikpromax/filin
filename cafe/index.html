@@ -141,8 +141,23 @@ img{display:block;max-width:100%}
   padding:8px 15px;border:1px solid var(--line);background:var(--card);
   font-size:.75rem;white-space:nowrap;
 }
-.state .dot{width:7px;height:7px;border-radius:50%;background:var(--ok);flex:none}
-.state.shut .dot{background:var(--acc)}
+/* кільце робочого дня: повне зранку, порожніє до 23:00 */
+.state .dot{position:relative;width:22px;height:22px;flex:none;display:grid;place-items:center}
+.state .dot svg{position:absolute;inset:0;width:100%;height:100%;transform:rotate(-90deg)}
+.state .dot circle{fill:none;stroke-width:2.2}
+.state .dot .track{stroke:var(--line)}
+.state .dot .fill{
+  stroke:var(--ok);stroke-linecap:round;
+  stroke-dasharray:56.55;stroke-dashoffset:56.55;
+  transition:stroke-dashoffset 1.4s var(--e),stroke .4s;
+}
+.state .dot i{
+  width:6px;height:6px;border-radius:50%;background:var(--ok);
+  animation:pulseDot 2.8s ease-in-out infinite;
+}
+.state.shut .dot .fill{stroke:var(--acc)}
+.state.shut .dot i{background:var(--acc);animation:none}
+@keyframes pulseDot{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(.72);opacity:.62}}
 .state b{font-weight:700}
 .tablebar{
   margin-top:14px;padding:11px 15px;background:var(--acc-soft);border-left:3px solid var(--acc);
@@ -508,7 +523,16 @@ footer{border-top:1px solid var(--line);padding:26px 0 100px;margin-top:clamp(26
 <div class="wrap head" id="top">
   <div class="head-row">
     <h1>Меню<em>домашня кухня</em></h1>
-    <div class="state" id="state"><span class="dot"></span><span id="stateTxt">07:00 – 23:00</span></div>
+    <div class="state" id="state">
+      <span class="dot">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <circle class="track" cx="12" cy="12" r="9"/>
+          <circle class="fill" id="stateRing" cx="12" cy="12" r="9"/>
+        </svg>
+        <i></i>
+      </span>
+      <span id="stateTxt">07:00 – 23:00</span>
+    </div>
   </div>
   <p class="tablebar" id="tablebar" hidden>Ви за столиком <b id="tableNo">—</b> — замовлення принесемо саме сюди.</p>
 
@@ -889,17 +913,25 @@ footer{border-top:1px solid var(--line);padding:26px 0 100px;margin-top:clamp(26
   clearBtn.addEventListener('click', function(){ seek.value = ''; filter(); seek.focus(); });
 
   /* ── відчинено / зачинено ── */
+  var RING = 2 * Math.PI * 9;          /* довжина кола r=9 */
   function state(){
     var t = kyiv();
     var box = document.getElementById('state'), txt = document.getElementById('stateTxt');
+    var ring = document.getElementById('stateRing');
     if (t.h >= 7 && t.h < 23){
       var left = (23 - t.h) * 60 - t.m;
       box.classList.remove('shut');
       txt.innerHTML = '<b>Відчинено</b> — до 23:00 ще ' +
         (Math.floor(left / 60) ? Math.floor(left / 60) + ' год ' : '') + two(left % 60) + ' хв';
+      /* кільце показує, скільки робочого дня лишилось */
+      if (ring){
+        var frac = Math.max(0, Math.min(1, left / (16 * 60)));
+        ring.style.strokeDashoffset = (RING * (1 - frac)).toFixed(2);
+      }
     } else {
       box.classList.add('shut');
       txt.innerHTML = '<b>Зачинено</b> — чекаємо з 07:00';
+      if (ring) ring.style.strokeDashoffset = RING.toFixed(2);
     }
   }
   state();
