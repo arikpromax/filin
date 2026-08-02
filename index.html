@@ -1496,6 +1496,7 @@ body.open .drawer a:nth-child(6){transition-delay:.26s}
     {k:'family', t:'Сімейний'}
   ];
   var shots = {};          /* кеш знайдених фото */
+  var dbShots = {};        /* фото, завантажені в адмінці: тип номера -> [url] */
   var lb      = document.getElementById('lb');
   var lbImg   = document.getElementById('lbImg');
   var lbTitle = document.getElementById('lbTitle');
@@ -1508,6 +1509,11 @@ body.open .drawer a:nth-child(6){transition-delay:.26s}
 
   function findShots(key, done){
     if (shots[key]) return done(shots[key]);
+    /* фото з адмінки мають перевагу над файлами поруч із сайтом */
+    if (dbShots[key] && dbShots[key].length){
+      shots[key] = dbShots[key].slice();
+      return done(shots[key]);
+    }
     var cands = ['photos/room-' + key + '.jpg'];
     for (var i = 1; i <= 6; i++) cands.push('photos/room-' + key + '-' + i + '.jpg');
     var found = [], left = cands.length;
@@ -2159,12 +2165,27 @@ body.open .drawer a:nth-child(6){transition-delay:.26s}
 
   /* ── номери з бази: оновити випадайку типів і галерею ── */
   document.addEventListener('filin:rooms', function(e){
-    var list = e.detail || [];
+    var d = e.detail || {};
+    var list = d.rooms || d;                      /* сумісність зі старим форматом */
     if (!list.length) return;
+    var byRoom = d.photos || {};
 
     ROOMS = list.map(function(r, i){
       var x = r.extra || {};
       return { k: x.kind || ('room' + (i + 1)), t: r.title };
+    });
+
+    /* збираємо фото кожного номера: головне з картки + усі з «Фото номерів» */
+    dbShots = {};
+    list.forEach(function(r, i){
+      var x = r.extra || {};
+      var k = x.kind || ('room' + (i + 1));
+      var arr = [];
+      if (r.image_url) arr.push(r.image_url);
+      (byRoom[r.title] || []).forEach(function(u){
+        if (arr.indexOf(u) < 0) arr.push(u);
+      });
+      if (arr.length) dbShots[k] = arr;
     });
     shots = {};                                   /* кеш фото більше не актуальний */
 
@@ -2386,7 +2407,7 @@ body.open .drawer a:nth-child(6){transition-delay:.26s}
 
   /* ---------- Списки (таблиця items) ---------- */
   fetch(DB_URL + '/items?site_id=eq.' + SITE_ID +
-        '&collection=in.(about_cards,rooms,room_perks,sauna_perks,gallery,hours,site_photos)' +
+        '&collection=in.(about_cards,rooms,room_photos,room_perks,sauna_perks,gallery,hours,site_photos)' +
         '&order=sort_order&select=collection,title,text,price,image_url,extra',
         { headers: { apikey: DB_KEY } })
     .then(function(r){ if(!r.ok) throw 0; return r.json(); })
@@ -2440,7 +2461,16 @@ body.open .drawer a:nth-child(6){transition-delay:.26s}
               '<div class="row-thumb" role="button" tabindex="0" data-room="' + esc(kind) + '" aria-label="Фото: ' + esc(r.title) + '">' +
               shot + '</div></article>';
           }).join('');
-          document.dispatchEvent(new CustomEvent('filin:rooms', {detail: by.rooms}));
+          /* фото номерів: групуємо за назвою номера */
+          var byRoom = {};
+          (by.room_photos || []).forEach(function(p){
+            var room = (p.extra || {}).room;
+            if (!room || !p.image_url) return;
+            (byRoom[room] = byRoom[room] || []).push(p.image_url);
+          });
+          document.dispatchEvent(new CustomEvent('filin:rooms', {
+            detail: { rooms: by.rooms, photos: byRoom }
+          }));
         }
       }
 
