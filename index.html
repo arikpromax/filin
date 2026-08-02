@@ -183,22 +183,44 @@ body.open .hamb i:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
 }
 .desk-status{display:flex;align-items:center;gap:12px;white-space:nowrap}
 /* кільце робочого дня: повне зранку, порожніє до 23:00 */
-.beacon{position:relative;width:24px;height:24px;flex:none;display:grid;place-items:center}
+.beacon{position:relative;width:34px;height:34px;flex:none;display:grid;place-items:center}
+.beacon::before{
+  content:'';position:absolute;inset:2px;border-radius:50%;
+  background:radial-gradient(circle,rgba(111,191,149,.22),transparent 68%);
+  opacity:0;transition:opacity .5s;
+}
+.beacon:not(.shut)::before{opacity:1}
 .beacon svg{position:absolute;inset:0;width:100%;height:100%;transform:rotate(-90deg)}
-.beacon circle{fill:none;stroke-width:2.2}
-.beacon .track{stroke:var(--hair)}
+.beacon circle{fill:none}
+.beacon .track{stroke:rgba(var(--bone-rgb),.12);stroke-width:2}
 .beacon .fill{
-  stroke:var(--jade);stroke-linecap:round;
+  stroke:var(--jade);stroke-width:2.4;stroke-linecap:round;
   stroke-dasharray:56.55;stroke-dashoffset:56.55;
   transition:stroke-dashoffset 1.4s var(--e),stroke .4s;
 }
+.beacon .tip{fill:var(--jade);stroke:none;r:2.2;transition:fill .4s}
 .beacon i{
-  width:7px;height:7px;border-radius:50%;background:var(--jade);
+  width:6px;height:6px;border-radius:50%;background:var(--jade);
   animation:pulseDot 2.8s ease-in-out infinite;
 }
-.beacon.shut .fill{stroke:var(--ember)}
+.beacon.shut .fill,.beacon.shut .tip{stroke:var(--ember);fill:var(--ember)}
 .beacon.shut i{background:var(--ember);animation:none}
-@keyframes pulseDot{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(.72);opacity:.62}}
+.beacon.shut .tip{opacity:0}
+@keyframes pulseDot{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(.66);opacity:.55}}
+
+/* підпис у два рівні */
+.desk-status{gap:13px}
+.st-txt{display:flex;flex-direction:column;line-height:1.25;white-space:nowrap}
+.desk-status .st-txt b{
+  font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;font-weight:700;
+  color:var(--jade);transition:color .4s;
+}
+.desk-status .st-txt u{
+  text-decoration:none;font-size:.86rem;color:var(--bone);font-weight:400;
+  margin-top:2px;letter-spacing:.01em;
+}
+.desk-status .st-txt u em{font-style:normal;color:var(--ash);font-weight:300}
+.desk-status.shut .st-txt b{color:var(--ember)}
 .desk-status span{font-size:.82rem;letter-spacing:.05em;color:#3f382f}
 .desk-status b{color:var(--bone);font-weight:600}
 .desk-rule{background:var(--hair);align-self:stretch}
@@ -867,10 +889,11 @@ body.open .drawer a:nth-child(6){transition-delay:.26s}
           <svg viewBox="0 0 24 24" aria-hidden="true">
             <circle class="track" cx="12" cy="12" r="9"/>
             <circle class="fill" id="beaconRing" cx="12" cy="12" r="9"/>
+            <circle class="tip" id="beaconTip" cx="21" cy="12"/>
           </svg>
           <i></i>
         </span>
-        <span id="statusTxt"><b>Рецепція</b> — 07:00–23:00</span>
+        <span class="st-txt" id="statusTxt"><b>Рецепція</b><u>07:00 – 23:00</u></span>
       </div>
       <div class="desk-rule"></div>
       <div class="desk-phones">
@@ -1420,22 +1443,34 @@ body.open .drawer a:nth-child(6){transition-delay:.26s}
     var now = kyiv(), h = now.h, m = now.m;
     var beacon = document.getElementById('beacon'), txt = document.getElementById('statusTxt');
     var ring = document.getElementById('beaconRing');
+    var tip  = document.getElementById('beaconTip');
+    var wrap = beacon ? beacon.parentNode : null;
     if (!beacon || !txt) return;
+
+    function setRing(frac){
+      if (ring) ring.style.strokeDashoffset = (RING * (1 - frac)).toFixed(2);
+      if (tip){                                  /* яскрава голівка на кінці дуги */
+        var a = 2 * Math.PI * frac;
+        tip.setAttribute('cx', (12 + 9 * Math.cos(a)).toFixed(2));
+        tip.setAttribute('cy', (12 + 9 * Math.sin(a)).toFixed(2));
+      }
+    }
+
     if (h >= OPEN && h < SHUT){
       var mins = (SHUT - h) * 60 - m, hh = Math.floor(mins/60), mm = mins % 60;
       beacon.classList.remove('shut');
-      txt.innerHTML = '<b>Відчинено</b> — до 23:00 залишилось ' + (hh ? hh + ' год ' : '') + two(mm) + ' хв';
-      /* кільце показує, скільки робочого дня лишилось */
-      if (ring){
-        var frac = Math.max(0, Math.min(1, mins / ((SHUT - OPEN) * 60)));
-        ring.style.strokeDashoffset = (RING * (1 - frac)).toFixed(2);
-      }
+      if (wrap) wrap.classList.remove('shut');
+      txt.innerHTML = '<b>Відчинено</b><u>ще ' + (hh ? hh + ' год ' : '') + two(mm) +
+                      ' хв <em>· до 23:00</em></u>';
+      setRing(Math.max(0, Math.min(1, mins / ((SHUT - OPEN) * 60))));
     } else {
       var uh = (h >= SHUT) ? (24 - h + OPEN - 1) : (OPEN - h - 1), um = 60 - m;
       if (um === 60){ um = 0; uh += 1; }
       beacon.classList.add('shut');
-      txt.innerHTML = '<b>Зараз зачинено</b> — відчинимось о 07:00, через ' + (uh ? uh + ' год ' : '') + two(um) + ' хв';
-      if (ring) ring.style.strokeDashoffset = RING.toFixed(2);
+      if (wrap) wrap.classList.add('shut');
+      txt.innerHTML = '<b>Зачинено</b><u>відчинимось за ' + (uh ? uh + ' год ' : '') + two(um) +
+                      ' хв <em>· о 07:00</em></u>';
+      setRing(0);
     }
   }
   status();

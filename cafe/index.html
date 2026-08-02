@@ -142,22 +142,43 @@ img{display:block;max-width:100%}
   font-size:.75rem;white-space:nowrap;
 }
 /* кільце робочого дня: повне зранку, порожніє до 23:00 */
-.state .dot{position:relative;width:22px;height:22px;flex:none;display:grid;place-items:center}
+.state .dot{position:relative;width:34px;height:34px;flex:none;display:grid;place-items:center}
+.state .dot::before{
+  content:'';position:absolute;inset:2px;border-radius:50%;
+  background:radial-gradient(circle,rgba(63,125,84,.18),transparent 68%);
+  opacity:1;transition:opacity .5s;
+}
+.state.shut .dot::before{opacity:0}
 .state .dot svg{position:absolute;inset:0;width:100%;height:100%;transform:rotate(-90deg)}
-.state .dot circle{fill:none;stroke-width:2.2}
-.state .dot .track{stroke:var(--line)}
+.state .dot circle{fill:none}
+.state .dot .track{stroke:var(--line);stroke-width:2}
 .state .dot .fill{
-  stroke:var(--ok);stroke-linecap:round;
+  stroke:var(--ok);stroke-width:2.4;stroke-linecap:round;
   stroke-dasharray:56.55;stroke-dashoffset:56.55;
   transition:stroke-dashoffset 1.4s var(--e),stroke .4s;
 }
+.state .dot .tip{fill:var(--ok);stroke:none;r:2.2;transition:fill .4s}
 .state .dot i{
   width:6px;height:6px;border-radius:50%;background:var(--ok);
   animation:pulseDot 2.8s ease-in-out infinite;
 }
 .state.shut .dot .fill{stroke:var(--acc)}
+.state.shut .dot .tip{opacity:0}
 .state.shut .dot i{background:var(--acc);animation:none}
-@keyframes pulseDot{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(.72);opacity:.62}}
+@keyframes pulseDot{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(.66);opacity:.55}}
+
+/* підпис у два рівні */
+.state{gap:12px;padding:9px 18px 9px 10px}
+.st-txt{display:flex;flex-direction:column;line-height:1.25;text-align:left}
+.state .st-txt b{
+  font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;font-weight:800;
+  color:var(--ok);transition:color .4s;
+}
+.state .st-txt u{
+  text-decoration:none;font-size:.82rem;color:var(--ink);font-weight:500;margin-top:2px;
+}
+.state .st-txt u em{font-style:normal;color:var(--ink-3);font-weight:300}
+.state.shut .st-txt b{color:var(--acc)}
 .state b{font-weight:700}
 .tablebar{
   margin-top:14px;padding:11px 15px;background:var(--acc-soft);border-left:3px solid var(--acc);
@@ -528,10 +549,11 @@ footer{border-top:1px solid var(--line);padding:26px 0 100px;margin-top:clamp(26
         <svg viewBox="0 0 24 24" aria-hidden="true">
           <circle class="track" cx="12" cy="12" r="9"/>
           <circle class="fill" id="stateRing" cx="12" cy="12" r="9"/>
+          <circle class="tip" id="stateTip" cx="21" cy="12"/>
         </svg>
         <i></i>
       </span>
-      <span id="stateTxt">07:00 – 23:00</span>
+      <span class="st-txt" id="stateTxt"><b>Кухня</b><u>07:00 – 23:00</u></span>
     </div>
   </div>
   <p class="tablebar" id="tablebar" hidden>Ви за столиком <b id="tableNo">—</b> — замовлення принесемо саме сюди.</p>
@@ -918,20 +940,31 @@ footer{border-top:1px solid var(--line);padding:26px 0 100px;margin-top:clamp(26
     var t = kyiv();
     var box = document.getElementById('state'), txt = document.getElementById('stateTxt');
     var ring = document.getElementById('stateRing');
+    var tip  = document.getElementById('stateTip');
+
+    function setRing(frac){
+      if (ring) ring.style.strokeDashoffset = (RING * (1 - frac)).toFixed(2);
+      if (tip){                                  /* яскрава голівка на кінці дуги */
+        var a = 2 * Math.PI * frac;
+        tip.setAttribute('cx', (12 + 9 * Math.cos(a)).toFixed(2));
+        tip.setAttribute('cy', (12 + 9 * Math.sin(a)).toFixed(2));
+      }
+    }
+
     if (t.h >= 7 && t.h < 23){
       var left = (23 - t.h) * 60 - t.m;
+      var hh = Math.floor(left / 60);
       box.classList.remove('shut');
-      txt.innerHTML = '<b>Відчинено</b> — до 23:00 ще ' +
-        (Math.floor(left / 60) ? Math.floor(left / 60) + ' год ' : '') + two(left % 60) + ' хв';
-      /* кільце показує, скільки робочого дня лишилось */
-      if (ring){
-        var frac = Math.max(0, Math.min(1, left / (16 * 60)));
-        ring.style.strokeDashoffset = (RING * (1 - frac)).toFixed(2);
-      }
+      txt.innerHTML = '<b>Відчинено</b><u>ще ' + (hh ? hh + ' год ' : '') + two(left % 60) +
+                      ' хв <em>· до 23:00</em></u>';
+      setRing(Math.max(0, Math.min(1, left / (16 * 60))));
     } else {
+      var wait = (t.h >= 23) ? (24 - t.h + 7) * 60 - t.m : (7 - t.h) * 60 - t.m;
+      var wh = Math.floor(wait / 60);
       box.classList.add('shut');
-      txt.innerHTML = '<b>Зачинено</b> — чекаємо з 07:00';
-      if (ring) ring.style.strokeDashoffset = RING.toFixed(2);
+      txt.innerHTML = '<b>Зачинено</b><u>відчинимось за ' + (wh ? wh + ' год ' : '') +
+                      two(wait % 60) + ' хв <em>· о 07:00</em></u>';
+      setRing(0);
     }
   }
   state();
