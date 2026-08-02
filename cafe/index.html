@@ -531,7 +531,7 @@ footer{border-top:1px solid var(--line);padding:26px 0 100px;margin-top:clamp(26
   <div class="wrap top-in">
     <a class="brand" href="#top">
       <span class="mono">Ф</span>
-      <span class="brand-t"><b>КУХНЯ ФІЛІН</b><span>Кобеляки · домашня кухня</span></span>
+      <span class="brand-t"><b data-txt="cafe_brand">КУХНЯ ФІЛІН</b><span data-txt="cafe_brand_sub">Кобеляки · домашня кухня</span></span>
     </a>
     <button type="button" class="hbtn" id="histBtn"><svg><use href="#i-bag"/></svg>Мої замовлення</button>
   </div>
@@ -543,7 +543,7 @@ footer{border-top:1px solid var(--line);padding:26px 0 100px;margin-top:clamp(26
 
 <div class="wrap head" id="top">
   <div class="head-row">
-    <h1>Меню<em>домашня кухня</em></h1>
+    <h1><span data-txt="menu_title">Меню</span><em data-txt="menu_title_em">домашня кухня</em></h1>
     <div class="state" id="state">
       <span class="dot">
         <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -571,11 +571,11 @@ footer{border-top:1px solid var(--line);padding:26px 0 100px;margin-top:clamp(26
 
 <div class="wrap">
   <div class="note">
-    <h3>Кілька слів про кухню</h3>
-    <p>Готуємо щодня невеликими партіями, тому деякі страви до вечора можуть закінчитися —
+    <h3 data-txt="note_title">Кілька слів про кухню</h3>
+    <p data-txt="note_text">Готуємо щодня невеликими партіями, тому деякі страви до вечора можуть закінчитися —
       якщо їдете спеціально, наберіть і ми відкладемо. Замовлення з собою збираємо
       за 20–30 хвилин, банкетне меню обговорюємо окремо.</p>
-    <div class="note-grid">
+    <div class="note-grid" id="kitchenFacts">
       <div><b>07:00</b><span>Відчиняємось</span></div>
       <div><b>23:00</b><span>Зачиняємось</span></div>
       <div><b>Щодня</b><span>Без вихідних</span></div>
@@ -587,12 +587,12 @@ footer{border-top:1px solid var(--line);padding:26px 0 100px;margin-top:clamp(26
 <footer>
   <div class="wrap">
     <div class="f-row">
-      <div><a href="tel:+380681558595">068 155 85 95</a> · <a href="tel:+380662783888">066 278 38 88</a></div>
-      <a href="https://www.instagram.com/cafe__filin__" target="_blank" rel="noopener">
-        <svg style="width:14px;height:14px;vertical-align:-2px"><use href="#i-ig"/></svg> @cafe__filin__
+      <div><a data-tel="phone1" href="tel:+380681558595">068 155 85 95</a> · <a data-tel="phone2" href="tel:+380662783888">066 278 38 88</a></div>
+      <a data-link="ig_link" href="https://www.instagram.com/cafe__filin__" target="_blank" rel="noopener">
+        <svg style="width:14px;height:14px;vertical-align:-2px"><use href="#i-ig"/></svg> <span data-txt="ig_label">@cafe__filin__</span>
       </a>
     </div>
-    <p class="f-small">м. Кобеляки, Полтавська обл. · <a href="../index.html" style="color:var(--acc)">Номери та сауна →</a></p>
+    <p class="f-small"><span data-txt="cafe_footer_note">м. Кобеляки, Полтавська обл.</span> · <a href="../index.html" style="color:var(--acc)">Номери та сауна →</a></p>
   </div>
 </footer>
 
@@ -844,41 +844,58 @@ footer{border-top:1px solid var(--line);padding:26px 0 100px;margin-top:clamp(26
       '</article>';
   }
 
-  var html = '', tabs = '';
-  MENU.forEach(function(sec){
-    tabs += '<button type="button" class="tab" data-go="' + sec.id + '">' + esc(sec.name) + '</button>';
-    html += '<section class="sec" id="' + sec.id + '">' +
-      '<div class="sec-head"><h2>' + esc(sec.name) + '</h2><i></i>' +
-      (sec.note ? '<span>' + esc(sec.note) + '</span>' : '') + '</div><div class="grid">' +
-      sec.items.map(function(it, i){
-        var key = sec.id + '-' + i;
-        BY_KEY[key] = it;
-        return tileHTML(it, key);
-      }).join('') + '</div></section>';
-  });
-  tabsRow.innerHTML = tabs;
-  menuBox.innerHTML = html +
-    '<p class="empty" id="empty" hidden><b>Нічого не знайшли</b>Спробуйте іншу назву або гляньте все меню.</p>';
+  /* Меню будується однією функцією — щоб те саме зробили дані з адмінки */
+  var tabBtns = [], secs = [], tiles = [], emptyMsg = null, io = null;
 
-  /* фото страв: photos/<img>.jpg — з'являється саме, коли файл покладено */
-  Object.keys(BY_KEY).forEach(function(key){
-    var it = BY_KEY[key];
-    if (!it.img) return;
-    var im = new Image();
-    im.onload = function(){
-      var box = menuBox.querySelector('.tile[data-key="' + key + '"] .tile-ph');
-      if (!box) return;
-      im.alt = it.n; im.loading = 'lazy';
-      box.insertBefore(im, box.firstChild);
-      var mono = box.querySelector('.tile-mono');
-      if (mono) mono.remove();
-    };
-    im.src = 'photos/' + it.img + '.jpg';
-  });
+  function buildMenu(data){
+    BY_KEY = {};
+    var html = '', tabs = '';
+    data.forEach(function(sec){
+      tabs += '<button type="button" class="tab" data-go="' + sec.id + '">' + esc(sec.name) + '</button>';
+      html += '<section class="sec" id="' + sec.id + '">' +
+        '<div class="sec-head"><h2>' + esc(sec.name) + '</h2><i></i>' +
+        (sec.note ? '<span>' + esc(sec.note) + '</span>' : '') + '</div><div class="grid">' +
+        sec.items.map(function(it, i){
+          var key = sec.id + '-' + i;
+          BY_KEY[key] = it;
+          return tileHTML(it, key);
+        }).join('') + '</div></section>';
+    });
+    tabsRow.innerHTML = tabs;
+    menuBox.innerHTML = html +
+      '<p class="empty" id="empty" hidden><b>Нічого не знайшли</b>Спробуйте іншу назву або гляньте все меню.</p>';
 
-  /* ── категорії ── */
-  var tabBtns = Array.prototype.slice.call(tabsRow.querySelectorAll('.tab'));
-  var secs = MENU.map(function(s){ return document.getElementById(s.id); });
+    /* фото страв: власне з адмінки або photos/<img>.jpg поруч із сайтом */
+    Object.keys(BY_KEY).forEach(function(key){
+      var it = BY_KEY[key];
+      var src = it.url || (it.img ? 'photos/' + it.img + '.jpg' : '');
+      if (!src) return;
+      var im = new Image();
+      im.onload = function(){
+        var box = menuBox.querySelector('.tile[data-key="' + key + '"] .tile-ph');
+        if (!box) return;
+        im.alt = it.n; im.loading = 'lazy';
+        box.insertBefore(im, box.firstChild);
+        var mono = box.querySelector('.tile-mono');
+        if (mono) mono.remove();
+      };
+      im.src = src;
+    });
+
+    tabBtns = Array.prototype.slice.call(tabsRow.querySelectorAll('.tab'));
+    secs = data.map(function(s){ return document.getElementById(s.id); });
+    tiles = Array.prototype.slice.call(menuBox.querySelectorAll('.tile'));
+    emptyMsg = document.getElementById('empty');
+
+    if (io) io.disconnect();
+    if ('IntersectionObserver' in window){
+      io = new IntersectionObserver(function(list){
+        list.forEach(function(en){ if (en.isIntersecting) markTab(secs.indexOf(en.target)); });
+      }, {rootMargin:'-130px 0px -68% 0px'});
+      secs.forEach(function(s){ if (s) io.observe(s); });
+    }
+    markTab(0);
+  }
 
   tabsRow.addEventListener('click', function(e){
     var b = e.target.closest('.tab');
@@ -893,19 +910,25 @@ footer{border-top:1px solid var(--line);padding:26px 0 100px;margin-top:clamp(26
     var r = on.getBoundingClientRect(), box = tabsRow.getBoundingClientRect();
     if (r.left < box.left || r.right > box.right) tabsRow.scrollTo({left:on.offsetLeft - 20, behavior:'smooth'});
   }
-  if ('IntersectionObserver' in window){
-    var io = new IntersectionObserver(function(list){
-      list.forEach(function(en){ if (en.isIntersecting) markTab(secs.indexOf(en.target)); });
-    }, {rootMargin:'-130px 0px -68% 0px'});
-    secs.forEach(function(s){ if (s) io.observe(s); });
-  }
-  markTab(0);
+
+  buildMenu(MENU);
+
+  /* меню з адмінки повністю заміщає вбудоване */
+  document.addEventListener('filin:menu', function(e){
+    if (!e.detail || !e.detail.length) return;
+    buildMenu(e.detail);
+    /* страви, яких у новому меню вже немає, прибираємо з кошика —
+       інакше підрахунок суми впаде на неіснуючому ключі */
+    Object.keys(cart).forEach(function(k){
+      if (BY_KEY[k]) paintTile(k); else delete cart[k];
+    });
+    paintDock();
+    filter();
+  });
 
   /* ── пошук ── */
   var seek = document.getElementById('seek');
   var clearBtn = document.getElementById('seekClear');
-  var emptyMsg = document.getElementById('empty');
-  var tiles = Array.prototype.slice.call(menuBox.querySelectorAll('.tile'));
 
   /* шукаємо за першими буквами: кожне введене слово має збігтися
      з початком якогось слова в назві або описі страви */
@@ -936,6 +959,16 @@ footer{border-top:1px solid var(--line);padding:26px 0 100px;margin-top:clamp(26
 
   /* ── відчинено / зачинено ── */
   var RING = 2 * Math.PI * 9;          /* довжина кола r=9 */
+  var OPEN = 7, SHUT = 23;             /* години з адмінки перезапишуть */
+  document.addEventListener('filin:hours', function(e){
+    var o = parseInt(String(e.detail.open || '').split(':')[0], 10);
+    var c = parseInt(String(e.detail.close || '').split(':')[0], 10);
+    if (!isNaN(o)) OPEN = o;
+    if (!isNaN(c)) SHUT = c;
+    state();
+    if (when === 'час') drawTimes();
+  });
+
   function state(){
     var t = kyiv();
     var box = document.getElementById('state'), txt = document.getElementById('stateTxt');
@@ -951,19 +984,19 @@ footer{border-top:1px solid var(--line);padding:26px 0 100px;margin-top:clamp(26
       }
     }
 
-    if (t.h >= 7 && t.h < 23){
-      var left = (23 - t.h) * 60 - t.m;
+    if (t.h >= OPEN && t.h < SHUT){
+      var left = (SHUT - t.h) * 60 - t.m;
       var hh = Math.floor(left / 60);
       box.classList.remove('shut');
       txt.innerHTML = '<b>Відчинено</b><u>ще ' + (hh ? hh + ' год ' : '') + two(left % 60) +
-                      ' хв <em>· до 23:00</em></u>';
-      setRing(Math.max(0, Math.min(1, left / (16 * 60))));
+                      ' хв <em>· до ' + two(SHUT) + ':00</em></u>';
+      setRing(Math.max(0, Math.min(1, left / ((SHUT - OPEN) * 60))));
     } else {
-      var wait = (t.h >= 23) ? (24 - t.h + 7) * 60 - t.m : (7 - t.h) * 60 - t.m;
+      var wait = (t.h >= SHUT) ? (24 - t.h + OPEN) * 60 - t.m : (OPEN - t.h) * 60 - t.m;
       var wh = Math.floor(wait / 60);
       box.classList.add('shut');
       txt.innerHTML = '<b>Зачинено</b><u>відчинимось за ' + (wh ? wh + ' год ' : '') +
-                      two(wait % 60) + ' хв <em>· о 07:00</em></u>';
+                      two(wait % 60) + ' хв <em>· о ' + two(OPEN) + ':00</em></u>';
       setRing(0);
     }
   }
@@ -985,8 +1018,8 @@ footer{border-top:1px solid var(--line);padding:26px 0 100px;margin-top:clamp(26
   var oNote     = document.getElementById('oNote');
   var oTable    = document.getElementById('oTable');
 
-  function count(){ var n = 0; for (var k in cart) n += cart[k]; return n; }
-  function total(){ var s = 0; for (var k in cart) s += cart[k] * BY_KEY[k].p; return s; }
+  function count(){ var n = 0; for (var k in cart) if (BY_KEY[k]) n += cart[k]; return n; }
+  function total(){ var s = 0; for (var k in cart) if (BY_KEY[k]) s += cart[k] * BY_KEY[k].p; return s; }
 
   function paintTile(key){
     var t = menuBox.querySelector('.tile[data-key="' + key + '"]');
@@ -1215,10 +1248,10 @@ footer{border-top:1px solid var(--line);padding:26px 0 100px;margin-top:clamp(26
 
   function slots(){
     var t = kyiv(), list = [], start;
-    if (t.h < 7 || t.h >= 23) start = 7 * 60;          /* зачинено — від відкриття */
+    if (t.h < OPEN || t.h >= SHUT) start = OPEN * 60;          /* зачинено — від відкриття */
     else start = t.h * 60 + t.m + 20;                   /* +20 хв на приготування */
     start = Math.ceil(start / 15) * 15;
-    for (var m = start; m <= 22 * 60 + 45; m += 15) list.push(two(Math.floor(m / 60)) + ':' + two(m % 60));
+    for (var m = start; m <= (SHUT - 1) * 60 + 45; m += 15) list.push(two(Math.floor(m / 60)) + ':' + two(m % 60));
     return list;
   }
   function drawTimes(){
@@ -1454,6 +1487,112 @@ footer{border-top:1px solid var(--line);padding:26px 0 100px;margin-top:clamp(26
   window.addEventListener('scroll', function(){
     if (count() === 0) dock.classList.toggle('up', window.pageYOffset > 240);
   }, {passive:true});
+})();
+</script>
+<!-- ===== Live-меню з платформи (Supabase) =====
+     Розділи, страви, ціни, фото й тексти тягнуться з адмінки. Якщо база
+     недоступна — сторінка показує вбудоване меню вище. -->
+<script>
+(function(){
+  var DB_URL  = 'https://ortiatyxntdikaldepbp.supabase.co/rest/v1';
+  var DB_KEY  = 'sb_publishable_UW1Z8ukEU1XWVCdQxIGkDw_firK4hpO'; /* публічний ключ читання */
+  var SITE_ID = 4; /* «Філін» у базі платформи */
+
+  function esc(s){
+    return String(s == null ? '' : s).replace(/[&<>"']/g, function(m){
+      return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m];
+    });
+  }
+
+  /* ---------- Меню та факти ---------- */
+  fetch(DB_URL + '/items?site_id=eq.' + SITE_ID +
+        '&collection=in.(menu_cats,menu_items,kitchen_facts)' +
+        '&order=sort_order&select=collection,title,text,price,image_url,extra',
+        { headers: { apikey: DB_KEY } })
+    .then(function(r){ if(!r.ok) throw 0; return r.json(); })
+    .then(function(rows){
+      var by = {};
+      rows.forEach(function(r){ (by[r.collection] = by[r.collection] || []).push(r); });
+
+      /* --- Розділи + страви --- */
+      var cats = by.menu_cats || [];
+      var dishes = by.menu_items || [];
+      if (cats.length && dishes.length){
+        var data = cats.map(function(c){
+          var cx = c.extra || {};
+          var id = cx.key || String(c.title).toLowerCase().replace(/[^a-z0-9]+/g, '') || 'cat';
+          return {
+            id: id,
+            name: c.title,
+            note: cx.note || '',
+            items: dishes.filter(function(d){
+              return String((d.extra || {}).cat || '') === c.title;
+            }).map(function(d){
+              var x = d.extra || {};
+              return {
+                n: d.title,
+                d: d.text || '',
+                w: x.weight || '',
+                p: parseInt(String(d.price).replace(/\D/g, ''), 10) || 0,
+                t: x.tag || '',
+                url: d.image_url || ''
+              };
+            })
+          };
+        }).filter(function(c){ return c.items.length; });
+
+        if (data.length) document.dispatchEvent(new CustomEvent('filin:menu', {detail: data}));
+      }
+
+      /* --- Чотири факти --- */
+      if (by.kitchen_facts && by.kitchen_facts.length){
+        var box = document.getElementById('kitchenFacts');
+        if (box) box.innerHTML = by.kitchen_facts.map(function(r){
+          return '<div><b>' + esc(r.title) + '</b><span>' + esc(r.text) + '</span></div>';
+        }).join('');
+      }
+    })
+    .catch(function(){ /* офлайн — вбудоване меню вже на екрані */ });
+
+  /* ---------- Тексти ---------- */
+  fetch(DB_URL + '/texts?site_id=eq.' + SITE_ID + '&select=key,value',
+        { headers: { apikey: DB_KEY } })
+    .then(function(r){ if(!r.ok) throw 0; return r.json(); })
+    .then(function(rows){
+      var T = {};
+      rows.forEach(function(t){
+        if (t.value == null || t.value === '') return;
+        T[t.key] = t.value;
+        document.querySelectorAll('[data-txt="' + t.key + '"]').forEach(function(el){
+          el.textContent = t.value;
+        });
+      });
+
+      if (T.seek_placeholder){
+        var s = document.getElementById('seek');
+        if (s) s.placeholder = T.seek_placeholder;
+      }
+
+      ['phone1', 'phone2'].forEach(function(k){
+        if (!T[k]) return;
+        var digits = T[k].replace(/\D/g, '');
+        if (digits.charAt(0) === '0') digits = '38' + digits;
+        document.querySelectorAll('[data-tel="' + k + '"]').forEach(function(a){
+          a.href = 'tel:+' + digits;
+          a.textContent = T[k];
+        });
+      });
+
+      document.querySelectorAll('[data-link]').forEach(function(a){
+        var v = T[a.getAttribute('data-link')];
+        if (v) a.href = v;
+      });
+
+      document.dispatchEvent(new CustomEvent('filin:hours', {
+        detail: { open: T.open_time, close: T.close_time }
+      }));
+    })
+    .catch(function(){});
 })();
 </script>
 </body>

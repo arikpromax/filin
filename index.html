@@ -599,7 +599,8 @@ footer{border-top:1px solid var(--hair);background:var(--ink);padding:44px 0 30p
 .f-nav{display:flex;flex-wrap:wrap;gap:22px}
 .f-nav a{font-size:.76rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ash);transition:color .35s}
 .f-nav a:hover{color:var(--ember)}
-.f-meta{margin-top:26px;padding-top:20px;border-top:1px solid var(--hair);display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;font-size:.72rem;color:#8c8175}
+.f-about{margin-top:20px;max-width:56ch;font-size:.86rem;color:var(--ash);line-height:1.6}
+.f-meta{margin-top:20px;padding-top:20px;border-top:1px solid var(--hair);display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;font-size:.72rem;color:#8c8175}
 
 /* ═══════════ LIGHTBOX ═══════════ */
 .row-thumb{cursor:zoom-in;position:relative}
@@ -840,7 +841,7 @@ body.open .drawer a:nth-child(6){transition-delay:.26s}
 <!-- ══════ LEFT RAIL ══════ -->
 <aside class="rail">
   <a class="mono" href="#hero" aria-label="На початок">Ф</a>
-  <p class="rail-vert"><b>МОТЕЛЬ</b> · САУНА &nbsp;—&nbsp; КОБЕЛЯКИ, ПОЛТАВЩИНА</p>
+  <p class="rail-vert" data-txt="brand_sub">МОТЕЛЬ · САУНА — КОБЕЛЯКИ, ПОЛТАВЩИНА</p>
   <div class="rail-dots" id="dots" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
 </aside>
 
@@ -881,9 +882,10 @@ body.open .drawer a:nth-child(6){transition-delay:.26s}
   <div class="scrim"></div>
 
   <div class="inner hero-body">
-    <h1 class="up">Зупиніться<em>на теплу ніч</em></h1>
-    <p class="hero-sub up a1"><b>Мотель і сауна «Філін»</b> — Кобеляки, Полтавщина.
-      Зупиніться на ніч, прогрійтеся в сауні й вирушайте далі відпочилими.</p>
+    <h1 class="up"><span data-txt="hero_title_1">Зупиніться</span><em data-txt="hero_title_2">на теплу ніч</em></h1>
+    <p class="hero-sub up a1"><b data-txt="hero_sub_strong">Мотель і сауна «Філін»</b>
+      <span data-txt="hero_sub">— Кобеляки, Полтавщина. Зупиніться на ніч, прогрійтеся
+      в сауні й вирушайте далі відпочилими.</span></p>
 
 
     <div class="desk up a2">
@@ -900,20 +902,20 @@ body.open .drawer a:nth-child(6){transition-delay:.26s}
       </div>
       <div class="desk-rule"></div>
       <div class="desk-phones">
-        <a href="tel:+380681558595">068 155 85 95</a>
-        <a href="tel:+380662783888">066 278 38 88</a>
+        <a data-tel="phone1" href="tel:+380681558595">068 155 85 95</a>
+        <a data-tel="phone2" href="tel:+380662783888">066 278 38 88</a>
       </div>
-      <a class="btn" href="#booking">Забронювати</a>
+      <a class="btn" href="#booking" data-txt="btn_book">Забронювати</a>
     </div>
   </div>
 
   <div class="inner">
     <div class="hero-foot">
-      <span>Номери · Сауна · Парковка</span>
+      <span data-txt="hero_foot_1">Номери · Сауна · Парковка</span>
       <span class="sep">◆</span>
-      <a href="cafe/index.html">Меню кухні «Філін»<svg class="exit-arrow" aria-hidden="true"><use href="#i-out"/></svg></a>
+      <a href="cafe/index.html"><span data-txt="hero_foot_cafe">Меню кухні «Філін»</span><svg class="exit-arrow" aria-hidden="true"><use href="#i-out"/></svg></a>
       <span class="sep">◆</span>
-      <a href="#rooms">Дивитись номери</a>
+      <a href="#rooms" data-txt="hero_foot_rooms">Дивитись номери</a>
     </div>
   </div>
 </section>
@@ -924,13 +926,13 @@ body.open .drawer a:nth-child(6){transition-delay:.26s}
     <div class="head">
       <span class="no up">01</span>
       <div>
-        <h2 class="up">Відпочити<br><em>і поїхати далі</em></h2>
-        <p class="up a1">Мотель, сауна й місце для авто — усе в одному дворі в Кобеляках.
+        <h2 class="up"><span data-txt="about_title_1">Відпочити</span><br><em data-txt="about_title_2">і поїхати далі</em></h2>
+        <p class="up a1" data-txt="about_text">Мотель, сауна й місце для авто — усе в одному дворі в Кобеляках.
           Без довгих формальностей на рецепції: ключ у руки — і відпочивайте.</p>
       </div>
     </div>
 
-    <div class="duo">
+    <div class="duo" id="aboutCards">
       <article class="slab up">
         <span class="glow"></span>
         <svg class="ico"><use href="#bed"/></svg>
@@ -965,13 +967,13 @@ body.open .drawer a:nth-child(6){transition-delay:.26s}
     <div class="head">
       <span class="no up">02</span>
       <div>
-        <h2 class="up">Номери</h2>
-        <p class="up a1">Три типи — від короткої зупинки до родинної поїздки.
+        <h2 class="up" data-txt="rooms_title">Номери</h2>
+        <p class="up a1" data-txt="rooms_text">Три типи — від короткої зупинки до родинної поїздки.
           Оберіть свій і надішліть заявку: підтвердимо дзвінком.</p>
       </div>
     </div>
 
-    <div class="sheet up a1">
+    <div class="sheet up a1" id="roomsSheet">
       <article class="row" data-room="single">
         <span class="row-no">01</span>
         <div class="row-main">
@@ -1009,7 +1011,7 @@ body.open .drawer a:nth-child(6){transition-delay:.26s}
         </article>
     </div>
 
-    <div class="strip up a2">
+    <div class="strip up a2" id="roomPerks">
       <div><svg><use href="#wifi"/></svg><span>Безкоштовний Wi-Fi</span></div>
       <div><svg><use href="#shower"/></svg><span>Душ у номері</span></div>
       <div><svg><use href="#car"/></svg><span>Парковка біля входу</span></div>
@@ -1023,16 +1025,16 @@ body.open .drawer a:nth-child(6){transition-delay:.26s}
   <div class="inner sauna-split">
     <div>
       <span class="up" style="font-family:var(--display);font-size:2rem;color:var(--ember-dk);display:block;margin-bottom:16px">03</span>
-      <h2 class="up">Сауна</h2>
-      <p class="up a1">Прогріта парна, прохолодний душ і кімната відпочинку, де можна довго
+      <h2 class="up"><span data-txt="sauna_title_1">Сауна</span><em data-txt="sauna_title_2"></em></h2>
+      <p class="up a1" data-txt="sauna_text">Прогріта парна, прохолодний душ і кімната відпочинку, де можна довго
         сидіти й розмовляти. Беріть компанію або приходьте вдвох — прогріємо до вашого приходу,
         просто скажіть час.</p>
-      <div class="heat up a1">
+      <div class="heat up a1" id="saunaPerks">
         <span>Парна</span><span>Душ</span><span>Кімната відпочинку</span><span>Оренда за годинами</span>
       </div>
       <div class="up a2" style="margin-top:28px;display:flex;flex-wrap:wrap;gap:12px">
-        <button class="btn" data-book="Сауна">Забронювати сауну</button>
-        <a class="btn line" href="tel:+380662783888"><svg><use href="#ph"/></svg>066 278 38 88</a>
+        <button class="btn" data-book="Сауна" data-txt="sauna_btn">Забронювати сауну</button>
+        <a class="btn line" data-tel="phone2" href="tel:+380662783888"><svg><use href="#ph"/></svg><span data-txt="phone2">066 278 38 88</span></a>
       </div>
     </div>
     <div class="frame up a1">
@@ -1048,8 +1050,8 @@ body.open .drawer a:nth-child(6){transition-delay:.26s}
       <span class="no up">04</span>
       <div class="strip-head">
         <div>
-          <h2 class="up">Як у нас</h2>
-          <p class="up a1">Номери, сауна й сам будинок — без прикрас.</p>
+          <h2 class="up" data-txt="photos_title">Як у нас</h2>
+          <p class="up a1" data-txt="photos_text">Номери, сауна й сам будинок — без прикрас.</p>
         </div>
         <div class="arrows up a1">
           <button id="prev" aria-label="Назад"><svg><use href="#arr-l"/></svg></button>
@@ -1075,8 +1077,8 @@ body.open .drawer a:nth-child(6){transition-delay:.26s}
     <div class="head">
       <span class="no up">05</span>
       <div>
-        <h2 class="up">Бронювання</h2>
-        <p class="up a1">Відмітьте, що вам потрібно — номер, сауну або одразу і те, і те.
+        <h2 class="up" data-txt="book_title">Бронювання</h2>
+        <p class="up a1" data-txt="book_text">Відмітьте, що вам потрібно — номер, сауну або одразу і те, і те.
           Заявка складеться сама, а ви надішлете її однією кнопкою.
           Ми підтвердимо й запишемо вас.</p>
       </div>
@@ -1270,7 +1272,7 @@ body.open .drawer a:nth-child(6){transition-delay:.26s}
         </div>
         <p class="bk-warn" id="bkWarn">Впишіть ім'я та телефон — і кнопка надсилання увімкнеться</p>
 
-        <p class="bk-hint">Заявка збирається сама, поки ви заповнюєте. Онлайн-календаря
+        <p class="bk-hint" data-txt="book_hint">Заявка збирається сама, поки ви заповнюєте. Онлайн-календаря
           ми не тримаємо й передоплати не беремо: отримаємо заявку
           та підтвердимо дзвінком.</p>
       </form>
@@ -1291,11 +1293,11 @@ body.open .drawer a:nth-child(6){transition-delay:.26s}
     <div class="teaser up">
       <svg class="plate" viewBox="0 0 24 24"><use href="#fork"/></svg>
       <div>
-        <h3>А поїсти — <em>у кухні «Філін»</em></h3>
-        <p>Кафе з домашньою кухнею працює в тій самій будівлі. Повне меню з цінами —
+        <h3><span data-txt="cafe_title_1">А поїсти —</span> <em data-txt="cafe_title_2">у кухні «Філін»</em></h3>
+        <p data-txt="cafe_text">Кафе з домашньою кухнею працює в тій самій будівлі. Повне меню з цінами —
           на окремому сайті кухні: сніданки з 07:00, перші страви, гриль і власна випічка.</p>
       </div>
-      <a class="btn" href="cafe/index.html" style="padding:16px 26px"><svg><use href="#fork"/></svg>Меню кухні</a>
+      <a class="btn" href="cafe/index.html" style="padding:16px 26px"><svg><use href="#fork"/></svg><span data-txt="cafe_btn">Меню кухні</span></a>
     </div>
   </div>
 </section>
@@ -1305,31 +1307,31 @@ body.open .drawer a:nth-child(6){transition-delay:.26s}
   <div class="inner">
     <div class="head">
       <span class="no up">06</span>
-      <div><h2 class="up">Зателефонуйте —<br><em>і місце ваше</em></h2></div>
+      <div><h2 class="up"><span data-txt="contact_title_1">Зателефонуйте —</span><br><em data-txt="contact_title_2">і місце ваше</em></h2></div>
     </div>
 
     <div class="contact-split">
       <div>
         <div class="big-phones up">
-          <a href="tel:+380681558595"><svg><use href="#arr"/></svg>068 155 85 95</a>
-          <a href="tel:+380662783888"><svg><use href="#arr"/></svg>066 278 38 88</a>
+          <a data-tel="phone1" href="tel:+380681558595"><svg><use href="#arr"/></svg><span data-txt="phone1">068 155 85 95</span></a>
+          <a data-tel="phone2" href="tel:+380662783888"><svg><use href="#arr"/></svg><span data-txt="phone2">066 278 38 88</span></a>
         </div>
-        <p class="contact-note up a1">Номери й сауна — за будь-яким із номерів.
+        <p class="contact-note up a1" data-txt="contact_note">Номери й сауна — за будь-яким із номерів.
           Якщо приїжджаєте пізно, попередьте: чекатимемо.</p>
-        <a class="ig up a1" style="margin-top:22px" href="https://www.instagram.com/cafe__filin__" target="_blank" rel="noopener">
-          <svg><use href="#ig"/></svg>@cafe__filin__
+        <a class="ig up a1" style="margin-top:22px" data-link="ig_link" href="https://www.instagram.com/cafe__filin__" target="_blank" rel="noopener">
+          <svg><use href="#ig"/></svg><span data-txt="ig_label">@cafe__filin__</span>
         </a>
       </div>
 
       <div class="up a1">
-        <div class="ledger">
+        <div class="ledger" id="ledger">
           <div><span>Рецепція</span><b>07:00 – 23:00</b></div>
           <div><span>Заселення</span><b>до 23:00</b></div>
           <div><span>Сауна</span><b>за домовленістю</b></div>
           <div><span>Вихідні</span><b>без вихідних</b></div>
           <div><span>Де ми</span><b>м. Кобеляки, Полтавська обл.</b></div>
         </div>
-        <a class="btn line" style="margin-top:24px" href="https://www.google.com/maps/search/%D0%A4%D1%96%D0%BB%D1%96%D0%BD+%D0%9A%D0%BE%D0%B1%D0%B5%D0%BB%D1%8F%D0%BA%D0%B8" target="_blank" rel="noopener">
+        <a class="btn line" style="margin-top:24px" data-link="map_link" href="https://www.google.com/maps/search/%D0%A4%D1%96%D0%BB%D1%96%D0%BD+%D0%9A%D0%BE%D0%B1%D0%B5%D0%BB%D1%8F%D0%BA%D0%B8" target="_blank" rel="noopener">
           <svg><use href="#pin"/></svg>Прокласти маршрут
         </a>
       </div>
@@ -1349,11 +1351,13 @@ body.open .drawer a:nth-child(6){transition-delay:.26s}
         <a href="cafe/index.html">Кафе</a>
         <a href="#contact">Контакти</a>
       </nav>
-      <a class="ig" href="https://www.instagram.com/cafe__filin__" target="_blank" rel="noopener"><svg><use href="#ig"/></svg>Instagram</a>
+      <a class="ig" data-link="ig_link" href="https://www.instagram.com/cafe__filin__" target="_blank" rel="noopener"><svg><use href="#ig"/></svg>Instagram</a>
     </div>
+    <p class="f-about" data-txt="footer_text">Придорожній комплекс у Кобеляках із домашньою кухнею,
+      номерами для нічлігу та сауною. Щодня з 07:00 до 23:00.</p>
     <div class="f-meta">
-      <span>© <b id="yr">2026</b> «Філін» — мотель і сауна, Кобеляки</span>
-      <span>068 155 85 95 · 066 278 38 88</span>
+      <span>© <b id="yr">2026</b> <span data-txt="footer_copy">«Філін» — мотель і сауна, Кобеляки</span></span>
+      <span id="footPhones">068 155 85 95 · 066 278 38 88</span>
     </div>
   </div>
 </footer>
@@ -1401,19 +1405,23 @@ body.open .drawer a:nth-child(6){transition-delay:.26s}
   var MAIN_PHONE = '+380681558595';
 
   /* ── photo slots ── */
-  document.querySelectorAll('.shot[data-src]').forEach(function(box){
-    var src = box.getAttribute('data-src');
-    if (!src) return;
-    var im = new Image();
-    im.onload = function(){
-      im.alt = box.getAttribute('data-alt') || '';
-      im.loading = 'lazy';
-      box.appendChild(im);
-      box.classList.add('filled');
-      if (box.getAttribute('data-hero')) document.getElementById('hero').classList.add('has-photo');
-    };
-    im.src = src;
-  });
+  function fillShots(){
+    document.querySelectorAll('.shot[data-src]:not(.filled)').forEach(function(box){
+      var src = box.getAttribute('data-src');
+      if (!src || box.dataset.tried) return;
+      box.dataset.tried = '1';
+      var im = new Image();
+      im.onload = function(){
+        im.alt = box.getAttribute('data-alt') || '';
+        im.loading = 'lazy';
+        box.appendChild(im);
+        box.classList.add('filled');
+        if (box.getAttribute('data-hero')) document.getElementById('hero').classList.add('has-photo');
+      };
+      im.src = src;
+    });
+  }
+  fillShots();
 
   /* ── open / closed countdown (07:00–23:00, київський час) ── */
   var OPEN = 7, SHUT = 23;
@@ -1464,7 +1472,7 @@ body.open .drawer a:nth-child(6){transition-delay:.26s}
       beacon.classList.remove('shut');
       if (wrap) wrap.classList.remove('shut');
       txt.innerHTML = '<b>Відчинено</b><u>ще ' + (hh ? hh + ' год ' : '') + two(mm) +
-                      ' хв <em>· до 23:00</em></u>';
+                      ' хв <em>· до ' + two(SHUT) + ':00</em></u>';
       setRing(Math.max(0, Math.min(1, mins / ((SHUT - OPEN) * 60))));
     } else {
       var uh = (h >= SHUT) ? (24 - h + OPEN - 1) : (OPEN - h - 1), um = 60 - m;
@@ -1472,7 +1480,7 @@ body.open .drawer a:nth-child(6){transition-delay:.26s}
       beacon.classList.add('shut');
       if (wrap) wrap.classList.add('shut');
       txt.innerHTML = '<b>Зачинено</b><u>відчинимось за ' + (uh ? uh + ' год ' : '') + two(um) +
-                      ' хв <em>· о 07:00</em></u>';
+                      ' хв <em>· о ' + two(OPEN) + ':00</em></u>';
       setRing(0);
     }
   }
@@ -2117,21 +2125,85 @@ body.open .drawer a:nth-child(6){transition-delay:.26s}
 
   /* quick-book buttons: start from the thing that was clicked,
      the guest can still tick the other one in the form */
-  document.querySelectorAll('[data-book]').forEach(function(b){
-    b.addEventListener('click', function(){
-      var what = b.getAttribute('data-book');
-      var seats = {'Одномісний':'1','Двомісний':'2','Сімейний':'3'};
-      if (what === 'Сауна'){
-        want.room = false; want.sauna = true;
-      } else {
-        want.room = true; want.sauna = false;
-        el.kind.value = what;
-        if (seats[what]) el.guests.value = seats[what];
-      }
-      paint();
-      document.getElementById('booking').scrollIntoView({behavior:'smooth', block:'start'});
-      setTimeout(function(){ el.name.focus({preventScroll:true}); }, 700);
+  /* делеговано — щоб працювало і на рядках, перебудованих із бази */
+  document.addEventListener('click', function(e){
+    var b = e.target.closest('[data-book]');
+    if (!b) return;
+    var what = b.getAttribute('data-book');
+    var seats = b.getAttribute('data-seats') ||
+                ({'Одномісний':'1','Двомісний':'2','Сімейний':'3'})[what];
+    if (what === 'Сауна'){
+      want.room = false; want.sauna = true;
+    } else {
+      want.room = true; want.sauna = false;
+      setKind(what);
+      if (seats) el.guests.value = seats;
+    }
+    paint();
+    document.getElementById('booking').scrollIntoView({behavior:'smooth', block:'start'});
+    setTimeout(function(){ el.name.focus({preventScroll:true}); }, 700);
+  });
+
+  /* обрати тип номера у власній випадайці */
+  function setKind(title){
+    var sel = document.getElementById('f-kind').querySelector('.sel');
+    if (!sel) return;
+    var opt = Array.prototype.filter.call(sel.querySelectorAll('.sel-opt'), function(o){
+      return o.getAttribute('data-v') === title;
+    })[0];
+    if (opt){ opt.click(); return; }
+    el.kind.value = title;                       /* такого типу в списку немає */
+    var val = sel.querySelector('.sel-val');
+    if (val) val.textContent = title;
+  }
+
+  /* ── номери з бази: оновити випадайку типів і галерею ── */
+  document.addEventListener('filin:rooms', function(e){
+    var list = e.detail || [];
+    if (!list.length) return;
+
+    ROOMS = list.map(function(r, i){
+      var x = r.extra || {};
+      return { k: x.kind || ('room' + (i + 1)), t: r.title };
     });
+    shots = {};                                   /* кеш фото більше не актуальний */
+
+    var sel = document.getElementById('f-kind').querySelector('.sel');
+    if (!sel) return;
+    var listBox = sel.querySelector('.sel-list');
+    listBox.innerHTML = list.map(function(r){
+      var x = r.extra || {};
+      var label = r.title + (x.cap ? ' — ' + x.cap + ' ' + (x.capw || '') : '');
+      return '<button type="button" class="sel-opt" data-v="' + r.title + '">' + label + '</button>';
+    }).join('') + '<button type="button" class="sel-opt" data-v="Порадьте">Порадьте, будь ласка</button>';
+
+    var cur = el.kind.value;
+    var keep = Array.prototype.filter.call(listBox.querySelectorAll('.sel-opt'), function(o){
+      return o.getAttribute('data-v') === cur;
+    })[0] || listBox.querySelector('.sel-opt');
+    if (keep){
+      el.kind.value = keep.getAttribute('data-v');
+      sel.querySelector('.sel-val').textContent = keep.textContent;
+      Array.prototype.forEach.call(listBox.querySelectorAll('.sel-opt'), function(o){
+        o.classList.toggle('on', o === keep);
+      });
+    }
+    render();
+  });
+
+  /* ── години роботи з бази ── */
+  document.addEventListener('filin:hours', function(e){
+    var o = parseInt(String(e.detail.open || '').split(':')[0], 10);
+    var c = parseInt(String(e.detail.close || '').split(':')[0], 10);
+    if (!isNaN(o)) OPEN = o;
+    if (!isNaN(c)) SHUT = c;
+    status();
+  });
+
+  /* ── новий вміст із бази: підхопити фото й показати блоки ── */
+  document.addEventListener('filin:content', function(){
+    fillShots();
+    document.querySelectorAll('.up:not(.seen)').forEach(function(el2){ el2.classList.add('seen'); });
   });
 
   Object.keys(el).forEach(function(k){
@@ -2287,6 +2359,193 @@ body.open .drawer a:nth-child(6){transition-delay:.26s}
   paint();   /* first draw — the panel is filled from the very start */
 
   document.getElementById('yr').textContent = new Date().getFullYear();
+})();
+</script>
+<!-- ===== Live-контент з платформи (Supabase) =====
+     Тексти, номери, переваги, фото й графік тягнуться з бази — власник
+     змінює їх в адмінці, і сайт оновлюється сам. Якщо база недоступна,
+     сторінка спокійно показує вбудований вміст вище. -->
+<script>
+(function(){
+  var DB_URL  = 'https://ortiatyxntdikaldepbp.supabase.co/rest/v1';
+  var DB_KEY  = 'sb_publishable_UW1Z8ukEU1XWVCdQxIGkDw_firK4hpO'; /* публічний ключ читання */
+  var SITE_ID = 4; /* «Філін» у базі платформи */
+
+  function esc(s){
+    return String(s == null ? '' : s).replace(/[&<>"']/g, function(m){
+      return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m];
+    });
+  }
+  function ico(k){ return '<svg><use href="#' + esc(k || 'bed') + '"/></svg>'; }
+  function byId(id){ return document.getElementById(id); }
+
+  /* ---------- Списки (таблиця items) ---------- */
+  fetch(DB_URL + '/items?site_id=eq.' + SITE_ID +
+        '&collection=in.(about_cards,rooms,room_perks,sauna_perks,gallery,hours,site_photos)' +
+        '&order=sort_order&select=collection,title,text,price,image_url,extra',
+        { headers: { apikey: DB_KEY } })
+    .then(function(r){ if(!r.ok) throw 0; return r.json(); })
+    .then(function(rows){
+      var by = {};
+      rows.forEach(function(r){ (by[r.collection] = by[r.collection] || []).push(r); });
+
+      /* --- Про нас: три картки (перша велика, решта у стовпці) --- */
+      if (by.about_cards && by.about_cards.length){
+        var box = byId('aboutCards');
+        if (box){
+          var card = function(r, cls){
+            var x = r.extra || {};
+            return '<article class="slab up' + (cls ? ' ' + cls : '') + '">' +
+              '<span class="glow"></span>' + ico(x.icon) +
+              '<h3>' + esc(r.title) + '</h3>' +
+              '<p>' + esc(r.text) + '</p>' +
+              (x.link ? '<a class="arrow" href="' + esc(x.link) + '">Детальніше <svg><use href="#arr"/></svg></a>' : '') +
+              '</article>';
+          };
+          var first = by.about_cards[0], rest = by.about_cards.slice(1);
+          box.innerHTML = card(first) +
+            '<div class="slab-col">' +
+            rest.map(function(r, i){ return card(r, 'a' + (i + 1)); }).join('') +
+            '</div>';
+        }
+      }
+
+      /* --- Номери --- */
+      if (by.rooms && by.rooms.length){
+        var sheet = byId('roomsSheet');
+        if (sheet){
+          sheet.innerHTML = by.rooms.map(function(r, i){
+            var x = r.extra || {};
+            var kind = x.kind || ('room' + (i + 1));
+            var tags = String(x.tags || '').split(',').map(function(s){ return s.trim(); })
+              .filter(Boolean).map(function(s){ return '<span>' + esc(s) + '</span>'; }).join('');
+            var shot = r.image_url
+              ? '<div class="shot filled"><img src="' + esc(r.image_url) + '" alt="' + esc(r.title) + '" loading="lazy"></div>'
+              : '<div class="shot" data-src="photos/room-' + esc(kind) + '.jpg" data-alt="' + esc(r.title) + '"><span class="wm">Ф</span></div>';
+            return '<article class="row" data-room="' + esc(kind) + '">' +
+              '<span class="row-no">' + ('0' + (i + 1)).slice(-2) + '</span>' +
+              '<div class="row-main"><h3>' + esc(r.title) + '</h3>' +
+              '<p>' + esc(r.text) + '</p>' +
+              (tags ? '<div class="tags">' + tags + '</div>' : '') + '</div>' +
+              '<div class="row-cap"><b>' + esc(x.cap || '') + '</b><span>' + esc(x.capw || '') + '</span>' +
+              (r.price ? '<span class="price">' + esc(r.price) +
+                (x.per ? '<i>' + esc(x.per) + '</i>' : '') + '</span>' : '') + '</div>' +
+              '<button class="btn line sm" data-book="' + esc(r.title) + '" data-seats="' + esc(x.cap || '') + '">' +
+                esc(window.__T && window.__T.room_btn ? window.__T.room_btn : 'Забронювати') + '</button>' +
+              '<div class="row-thumb" role="button" tabindex="0" data-room="' + esc(kind) + '" aria-label="Фото: ' + esc(r.title) + '">' +
+              shot + '</div></article>';
+          }).join('');
+          document.dispatchEvent(new CustomEvent('filin:rooms', {detail: by.rooms}));
+        }
+      }
+
+      /* --- Смуга переваг під номерами --- */
+      if (by.room_perks && by.room_perks.length){
+        var strip = byId('roomPerks');
+        if (strip) strip.innerHTML = by.room_perks.map(function(r){
+          var x = r.extra || {};
+          return '<div>' + ico(x.icon) + '<span>' + esc(r.title) + '</span></div>';
+        }).join('');
+      }
+
+      /* --- Позначки сауни --- */
+      if (by.sauna_perks && by.sauna_perks.length){
+        var heat = byId('saunaPerks');
+        if (heat) heat.innerHTML = by.sauna_perks.map(function(r){
+          return '<span>' + esc(r.title) + '</span>';
+        }).join('');
+      }
+
+      /* --- Стрічка фото --- */
+      if (by.gallery && by.gallery.length){
+        var film = byId('film');
+        if (film) film.innerHTML = by.gallery.map(function(r, i){
+          var shot = r.image_url
+            ? '<div class="shot filled"><img src="' + esc(r.image_url) + '" alt="' + esc(r.title) + '" loading="lazy"></div>'
+            : '<div class="shot" data-src="photos/gallery-' + (i + 1) + '.jpg" data-alt="' + esc(r.title) + '"><span class="wm">Ф</span></div>';
+          return '<figure class="cell">' + shot +
+                 '<figcaption>' + esc(r.title) + '</figcaption></figure>';
+        }).join('');
+      }
+
+      /* --- Графік у контактах --- */
+      if (by.hours && by.hours.length){
+        var led = byId('ledger');
+        if (led) led.innerHTML = by.hours.map(function(r){
+          return '<div><span>' + esc(r.title) + '</span><b>' + esc(r.text) + '</b></div>';
+        }).join('');
+      }
+
+      /* --- Фото сайту за слотами --- */
+      (by.site_photos || []).forEach(function(r){
+        var slot = (r.extra || {}).slot;
+        if (!slot || !r.image_url) return;
+        document.querySelectorAll('.shot[data-src$="' + slot + '"]').forEach(function(box){
+          if (box.classList.contains('filled')) return;
+          var im = new Image();
+          im.onload = function(){
+            im.alt = box.getAttribute('data-alt') || '';
+            box.appendChild(im);
+            box.classList.add('filled');
+            if (box.getAttribute('data-hero')) {
+              var hero = byId('hero');
+              if (hero) hero.classList.add('has-photo');
+            }
+          };
+          im.src = r.image_url;
+        });
+      });
+
+      /* заглушки й галерея мають підхопити нову розмітку */
+      document.dispatchEvent(new CustomEvent('filin:content'));
+    })
+    .catch(function(){ /* офлайн чи збій — вбудований вміст уже на екрані */ });
+
+  /* ---------- Тексти (таблиця texts) ---------- */
+  fetch(DB_URL + '/texts?site_id=eq.' + SITE_ID + '&select=key,value',
+        { headers: { apikey: DB_KEY } })
+    .then(function(r){ if(!r.ok) throw 0; return r.json(); })
+    .then(function(rows){
+      var T = {};
+      rows.forEach(function(t){
+        if (t.value == null || t.value === '') return;
+        T[t.key] = t.value;
+        document.querySelectorAll('[data-txt="' + t.key + '"]').forEach(function(el){
+          el.textContent = t.value;
+        });
+      });
+      window.__T = T;
+
+      /* телефони: текст керує і написом, і посиланням tel: */
+      ['phone1', 'phone2'].forEach(function(k){
+        if (!T[k]) return;
+        var digits = T[k].replace(/\D/g, '');
+        if (digits.charAt(0) === '0') digits = '38' + digits;
+        document.querySelectorAll('[data-tel="' + k + '"]').forEach(function(a){
+          a.href = 'tel:+' + digits;
+          if (!a.querySelector('[data-txt]')) a.textContent = T[k];
+        });
+      });
+      var fp = byId('footPhones');
+      if (fp && (T.phone1 || T.phone2)) fp.textContent = [T.phone1, T.phone2].filter(Boolean).join(' · ');
+
+      /* напис на кнопках у рядках номерів */
+      if (T.room_btn) document.querySelectorAll('.row [data-book]').forEach(function(b){
+        b.textContent = T.room_btn;
+      });
+
+      /* посилання (Instagram, карта) */
+      document.querySelectorAll('[data-link]').forEach(function(a){
+        var v = T[a.getAttribute('data-link')];
+        if (v) a.href = v;
+      });
+
+      /* години роботи керують статусом і зворотним відліком */
+      document.dispatchEvent(new CustomEvent('filin:hours', {
+        detail: { open: T.open_time, close: T.close_time }
+      }));
+    })
+    .catch(function(){});
 })();
 </script>
 </body>
