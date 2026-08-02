@@ -1122,31 +1122,14 @@ footer{border-top:1px solid var(--line);padding:26px 0 100px;margin-top:clamp(26
     }
   }
 
-  function showDish(key){
+  function openDish(key){
+    if (!BY_KEY[key]) return;
     dKey = key; dIdx = 0;
     dlb.hidden = false;
     document.body.style.overflow = 'hidden';
     document.getElementById('dlbName').textContent = BY_KEY[key].n;
     dlbImg.innerHTML = '<div class="dlb-none">Шукаємо фото…</div>';
     dishShots(key, drawDlb);
-  }
-  /* фото плитки «виростає» у велике — якщо браузер уміє */
-  function openDish(key){
-    if (!BY_KEY[key]) return;
-    var from = menuBox.querySelector('.tile[data-key="' + key + '"] .tile-ph');
-    if (!document.startViewTransition || !from || !dlb.hidden) return showDish(key);
-    from.style.viewTransitionName = 'dishshot';
-    var stage = document.querySelector('.dlb-stage');
-    var t = document.startViewTransition(function(){
-      from.style.viewTransitionName = '';
-      stage.style.viewTransitionName = 'dishshot';
-      showDish(key);
-    });
-    t.finished.then(clean, clean);
-    function clean(){
-      from.style.viewTransitionName = '';
-      stage.style.viewTransitionName = '';
-    }
   }
   function closeDish(){
     dlb.hidden = true;
