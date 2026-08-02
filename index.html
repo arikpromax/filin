@@ -2378,6 +2378,11 @@ body.open .drawer a:nth-child(6){transition-delay:.26s}
   }
   function ico(k){ return '<svg><use href="#' + esc(k || 'bed') + '"/></svg>'; }
   function byId(id){ return document.getElementById(id); }
+  /* в адмінці ціна вводиться без валюти — дописуємо ₴ тут */
+  function price(v){
+    v = String(v == null ? '' : v).trim();
+    return (!v || v.indexOf('₴') > -1) ? v : v + ' ₴';
+  }
 
   /* ---------- Списки (таблиця items) ---------- */
   fetch(DB_URL + '/items?site_id=eq.' + SITE_ID +
@@ -2428,8 +2433,8 @@ body.open .drawer a:nth-child(6){transition-delay:.26s}
               '<p>' + esc(r.text) + '</p>' +
               (tags ? '<div class="tags">' + tags + '</div>' : '') + '</div>' +
               '<div class="row-cap"><b>' + esc(x.cap || '') + '</b><span>' + esc(x.capw || '') + '</span>' +
-              (r.price ? '<span class="price">' + esc(r.price) +
-                (x.per ? '<i>' + esc(x.per) + '</i>' : '') + '</span>' : '') + '</div>' +
+              (r.price ? '<span class="price">' + esc(price(r.price)) +
+                '<i>' + esc(x.per || 'за ніч') + '</i></span>' : '') + '</div>' +
               '<button class="btn line sm" data-book="' + esc(r.title) + '" data-seats="' + esc(x.cap || '') + '">' +
                 esc(window.__T && window.__T.room_btn ? window.__T.room_btn : 'Забронювати') + '</button>' +
               '<div class="row-thumb" role="button" tabindex="0" data-room="' + esc(kind) + '" aria-label="Фото: ' + esc(r.title) + '">' +
