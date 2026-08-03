@@ -677,6 +677,15 @@ footer{border-top:1px solid var(--hair);background:var(--ink);padding:44px 0 30p
 .lb-thumbs button.on{opacity:1;border-color:var(--ember)}
 .lb-more{margin-top:16px;padding-top:14px;border-top:1px solid var(--hair)}
 .lb-more p{font-size:.64rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ash);margin-bottom:10px}
+.lb-filters{display:flex;flex-wrap:wrap;gap:7px;width:100%;margin-bottom:10px}
+.lb-filter{
+  padding:8px 14px;border:1px solid var(--hair);background:transparent;
+  font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ash);
+  transition:all .3s;
+}
+.lb-filter:hover{border-color:var(--hair-warm);color:var(--bone)}
+.lb-filter.on{background:var(--ember);border-color:var(--ember);color:#fff;font-weight:600}
+.lb-none{width:100%;font-size:.85rem;color:var(--ash)}
 .lb-rooms{display:flex;flex-wrap:wrap;gap:8px}
 .lb-rooms button{
   padding:11px 16px;border:1px solid var(--hair);background:var(--field);
@@ -1491,10 +1500,11 @@ body.open .drawer a:nth-child(6){transition-delay:.26s}
      Фото шукаються самі: photos/room-<тип>.jpg і photos/room-<тип>-1..6.jpg.
      Скільки файлів покладете — стільки й буде в галереї. */
   var ROOMS = [
-    {k:'single', t:'Одномісний'},
-    {k:'double', t:'Двомісний'},
-    {k:'family', t:'Сімейний'}
+    {k:'single', t:'Одномісний', cap:1},
+    {k:'double', t:'Двомісний', cap:2},
+    {k:'family', t:'Сімейний', cap:3}
   ];
+  var lbFilter = 0;        /* 0 — показувати всі номери, інакше місткість */
   var shots = {};          /* кеш знайдених фото */
   var dbShots = {};        /* фото, завантажені в адмінці: тип номера -> [url] */
   var lb      = document.getElementById('lb');
@@ -1578,9 +1588,33 @@ body.open .drawer a:nth-child(6){transition-delay:.26s}
       }).join('');
     }
 
-    lbRooms.innerHTML = ROOMS.filter(function(r){ return r.k !== curRoom.k; })
-      .map(function(r){ return '<button type="button" data-go="' + r.k + '">' + r.t + ' →</button>'; })
-      .join('');
+    drawRoomList();
+  }
+
+  /* каталог унизу вікна: фільтр за місткістю + самі номери */
+  function drawRoomList(){
+    var caps = [];
+    ROOMS.forEach(function(r){ if (r.cap && caps.indexOf(r.cap) < 0) caps.push(r.cap); });
+    caps.sort(function(a, b){ return a - b; });
+
+    var chips = '<button type="button" class="lb-filter' + (lbFilter === 0 ? ' on' : '') +
+                '" data-cap="0">Усі</button>' +
+      caps.map(function(c){
+        return '<button type="button" class="lb-filter' + (lbFilter === c ? ' on' : '') +
+               '" data-cap="' + c + '">' + c + '-місні</button>';
+      }).join('');
+
+    var rooms = ROOMS.filter(function(r){
+      if (r.k === curRoom.k) return false;
+      return !lbFilter || r.cap === lbFilter;
+    });
+
+    lbRooms.innerHTML = '<div class="lb-filters">' + chips + '</div>' +
+      (rooms.length
+        ? rooms.map(function(r){
+            return '<button type="button" data-go="' + r.k + '">' + r.t + ' →</button>';
+          }).join('')
+        : '<p class="lb-none">Інших номерів на стільки осіб немає.</p>');
   }
 
   function showLb(key){
@@ -1624,6 +1658,8 @@ body.open .drawer a:nth-child(6){transition-delay:.26s}
     }
     var go = e.target.closest('[data-go]');
     if (go && lb.contains(go)){ openLb(go.getAttribute('data-go')); return; }
+    var fl = e.target.closest('.lb-filter');
+    if (fl){ lbFilter = parseInt(fl.getAttribute('data-cap'), 10) || 0; drawRoomList(); return; }
     var tb = e.target.closest('.lb-thumbs button');
     if (tb){ curIdx = parseInt(tb.getAttribute('data-i'), 10); drawLb(); return; }
     if (e.target.closest('#lbX') || e.target === lb) closeLb();
@@ -2172,7 +2208,7 @@ body.open .drawer a:nth-child(6){transition-delay:.26s}
 
     ROOMS = list.map(function(r, i){
       var x = r.extra || {};
-      return { k: x.kind || ('room' + (i + 1)), t: r.title };
+      return { k: x.kind || ('room' + (i + 1)), t: r.title, cap: parseInt(x.cap, 10) || 0 };
     });
 
     /* збираємо фото кожного номера: головне з картки + усі з «Фото номерів» */
@@ -2181,8 +2217,9 @@ body.open .drawer a:nth-child(6){transition-delay:.26s}
       var x = r.extra || {};
       var k = x.kind || ('room' + (i + 1));
       var arr = [];
-      /* головне фото картки + Фото 2, 3, 4 з тієї ж картки */
-      [r.image_url, x.photo2, x.photo3, x.photo4].forEach(function(u){
+      /* головне фото картки + усі, додані кнопкою «+ Додати фото» */
+      var more = Array.isArray(x.photos) ? x.photos : [];
+      [r.image_url].concat(more, [x.photo2, x.photo3, x.photo4]).forEach(function(u){
         if (u && arr.indexOf(u) < 0) arr.push(u);
       });
       (byRoom[r.title] || []).forEach(function(u){
