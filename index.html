@@ -2181,9 +2181,12 @@ body.open .drawer a:nth-child(6){transition-delay:.26s}
       var x = r.extra || {};
       var k = x.kind || ('room' + (i + 1));
       var arr = [];
-      if (r.image_url) arr.push(r.image_url);
+      /* головне фото картки + Фото 2, 3, 4 з тієї ж картки */
+      [r.image_url, x.photo2, x.photo3, x.photo4].forEach(function(u){
+        if (u && arr.indexOf(u) < 0) arr.push(u);
+      });
       (byRoom[r.title] || []).forEach(function(u){
-        if (arr.indexOf(u) < 0) arr.push(u);
+        if (u && arr.indexOf(u) < 0) arr.push(u);
       });
       if (arr.length) dbShots[k] = arr;
     });
@@ -2397,7 +2400,8 @@ body.open .drawer a:nth-child(6){transition-delay:.26s}
       return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m];
     });
   }
-  function ico(k){ return '<svg><use href="#' + esc(k || 'bed') + '"/></svg>'; }
+  /* class="ico" обовʼязковий — без нього значок розтягується на всю картку */
+  function ico(k, cls){ return '<svg class="' + (cls || 'ico') + '"><use href="#' + esc(k || 'bed') + '"/></svg>'; }
   function byId(id){ return document.getElementById(id); }
   /* в адмінці ціна вводиться без валюти — дописуємо ₴ тут */
   function price(v){
@@ -2479,7 +2483,7 @@ body.open .drawer a:nth-child(6){transition-delay:.26s}
         var strip = byId('roomPerks');
         if (strip) strip.innerHTML = by.room_perks.map(function(r){
           var x = r.extra || {};
-          return '<div>' + ico(x.icon) + '<span>' + esc(r.title) + '</span></div>';
+          return '<div>' + ico(x.icon, '') + '<span>' + esc(r.title) + '</span></div>';
         }).join('');
       }
 
