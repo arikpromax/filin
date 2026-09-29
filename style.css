@@ -1233,3 +1233,32 @@ a:hover > .ico--ext { transform: translate(2px, -2px); }
 .ph { background: linear-gradient(155deg, #f5efe3 0%, #e7dcc8 100%); }
 .ph__label { color: #8a6a3a; letter-spacing: .14em; }
 
+
+/* ── Перший екран: фото на весь екран із повільним наїздом ── */
+.hero__media { position: absolute; inset: 0; overflow: hidden; z-index: 0; }
+.hero__media img {
+  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+  opacity: 0;
+  animation: heroFade 26s linear infinite, heroZoom 26s ease-in-out infinite;
+}
+.hero__media img:nth-child(2) { animation-delay: -13s; }
+/* друге фото ще не поклали — перше просто поволі наїжджає, без миготіння */
+.hero__media img:only-child { opacity: 1; animation: heroZoom 26s ease-in-out infinite; }
+
+/* вуаль поверх фото, щоб білий текст читався; фото немає — вуалі теж */
+.hero__media::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(23, 13, 10, .62) 0%, rgba(23, 13, 10, .46) 42%, rgba(23, 13, 10, .78) 100%);
+}
+.hero__media:not(:has(img))::after { content: none; }
+
+/* вміст — над фото */
+.hero__inner, .hero__facts { position: relative; z-index: 1; }
+
+@keyframes heroFade { 0%, 42% { opacity: 1; } 50%, 92% { opacity: 0; } 100% { opacity: 1; } }
+@keyframes heroZoom { 0% { transform: scale(1.04); } 50% { transform: scale(1.13); } 100% { transform: scale(1.04); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .hero__media img { animation: none; opacity: 1; }
+  .hero__media img:nth-child(2) { opacity: 0; }
+}

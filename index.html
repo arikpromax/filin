@@ -48,6 +48,11 @@
 <!-- ─────────────── 1. ГОЛОВНИЙ ЕКРАН ─────────────── -->
 <header class="hero" id="top">
 
+  <!-- Фон першого екрана: покладіть у теку hero-1.jpg і hero-2.jpg — вони
+       поволі наїжджають і перетікають одна в одну. Фото немає — лишається
+       колір, сайт від цього не ламається. -->
+  <div class="hero__media" aria-hidden="true"><img src="hero-1.jpg" alt="" onerror="this.remove()"><img src="hero-2.jpg" alt="" onerror="this.remove()"></div>
+
   <div class="hero__inner">
     <p class="hero__kicker">Кобеляки · Полтавщина</p>
     <h1 class="hero__title"><img src="logo-light.png" alt="Кафе «Філін» — Кобеляки" width="447" height="360"></h1>
