@@ -441,6 +441,8 @@ body:has(> .back-btn) .topbar__logo { margin-left: 48px; }
 .foot p + p { margin-top: .5rem; }
 .foot ul { list-style: none; padding: 0; }
 .foot a { color: var(--text); }
+.foot .btn { color: #fff; }
+.foot .btn:hover { color: #e3c173; }
 .foot ul a { text-decoration: none; }
 .foot ul a:hover { text-decoration: underline; }
 .foot__bottom {
@@ -1276,7 +1278,7 @@ a:hover > .ico--ext { transform: translate(2px, -2px); }
 
 /* ── Посилання без підкреслення: підкреслюємо лише при наведенні ── */
 .foot a:hover { text-decoration: underline; text-decoration-thickness: 1px; }
-.foot .btn--light:hover, .foot a:has(> .ico--ext):hover { text-decoration: none; }
+.foot .btn:hover, .foot a:has(> .ico--ext):hover { text-decoration: none; }
 
 /* ── Логотип кафе: золото вже в самому PNG, тому це звичайна картинка ── */
 .topbar__mark, .foot__emblem { display: block; flex: none; width: auto; }
