@@ -164,11 +164,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 }
 .topbar.is-on { transform: none; visibility: visible; transition: transform .45s var(--ease); }
 .topbar__logo { grid-column: 1; grid-row: 1; justify-self: start; display: inline-flex; align-items: center; gap: .75rem; text-decoration: none; color: #d3a94d; }
-.topbar__mark { height: 32px; }
-.topbar__logo span {
-  font-family: var(--logo); font-weight: 600; font-size: 1.2rem; line-height: 1; letter-spacing: .46em; padding-left: .46em;
-  color: #d3a94d; background: var(--gilt); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
-}
+.topbar__mark { height: 40px; }
 .topbar__nav { grid-column: 2; display: flex; gap: clamp(1.8rem, 3vw, 3.2rem); }
 .topbar__nav a {
   position: relative; padding: .55rem 0; color: rgba(246, 241, 230, .82); text-decoration: none;
@@ -440,14 +436,7 @@ body:has(> .back-btn) .topbar__logo { margin-left: 48px; }
   padding-bottom: clamp(24px, 3vw, 36px); border-bottom: 1px solid rgba(255, 255, 255, .15);
 }
 .foot__brand { display: flex; align-items: center; gap: clamp(16px, 2.4vw, 32px); }
-.foot__emblem { height: clamp(48px, 2.2vw + 32px, 64px); }
-.foot__logo {
-  font-family: var(--logo); font-weight: 600;
-  font-size: clamp(1.8rem, 1.2rem + 2vw, 2.8rem); line-height: 1.15; letter-spacing: .3em;
-  color: #d7b263;
-  background: var(--gilt); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
-  padding-right: .1em;
-}
+.foot__emblem { height: clamp(76px, 4vw + 48px, 104px); }
 .foot__cols { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1.4rem var(--gap); padding: clamp(24px, 3vw, 40px) 0; }
 .foot h3 { font-size: .7rem; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; margin-bottom: .6rem; }
 .foot p + p { margin-top: .5rem; }
@@ -1189,7 +1178,6 @@ body:has(.dock) .foot { padding-bottom: 110px; }
 }
 
 @media (max-width: 640px) {
-  .topbar__logo span { font-size: 1.05rem; letter-spacing: .4em; padding-left: .4em; }
   .bar-on .menu-btn { top: 7px; right: 12px; }
   .bar-on .back-btn { top: 7px; left: 12px; }
   body:has(> .back-btn) .topbar__logo { margin-left: 56px; }
@@ -1295,13 +1283,5 @@ a:hover > .ico--ext { transform: translate(2px, -2px); }
 .foot a:hover { text-decoration: underline; text-decoration-thickness: 1px; }
 .foot .btn--light:hover, .foot a:has(> .ico--ext):hover { text-decoration: none; }
 
-/* ── Герб кафе: PNG-маска, щоб він був тим самим золотом, що й напис FILIN ── */
-.topbar__mark, .foot__emblem {
-  display: block; flex: none;
-  aspect-ratio: 323 / 260;
-  background: var(--gilt);
-  -webkit-mask-image: url("logo-mark.png"); mask-image: url("logo-mark.png");
-  -webkit-mask-size: contain;  mask-size: contain;
-  -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
-  -webkit-mask-position: center; mask-position: center;
-}
+/* ── Логотип кафе: золото вже в самому PNG, тому це звичайна картинка ── */
+.topbar__mark, .foot__emblem { display: block; flex: none; width: auto; }
