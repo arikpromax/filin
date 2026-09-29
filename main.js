@@ -136,12 +136,12 @@
   }
 
   /* ── Смуга з логотипом зверху (коли гортаєш) і кнопки «Меню» / «Назад» у тон темних місць під ними ── */
-  var darkEls = $$('.hero, .leisure, .foot');
+  var darkEls = $$('.hero, .leisure');
   var topbar = $('[data-topbar]'), heroTop = $('.hero'), backBtn = $('.back-btn');
   if (darkEls.length && burger) {
     var toneQueued = false;
     var overDark = function (btn) {
-      if (root.classList.contains('bar-on')) return true;
+      if (root.classList.contains('bar-on')) return false;
       var b = btn.getBoundingClientRect(), mid = b.top + b.height / 2;
       return darkEls.some(function (el) { var r = el.getBoundingClientRect(); return r.top <= mid && r.bottom > mid; });
     };
@@ -895,8 +895,7 @@
             return '<article class="vcard"><span class="vcard__icon" data-vicon="' + jesc(j.icon || 'dish') + '"></span>' +
               '<h2 class="vcard__h">' + jesc(j.title) + '</h2>' +
               (j.duties && j.duties.length ? '<ul class="vcard__list">' + j.duties.map(function (d) { return '<li>' + jesc(d) + '</li>'; }).join('') + '</ul>' : '') +
-              '<div class="vcard__btns"><button class="btn" type="button" data-job="' + jesc(j.title) + '"><span>Залишити заявку</span></button>' +
-              (firstTel ? '<a class="btn btn--ghost" href="' + firstTel + '"><span>Зателефонувати</span></a>' : '') + '</div></article>';
+              '</article>';
           }).join('')
         : '<p class="vcard vcard--none">Зараз відкритих вакансій немає. Залиште заявку — зателефонуємо, коли з’явиться місце.</p>';
       $('[data-job-chips]').innerHTML = jobs.map(function (j) { return j.title; }).map(function (t, i) {
@@ -914,14 +913,6 @@
         return '<a class="btn btn--light" href="' + telOf(p) + '"><span>' + jesc(p) + '</span></a>';
       }).join('');
     }
-    // «Відгукнутися» — одразу до форми з обраною вакансією
-    $('[data-jobs]').addEventListener('click', function (e) {
-      var b = e.target.closest('[data-job]');
-      if (!b) return;
-      $$('input[name="vacancy"]', jform).forEach(function (r) { r.checked = r.value === b.getAttribute('data-job'); });
-      $('#apply').scrollIntoView({ behavior: 'smooth', block: 'start' });
-      setTimeout(function () { jform.elements.name.focus({ preventScroll: true }); }, 500);
-    });
     var jerr = $('.book__error', jform), jdone = $('.jform__done');
     jform.addEventListener('submit', function (e) {
       e.preventDefault();
@@ -937,9 +928,8 @@
         return;
       }
       jerr.hidden = true;
-      var data = { kind: 'job', vacancy: vac ? vac.value : 'будь-яка', name: v('name'), phone: v('phone'), age: v('age'), about: v('about') };
-      data.message = ['Заявка на роботу', 'Вакансія: ' + data.vacancy, 'Ім’я: ' + data.name, 'Телефон: ' + data.phone]
-        .concat(data.age ? ['Вік: ' + data.age] : [], data.about ? ['Про себе: ' + data.about] : []).join('\n');
+      var data = { kind: 'job', vacancy: vac ? vac.value : 'будь-яка', name: v('name'), phone: v('phone') };
+      data.message = ['Заявка на роботу', 'Вакансія: ' + data.vacancy, 'Ім’я: ' + data.name, 'Телефон: ' + data.phone].join('\n');
       var btn = $('button[type="submit"]', jform), label = $('span', btn);
       btn.disabled = true; label.textContent = 'Надсилаємо…';
       sendBooking(data).then(function () {
