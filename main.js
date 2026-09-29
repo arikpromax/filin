@@ -880,22 +880,6 @@
     });
   }
 
-  /* ── Відгуки гостей: справжні з config.js; порожньо — нічого не вигадуємо ── */
-  var revBox = $('[data-reviews]');
-  if (revBox) {
-    var revs = (CFG.reviews || []).filter(function (r) { return r && r.text; });
-    var resc = function (t) { return String(t).replace(/[&<>]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]; }); };
-    if (revs.length) {
-      revBox.innerHTML = revs.map(function (r) {
-        return '<figure class="rev"><blockquote>' + resc(r.text) + '</blockquote><figcaption>' +
-          resc(r.name || 'Гість') +
-          (r.from ? ' <span>· ' + resc(r.from) + '</span>' : '') +
-          '</figcaption></figure>';
-      }).join('');
-    } else {
-      revBox.hidden = true;   // карток немає — лишається саме посилання
-    }
-  }
   /* ── Вакансії: список із config.js, відгук — дзвінком власнику ── */
   var vbox = $('[data-jobs]');
   if (vbox) {
