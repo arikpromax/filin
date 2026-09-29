@@ -880,66 +880,33 @@
     });
   }
 
-  /* ── Вакансії: список і телефони з config.js, заявка на роботу ── */
-  var jform = $('[data-jform]');
-  if (jform) {
+  /* ── Вакансії: список із config.js, відгук — дзвінком власнику ── */
+  var vbox = $('[data-jobs]');
+  if (vbox) {
     var JOBS = CFG.jobs || {};
     var jesc = function (t) { return String(t).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
     var telOf = function (p) { var d = String(p).replace(/\D/g, ''); return 'tel:' + (d.length === 10 && d.charAt(0) === '0' ? '+38' + d : '+' + d); };
-    var firstTel = JOBS.phones && JOBS.phones.length ? telOf(JOBS.phones[0]) : '';
+    // номер, на який відгукуються: головний із config.js, інакше перший зі списку вакансій
+    var ownPhone = CFG.phone || (JOBS.phones && JOBS.phones[0]) || '';
+    var ownTel = ownPhone ? telOf(ownPhone) : '';
+    var actHTML = ownPhone
+      ? '<div class="vcard__act"><a class="btn" href="' + ownTel + '"><span>Відгукнутись</span></a>' +
+        '<a class="vcard__tel" href="' + ownTel + '">' + jesc(ownPhone) + '</a></div>'
+      : '';
     if (JOBS.list) {
       var jobs = JOBS.list.map(function (j) { return typeof j === 'string' ? { title: j } : j; });
-      // кожна вакансія — окрема картка: значок, назва, що робити, заявка й дзвінок
-      $('[data-jobs]').innerHTML = jobs.length
+      // кожна вакансія — окрема картка: значок, назва, що робити, кнопка відгуку
+      vbox.innerHTML = jobs.length
         ? jobs.map(function (j) {
             return '<article class="vcard"><span class="vcard__icon" data-vicon="' + jesc(j.icon || 'dish') + '"></span>' +
               '<h2 class="vcard__h">' + jesc(j.title) + '</h2>' +
               (j.duties && j.duties.length ? '<ul class="vcard__list">' + j.duties.map(function (d) { return '<li>' + jesc(d) + '</li>'; }).join('') + '</ul>' : '') +
-              '</article>';
+              actHTML + '</article>';
           }).join('')
-        : '<p class="vcard vcard--none">Зараз відкритих вакансій немає. Залиште заявку — зателефонуємо, коли з’явиться місце.</p>';
-      $('[data-job-chips]').innerHTML = jobs.map(function (j) { return j.title; }).map(function (t, i) {
-        return '<label class="chip"><input type="radio" name="vacancy" value="' + jesc(t) + '"' + (i ? '' : ' checked') + '>' + jesc(t) + '</label>';
-      }).join('');
-      // вакансій немає — вибір вакансії у формі не потрібен
-      var chipsBox = $('[data-job-chips]');
-      chipsBox.hidden = chipsBox.previousElementSibling.hidden = !jobs.length;
+        : '<p class="vcard vcard--none">Зараз відкритих вакансій немає. Зателефонуйте — скажемо, коли з’явиться місце.</p>';
     }
     $$('[data-vicon]').forEach(function (el) {
       el.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true">' + (ICONS[el.getAttribute('data-vicon')] || ICONS.dish) + '</svg>';
-    });
-    if (JOBS.phones && JOBS.phones.length) {
-      $('[data-job-phones]').innerHTML = JOBS.phones.map(function (p) {
-        return '<a class="btn btn--light" href="' + telOf(p) + '"><span>' + jesc(p) + '</span></a>';
-      }).join('');
-    }
-    var jerr = $('.book__error', jform), jdone = $('.jform__done');
-    jform.addEventListener('submit', function (e) {
-      e.preventDefault();
-      var f = jform.elements, v = function (k) { return String(f[k].value).trim(); };
-      var vac = $('input[name="vacancy"]:checked', jform);
-      var noName = !v('name'), noPhone = v('phone').replace(/\D/g, '').length < 9;
-      f.name.classList.toggle('invalid', noName);
-      f.phone.classList.toggle('invalid', noPhone);
-      if (noName || noPhone) {
-        jerr.textContent = 'Заповніть: ' + [noName ? 'ім’я' : '', noPhone ? 'телефон' : ''].filter(Boolean).join(', ') + '.';
-        jerr.hidden = false;
-        (noName ? f.name : f.phone).focus();
-        return;
-      }
-      jerr.hidden = true;
-      var data = { kind: 'job', vacancy: vac ? vac.value : 'будь-яка', name: v('name'), phone: v('phone') };
-      data.message = ['Заявка на роботу', 'Вакансія: ' + data.vacancy, 'Ім’я: ' + data.name, 'Телефон: ' + data.phone].join('\n');
-      var btn = $('button[type="submit"]', jform), label = $('span', btn);
-      btn.disabled = true; label.textContent = 'Надсилаємо…';
-      sendBooking(data).then(function () {
-        jform.hidden = true; jdone.hidden = false;
-      }, function (why) {
-        jerr.textContent = why === 'not-configured'
-          ? 'Надсилання заявок ще не підключене — зателефонуйте нам, будь ласка.'
-          : 'Не вдалося надіслати заявку. Спробуйте ще раз або зателефонуйте нам.';
-        jerr.hidden = false;
-      }).then(function () { btn.disabled = false; label.textContent = 'Надіслати заявку'; });
     });
   }
 

@@ -1054,16 +1054,10 @@ body:has(.dock) .foot { padding-bottom: 110px; }
 .vcard__list li::before { content: ""; position: absolute; left: 0; top: 1.05rem; width: 6px; height: 6px; border: 1px solid #a98335; transform: rotate(45deg); }
 .vcard--none { grid-column: 1 / -1; font-size: 1rem; }
 .jobs__note { margin-top: 1rem; font-size: .9rem; }
-.jobs { display: grid; grid-template-columns: minmax(0, 1fr) minmax(280px, 380px); gap: var(--gap); align-items: stretch; margin-top: clamp(40px, 5vw, 64px); }
-.jobs__form { padding: clamp(24px, 3vw, 40px); border: 1px solid var(--line); background: #fff; scroll-margin-top: 90px; }
-.jform__title { margin-bottom: 1.2rem; font-size: 1.5rem; font-weight: 500; }
-.jform .bk__via { margin-bottom: 1.4rem; }
-.jobs__call { display: flex; flex-direction: column; padding: clamp(24px, 3vw, 36px); background: var(--hero-bg); color: var(--hero-text); }
-.jobs__label { font-size: .68rem; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; }
-.jobs__call-text { margin-top: .6rem; font-size: .95rem; }
-.jobs__phones { display: grid; gap: .6rem; margin-top: auto; padding-top: 1.4rem; }
-.jobs__phones .btn { font-size: .95rem; letter-spacing: .06em; }
-.jobs__phones .btn:hover { color: var(--hero-text); border-color: var(--hero-text); }
+/* під кожною вакансією: кнопка відгуку й номер поруч */
+.vcard__act { display: flex; flex-wrap: wrap; align-items: center; gap: .9rem 1.2rem; margin-top: auto; }
+.vcard__tel { font-size: 1.05rem; font-weight: 600; letter-spacing: .02em; white-space: nowrap; }
+.vcard__tel:hover { text-decoration: underline; text-decoration-thickness: 1px; }
 
 .leisure {                                      /* темна смуга посеред білого — як перший екран */
   padding: clamp(64px, 8vw, 112px) 0; color: var(--hero-text);
@@ -1168,7 +1162,7 @@ body:has(.dock) .foot { padding-bottom: 110px; }
   .faq__head, .faq__list { grid-column: 1 / -1; }
   .about__title, .about__text { grid-column: 1 / -1; }
   .about__text { margin-top: 1.4rem; padding-top: 0; }
-  .jobs, .vcards { grid-template-columns: minmax(0, 1fr); }
+  .vcards { grid-template-columns: minmax(0, 1fr); }
   .faq__list { margin-top: 2rem; }
   .rblock__info { margin-top: 1.6rem; }
 

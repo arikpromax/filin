@@ -52,7 +52,7 @@
     <header class="page-head reveal">
       <p class="eyebrow">Робота у «Філіні»</p>
       <h1 class="display">Вакансії</h1>
-      <p>Шукаємо людей у команду кафе в Кобеляках. Залиште заявку або зателефонуйте — ми передзвонимо.</p>
+      <p>Шукаємо людей у команду кафе в Кобеляках. Телефонуйте — обговоримо все на місці.</p>
     </header>
 
     <!-- Вакансії беруться з config.js → jobs.list; кожна — окремою карткою -->
@@ -61,46 +61,23 @@
         <span class="vcard__icon" data-vicon="dish"></span>
         <h2 class="vcard__h">Офіціант</h2>
         <ul class="vcard__list"><li>Зустрічати гостей і приймати замовлення</li><li>Подавати страви й напої</li><li>Тримати зал у порядку</li></ul>
+        <div class="vcard__act">
+          <a class="btn" href="tel:+380681558595"><span>Відгукнутись</span></a>
+          <a class="vcard__tel" href="tel:+380681558595">068 155 85 95</a>
+        </div>
       </article>
       <article class="vcard">
         <span class="vcard__icon" data-vicon="chef"></span>
         <h2 class="vcard__h">Помічник кухаря</h2>
         <ul class="vcard__list"><li>Допомагати кухарю з приготуванням</li><li>Робити заготовки й нарізку</li><li>Тримати кухню в чистоті</li></ul>
+        <div class="vcard__act">
+          <a class="btn" href="tel:+380681558595"><span>Відгукнутись</span></a>
+          <a class="vcard__tel" href="tel:+380681558595">068 155 85 95</a>
+        </div>
       </article>
     </div>
     <p class="jobs__note">Графік і оплату розкажемо телефоном.</p>
 
-    <div class="jobs">
-      <aside class="jobs__form" id="apply">
-        <form class="jform" data-jform novalidate>
-          <p class="jform__title">Відгукнутись</p>
-          <p class="bk__label">Вакансія</p>
-          <div class="chips bk__via" data-job-chips>
-            <label class="chip"><input type="radio" name="vacancy" value="Офіціант" checked>Офіціант</label>
-            <label class="chip"><input type="radio" name="vacancy" value="Помічник кухаря">Помічник кухаря</label>
-          </div>
-          <div class="field-row">
-            <label class="field"><span>Ім’я</span><input name="name" type="text" autocomplete="name" required></label>
-            <label class="field"><span>Телефон</span><input name="phone" type="tel" autocomplete="tel" inputmode="tel" required></label>
-          </div>
-          <p class="book__error" role="alert" hidden></p>
-          <button class="btn btn--block" type="submit"><span>Надіслати заявку</span></button>
-        </form>
-        <div class="jform__done" hidden>
-          <p class="bk__done-title">Дякуємо! Заявку надіслано</p>
-          <p class="bk__done-hint">Ми зателефонуємо вам найближчим часом.</p>
-        </div>
-      </aside>
-
-      <div class="jobs__call">
-        <p class="jobs__label">Або телефонуйте</p>
-        <p class="jobs__call-text">Розкажемо про графік і оплату, домовимося про зустріч.</p>
-        <div class="jobs__phones" data-job-phones>
-          <a class="btn btn--light" href="tel:+380681558595"><span>068 155 85 95</span></a>
-          <a class="btn btn--light" href="tel:+380662783888"><span>066 278 38 88</span></a>
-        </div>
-      </div>
-    </div>
   </div>
 </main>
 
