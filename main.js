@@ -373,8 +373,8 @@
     var renderCal = function () {
       var html = '<div class="cal__nav">' +
         '<button type="button" data-cal-nav="-1" aria-label="Попередній місяць"' +
-        (view.getFullYear() === new Date().getFullYear() && view.getMonth() === new Date().getMonth() ? ' disabled' : '') + '>←</button>' +
-        '<button type="button" data-cal-nav="1" aria-label="Наступний місяць">→</button></div><div class="cal__months">';
+        (view.getFullYear() === new Date().getFullYear() && view.getMonth() === new Date().getMonth() ? ' disabled' : '') + '><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></button>' +
+        '<button type="button" data-cal-nav="1" aria-label="Наступний місяць"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></div><div class="cal__months">';
       var months = +bw.getAttribute('data-months') || 2;
       for (var m = 0; m < months; m++) {
         var first = new Date(view.getFullYear(), view.getMonth() + m, 1);
