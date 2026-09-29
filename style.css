@@ -33,7 +33,7 @@
 
 }
 
-*, *::before, *::after { box-sizing: border-box; margin: 0; border-radius: 0 !important; }
+*, *::before, *::after { box-sizing: border-box; margin: 0; border-radius: 0; }
 [hidden] { display: none !important; }
 
 html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
@@ -1262,3 +1262,62 @@ a:hover > .ico--ext { transform: translate(2px, -2px); }
   .hero__media img { animation: none; opacity: 1; }
   .hero__media img:nth-child(2) { opacity: 0; }
 }
+
+/* ── Галерея альбомами: ряд карток, що гортається вбік ── */
+.gal { position: relative; }
+.gal__track {
+  display: grid; grid-auto-flow: column; grid-auto-columns: calc((100% - 2 * var(--gap)) / 3);
+  gap: var(--gap); overflow-x: auto; scroll-snap-type: x mandatory;
+  scrollbar-width: none; -ms-overflow-style: none;
+}
+.gal__track::-webkit-scrollbar { display: none; }
+.gal__card {
+  position: relative; scroll-snap-align: start;
+  aspect-ratio: 3 / 2; padding: 0; border: 0; cursor: pointer;
+  border-radius: 4px; overflow: hidden;
+  text-align: left; color: #fff;
+}
+.gal__card::after {                      /* затемнення знизу, щоб підпис читався */
+  content: ""; position: absolute; inset: 50% 0 0;
+  background: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, .58) 100%);
+  pointer-events: none;
+}
+.gal__card img { transition: transform 1.4s var(--ease); }
+.gal__card:hover img { transform: scale(1.05); }
+.gal__cap { position: absolute; left: 22px; right: 58px; bottom: 20px; z-index: 1; display: grid; gap: .2rem; }
+.gal__count { font-size: .78rem; opacity: .85; }
+.gal__cap b { font-size: 1.05rem; font-weight: 700; line-height: 1.2; }
+.gal__arrow {
+  position: absolute; right: 20px; bottom: 26px; z-index: 1;
+  width: 30px; height: 12px; fill: none; stroke: #fff; stroke-width: 1.6;
+  stroke-linecap: round; stroke-linejoin: round;
+  transition: transform .4s var(--ease);
+}
+.gal__card:hover .gal__arrow { transform: translateX(5px); }
+/* у картці без фото затемнення й стрілка ні до чого */
+.gal__card:not(:has(img))::after { content: none; }
+.gal__card:not(:has(img)) .gal__arrow { display: none; }
+.gal__card:not(:has(img)) .gal__cap { color: var(--text); }
+.gal__card:not(:has(img)) .gal__count { opacity: .6; }
+.gal__nav { display: flex; justify-content: flex-end; gap: .6rem; margin-top: 1rem; }
+.gal__nav .slider__btn { position: static; translate: none; border: 1px solid var(--line); background: var(--bg); color: var(--text); }
+.gal__nav .slider__btn:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+@media (max-width: 1000px) { .gal__track { grid-auto-columns: calc((100% - var(--gap)) / 2); } }
+@media (max-width: 640px)  { .gal__track { grid-auto-columns: 86%; } }
+
+/* ── Картка номера: назва й опис лежать на фото ── */
+.rc__photo { position: relative; }
+.rc__cap {
+  position: absolute; left: 20px; right: 20px; bottom: 16px; z-index: 1;
+  display: grid; gap: .15rem; color: #fff; text-align: left;
+}
+.rc__cap b { font-size: 1.25rem; font-weight: 700; line-height: 1.2; }
+.rc__cap span { font-size: .82rem; opacity: .88; }
+.rc__photo:has(img)::after {
+  content: ""; position: absolute; inset: 45% 0 0;
+  background: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, .6) 100%);
+  pointer-events: none;
+}
+/* фото ще немає — підпис темний, на світлій заглушці */
+.rc__photo:not(:has(img)) .rc__cap { color: var(--text); }

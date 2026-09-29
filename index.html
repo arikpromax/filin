@@ -92,39 +92,46 @@
     </div>
   </div>
 
-  <!-- Галерея. Фото: gallery-1.jpg … gallery-6.jpg -->
+  <!-- Галерея альбомами. Фото кожного альбому — у data-album, через кому.
+       Кількість знімків рахується сама; поки фото немає, пишемо «фото скоро». -->
   <div class="wrap">
-    <div class="gallery reveal" aria-label="Галерея">
-      <button class="tile tile--1 ph" type="button" data-full="gallery-1.jpg" data-caption="Зал" data-icon="cup">
-        <span class="ph__label">Зал</span>
-        <img src="gallery-1.jpg" alt="Зал кафе «Філін»" loading="lazy" onerror="this.remove()">
-        <span class="tile__cap">Зал</span>
-      </button>
-      <button class="tile tile--2 ph" type="button" data-full="gallery-2.jpg" data-caption="Домашні страви" data-icon="dish">
-        <span class="ph__label">Страви</span>
-        <img src="gallery-2.jpg" alt="Домашні страви" loading="lazy" onerror="this.remove()">
-        <span class="tile__cap">Домашні страви</span>
-      </button>
-      <button class="tile tile--3 ph" type="button" data-full="gallery-3.jpg" data-caption="Сауна" data-icon="sauna">
-        <span class="ph__label">Сауна</span>
-        <img src="gallery-3.jpg" alt="Сауна" loading="lazy" onerror="this.remove()">
-        <span class="tile__cap">Сауна</span>
-      </button>
-      <button class="tile tile--4 ph" type="button" data-full="gallery-4.jpg" data-caption="Більярд" data-icon="billiard">
-        <span class="ph__label">Більярд</span>
-        <img src="gallery-4.jpg" alt="Більярдна" loading="lazy" onerror="this.remove()">
-        <span class="tile__cap">Більярд</span>
-      </button>
-      <button class="tile tile--5 ph" type="button" data-full="gallery-5.jpg" data-caption="Тераса" data-icon="sun">
-        <span class="ph__label">Тераса</span>
-        <img src="gallery-5.jpg" alt="Тераса" loading="lazy" onerror="this.remove()">
-        <span class="tile__cap">Тераса</span>
-      </button>
-      <button class="tile tile--6 ph" type="button" data-full="gallery-6.jpg" data-caption="Вечір у «Філіні»" data-icon="moon">
-        <span class="ph__label">Вечір</span>
-        <img src="gallery-6.jpg" alt="Вечір у «Філіні»" loading="lazy" onerror="this.remove()">
-        <span class="tile__cap">Вечір у «Філіні»</span>
-      </button>
+    <div class="gal reveal">
+      <div class="gal__track" data-gal>
+        <button class="gal__card ph" type="button" data-icon="cup" data-title="Зал кафе" data-album="gallery-1.jpg">
+          <span class="ph__label">Зал кафе</span>
+          <span class="gal__cap"><span class="gal__count">фото скоро</span><b>Зал кафе</b></span>
+          <svg class="gal__arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg>
+        </button>
+        <button class="gal__card ph" type="button" data-icon="dish" data-title="Домашні страви" data-album="gallery-2.jpg">
+          <span class="ph__label">Домашні страви</span>
+          <span class="gal__cap"><span class="gal__count">фото скоро</span><b>Домашні страви</b></span>
+          <svg class="gal__arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg>
+        </button>
+        <button class="gal__card ph" type="button" data-icon="sauna" data-title="Сауна" data-album="gallery-3.jpg">
+          <span class="ph__label">Сауна</span>
+          <span class="gal__cap"><span class="gal__count">фото скоро</span><b>Сауна</b></span>
+          <svg class="gal__arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg>
+        </button>
+        <button class="gal__card ph" type="button" data-icon="billiard" data-title="Більярд" data-album="gallery-4.jpg">
+          <span class="ph__label">Більярд</span>
+          <span class="gal__cap"><span class="gal__count">фото скоро</span><b>Більярд</b></span>
+          <svg class="gal__arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg>
+        </button>
+        <button class="gal__card ph" type="button" data-icon="sun" data-title="Тераса" data-album="gallery-5.jpg">
+          <span class="ph__label">Тераса</span>
+          <span class="gal__cap"><span class="gal__count">фото скоро</span><b>Тераса</b></span>
+          <svg class="gal__arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg>
+        </button>
+        <button class="gal__card ph" type="button" data-icon="moon" data-title="Вечір у «Філіні»" data-album="gallery-6.jpg">
+          <span class="ph__label">Вечір у «Філіні»</span>
+          <span class="gal__cap"><span class="gal__count">фото скоро</span><b>Вечір у «Філіні»</b></span>
+          <svg class="gal__arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg>
+        </button>
+      </div>
+      <div class="gal__nav">
+        <button class="slider__btn" type="button" data-gal-nav="-1" aria-label="Гортати назад"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></button>
+        <button class="slider__btn" type="button" data-gal-nav="1" aria-label="Гортати вперед"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+      </div>
     </div>
   </div>
 </section>
@@ -152,10 +159,9 @@
         <a class="rc__photo ph" data-icon="bed" href="odnomisnyi.html" aria-label="Відкрити номер «Одномісний»">
           <span class="ph__label">Фото</span>
           <img src="room-4-1.jpg" alt="Номер «Одномісний»" loading="lazy" onerror="this.remove()">
+          <span class="rc__cap"><b>Одномісний</b><span>1 гість · односпальне ліжко</span></span>
         </a>
         <div class="rc__body">
-          <h3 class="rc__name"><a href="odnomisnyi.html">Одномісний</a></h3>
-          <p class="rc__meta">1 гість · односпальне ліжко</p>
           <p class="rc__price" data-price>Ціну уточнимо</p>
           <button class="btn btn--block" type="button" data-book="odnomisnyi"><span>Забронювати</span></button>
           <a class="rc__more" href="odnomisnyi.html">Детальніше</a>
@@ -165,10 +171,9 @@
         <a class="rc__photo ph" data-icon="bed" href="standart.html" aria-label="Відкрити номер «Стандарт»">
           <span class="ph__label">Фото</span>
           <img src="room-1-1.jpg" alt="Номер «Стандарт»" loading="lazy" onerror="this.remove()">
+          <span class="rc__cap"><b>Стандарт</b><span>До 2 гостей · двоспальне ліжко</span></span>
         </a>
         <div class="rc__body">
-          <h3 class="rc__name"><a href="standart.html">Стандарт</a></h3>
-          <p class="rc__meta">До 2 гостей · двоспальне ліжко</p>
           <p class="rc__price" data-price>Ціну уточнимо</p>
           <button class="btn btn--block" type="button" data-book="standart"><span>Забронювати</span></button>
           <a class="rc__more" href="standart.html">Детальніше</a>
@@ -178,10 +183,9 @@
         <a class="rc__photo ph" data-icon="bed" href="tvin.html" aria-label="Відкрити номер «Твін»">
           <span class="ph__label">Фото</span>
           <img src="room-2-1.jpg" alt="Номер «Твін»" loading="lazy" onerror="this.remove()">
+          <span class="rc__cap"><b>Твін</b><span>До 2 гостей · два окремі ліжка</span></span>
         </a>
         <div class="rc__body">
-          <h3 class="rc__name"><a href="tvin.html">Твін</a></h3>
-          <p class="rc__meta">До 2 гостей · два окремі ліжка</p>
           <p class="rc__price" data-price>Ціну уточнимо</p>
           <button class="btn btn--block" type="button" data-book="tvin"><span>Забронювати</span></button>
           <a class="rc__more" href="tvin.html">Детальніше</a>
@@ -191,10 +195,9 @@
         <a class="rc__photo ph" data-icon="bed" href="lyuks.html" aria-label="Відкрити номер «Люкс»">
           <span class="ph__label">Фото</span>
           <img src="room-5-1.jpg" alt="Номер «Люкс»" loading="lazy" onerror="this.remove()">
+          <span class="rc__cap"><b>Люкс</b><span>До 3 гостей · двоспальне ліжко й диван</span></span>
         </a>
         <div class="rc__body">
-          <h3 class="rc__name"><a href="lyuks.html">Люкс</a></h3>
-          <p class="rc__meta">До 3 гостей · двоспальне ліжко й диван</p>
           <p class="rc__price" data-price>Ціну уточнимо</p>
           <button class="btn btn--block" type="button" data-book="lyuks"><span>Забронювати</span></button>
           <a class="rc__more" href="lyuks.html">Детальніше</a>
@@ -204,10 +207,9 @@
         <a class="rc__photo ph" data-icon="bed" href="simeinyi.html" aria-label="Відкрити номер «Сімейний»">
           <span class="ph__label">Фото</span>
           <img src="room-3-1.jpg" alt="Номер «Сімейний»" loading="lazy" onerror="this.remove()">
+          <span class="rc__cap"><b>Сімейний</b><span>До 4 гостей · кілька спальних місць</span></span>
         </a>
         <div class="rc__body">
-          <h3 class="rc__name"><a href="simeinyi.html">Сімейний</a></h3>
-          <p class="rc__meta">До 4 гостей · кілька спальних місць</p>
           <p class="rc__price" data-price>Ціну уточнимо</p>
           <button class="btn btn--block" type="button" data-book="simeinyi"><span>Забронювати</span></button>
           <a class="rc__more" href="simeinyi.html">Детальніше</a>

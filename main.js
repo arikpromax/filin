@@ -227,18 +227,46 @@
     });
   }
 
-  // Галерея «Про нас»
-  var tiles = $$('.tile');
-  tiles.forEach(function (t) {
-    t.addEventListener('click', function () {
-      if (!hasImg(t)) return;
-      var loaded = tiles.filter(hasImg);
-      openLightbox(loaded.map(function (x) {
-        return { src: x.getAttribute('data-full'), caption: x.getAttribute('data-caption') };
-      }), loaded.indexOf(t));
+  // Галерея альбомами: рахуємо, скільки фото альбому справді є, і показуємо число
+  $$('.gal__card').forEach(function (card) {
+    var names = (card.getAttribute('data-album') || '').split(',')
+      .map(function (t) { return t.trim(); }).filter(Boolean);
+    var title = card.getAttribute('data-title') || '';
+    var countEl = $('.gal__count', card);
+    var found = [];
+    var done = 0;
+    var finish = function () {
+      if (++done < names.length) return;
+      if (!found.length) { countEl.textContent = 'фото скоро'; return; }
+      countEl.textContent = found.length + ' фото';
+      var cover = new Image();
+      cover.src = found[0];
+      cover.alt = title;
+      card.insertBefore(cover, $('.gal__cap', card));
+      card.addEventListener('click', function () {
+        openLightbox(found.map(function (src) { return { src: src, caption: title }; }), 0);
+      });
+    };
+    if (!names.length) { countEl.textContent = 'фото скоро'; return; }
+    names.forEach(function (src) {
+      var probe = new Image();
+      probe.onload = function () { found.push(src); finish(); };
+      probe.onerror = finish;
+      probe.src = src;
     });
   });
 
+  // стрілки під галереєю гортають на одну картку
+  var galTrack = $('[data-gal]');
+  if (galTrack) {
+    $$('[data-gal-nav]').forEach(function (b) {
+      b.addEventListener('click', function () {
+        var card = $('.gal__card', galTrack);
+        var step = card ? card.getBoundingClientRect().width + 24 : 300;
+        galTrack.scrollBy({ left: step * (+b.getAttribute('data-gal-nav')), behavior: 'smooth' });
+      });
+    });
+  }
   /* ── Гортання фото номера (стрілки, свайп, мініатюри) ── */
   $$('.slider').forEach(function (slider) {
     var track = $('.slider__track', slider), slides = $$('.slide', slider);
