@@ -16,7 +16,8 @@
   --accent-hover: #93683f;
   --ph:           #e9e0d0;   /* заглушка під фото */
 
-  --font:   'Manrope', 'Helvetica Neue', Arial, sans-serif;
+  --font:    'Manrope', 'Helvetica Neue', Arial, sans-serif;
+  --display: 'Playfair Display SC', Georgia, 'Times New Roman', serif;
 
   --gutter: clamp(20px, 5vw, 72px);
   --frame:  clamp(12px, 2vw, 28px);
@@ -485,7 +486,7 @@ body:has(> .back-btn) .topbar__logo { margin-left: 48px; }
 .room-about { grid-area: about; min-width: 0; }
 .room-book {
   grid-area: book; position: sticky; top: 90px; z-index: 30;   /* вікно календаря — над фото */
-  padding: clamp(22px, 2.4vw, 32px); border: 1px solid var(--line); background: #fff;
+  padding: clamp(22px, 2.4vw, 32px) 0; background: transparent;
 }
 .slider--big .slider__track { aspect-ratio: 3 / 2; }
 .thumbs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin-top: 10px; }
@@ -520,15 +521,15 @@ body:has(> .back-btn) .topbar__logo { margin-left: 48px; }
   overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; scrollbar-width: none; padding-bottom: 4px;
 }
 .ocards::-webkit-scrollbar { display: none; }
-.ocard { display: flex; flex-direction: column; scroll-snap-align: start; border: 1px solid var(--line); text-decoration: none; transition: border-color .3s; }
-.ocard:hover { border-color: var(--accent); }
+.ocard { display: flex; flex-direction: column; scroll-snap-align: start; text-decoration: none; }
+
 .ocard__photo { display: block; aspect-ratio: 4 / 3; }
 .ocard__photo img { transition: transform 1.2s var(--ease); }
 .ocard:hover .ocard__photo img { transform: scale(1.04); }
 .ocard__name { padding: .75rem .85rem 0; font-weight: 500; font-size: 1.05rem; }
 .ocard__meta { padding: .15rem .85rem .85rem; font-size: .8rem; line-height: 1.4; }
 .rcards--2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-.rcard--line { border: 1px solid var(--line); }
+.rcard--line { border: 0; }
 
 
 /* ==========================================================
@@ -785,8 +786,8 @@ body:has(> .back-btn) .topbar__logo { margin-left: 48px; }
 .rtools__sum { font-size: .9rem; font-weight: 500; }
 
 .rgrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--gap); }
-.rc { display: flex; flex-direction: column; background: #fff; border: 1px solid var(--line); transition: border-color .3s; cursor: pointer; }
-.rc:hover { border-color: var(--accent); }
+.rc { display: flex; flex-direction: column; background: transparent; cursor: pointer; }
+
 .rc__photo { display: block; aspect-ratio: 4 / 3; }
 .rc__photo img { transition: transform 1.2s var(--ease); }
 .rc:hover .rc__photo img { transform: scale(1.04); }
@@ -892,8 +893,8 @@ dialog[open] { animation: dialogIn .45s var(--ease); }
 .mcat__title { font-size: clamp(1.4rem, 1.15rem + .9vw, 1.9rem); font-weight: 500; margin-bottom: 1rem; padding-bottom: .7rem; border-bottom: 1px solid var(--text); }
 
 .dgrid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(10px, 1.6vw, 22px); }
-.dcard { display: flex; flex-direction: column; background: #fff; border: 1px solid var(--line); transition: border-color .3s; cursor: pointer; }
-.dcard:hover { border-color: var(--accent); }
+.dcard { display: flex; flex-direction: column; background: transparent; cursor: pointer; }
+
 .dcard__photo { display: block; width: 100%; aspect-ratio: 4 / 3; cursor: zoom-in; }
 .dcard__photo img { transition: transform 1.2s var(--ease); }
 .dcard:hover .dcard__photo img { transform: scale(1.04); }
@@ -997,7 +998,7 @@ body:has(.dock) .foot { padding-bottom: 110px; }
    ========================================================== */
 /* ── Вакансії: кожна — окрема картка ── */
 .vcards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--gap); }
-.vcard { display: flex; flex-direction: column; padding: clamp(24px, 3vw, 40px); border: 1px solid var(--line); background: #fff; }
+.vcard { display: flex; flex-direction: column; padding: clamp(24px, 3vw, 40px) 0; background: transparent; }
 .vcard__icon { display: block; width: 46px; height: 46px; color: var(--amber); }
 .vcard__icon svg { width: 100%; height: 100%; fill: none; stroke: currentColor; stroke-width: 1.1; stroke-linecap: round; stroke-linejoin: round; }
 .vcard__h { margin-top: 1.1rem; font-size: clamp(1.6rem, 1.3rem + 1vw, 2.1rem); font-weight: 500; line-height: 1.15; }
@@ -1321,3 +1322,22 @@ a:hover > .ico--ext { transform: translate(2px, -2px); }
 }
 /* фото ще немає — підпис темний, на світлій заглушці */
 .rc__photo:not(:has(img)) .rc__cap { color: var(--text); }
+
+/* ── Заголовки: серіф малими капітелями, як на greatpolonia ── */
+.display, .page-head h1, .room-head h1, .rblock__name, .more__title,
+.vcard__h, .mcat__title, h1, h2, h3 {
+  font-family: var(--display); font-weight: 400; letter-spacing: .01em;
+}
+.hero__kicker, .hero__tag { font-family: var(--display); font-weight: 400; letter-spacing: .12em; }
+.rc__cap b, .gal__cap b { font-family: var(--display); font-weight: 400; letter-spacing: .02em; }
+
+/* ── Перший екран: при скролі вміст меншає, тане й розмивається ── */
+.hero__inner, .hero__facts {
+  transform: scale(var(--hs, 1));
+  opacity: var(--ho, 1);
+  filter: blur(var(--hb, 0px));
+  will-change: transform, opacity, filter;
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero__inner, .hero__facts { transform: none; opacity: 1; filter: none; }
+}

@@ -135,6 +135,28 @@
     });
   }
 
+  /* ── Перший екран при скролі: вміст меншає, тане й розмивається ── */
+  var heroEl = $('.hero');
+  if (heroEl && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    var hParts = [$('.hero__inner', heroEl), $('.hero__facts', heroEl)].filter(Boolean);
+    var hQueued = false;
+    var heroFade = function () {
+      hQueued = false;
+      // весь рух укладається в третину висоти екрана — далі вміст уже зник
+      var span = window.innerHeight * 0.33;
+      var p = Math.min(1, Math.max(0, window.scrollY / span));
+      hParts.forEach(function (el) {
+        el.style.setProperty('--hs', (1 - p * 0.5).toFixed(3));
+        el.style.setProperty('--ho', (1 - p).toFixed(3));
+        el.style.setProperty('--hb', (p * 50).toFixed(1) + 'px');
+      });
+    };
+    heroFade();
+    window.addEventListener('scroll', function () {
+      if (!hQueued) { hQueued = true; requestAnimationFrame(heroFade); }
+    }, { passive: true });
+    window.addEventListener('resize', heroFade);
+  }
   /* ── Смуга з логотипом зверху (коли гортаєш) і кнопки «Меню» / «Назад» у тон темних місць під ними ── */
   var darkEls = $$('.hero, .leisure');
   var topbar = $('[data-topbar]'), heroTop = $('.hero'), backBtn = $('.back-btn');
