@@ -18,7 +18,7 @@
 
   --font:    'Manrope', 'Helvetica Neue', Arial, sans-serif;
   --display: 'Playfair Display SC', Georgia, 'Times New Roman', serif;
-  --script:  'Marck Script', 'Playfair Display SC', cursive;
+  --script:  'Great Vibes', 'Playfair Display SC', cursive;
 
   --gutter: clamp(20px, 5vw, 72px);
   --frame:  clamp(12px, 2vw, 28px);
@@ -1352,7 +1352,7 @@ main { background: var(--bg); }
 .rc__foot .btn { padding: .85em 1.5em; font-size: .72rem; }
 
 /* ── Перший екран: типографіка за розмірами greatpolonia ── */
-.hero__crest { display: block; width: clamp(96px, 7rem + 3vw, 150px); height: auto; margin-bottom: 1.1rem; }
+.hero__crest { display: block; width: clamp(88px, 6rem + 2.6vw, 128px); height: auto; margin-bottom: .5rem; }
 .hero__h { display: grid; margin: 0; font-weight: 400; }
 .hero__h-top {
   font-family: var(--display); font-weight: 400;
@@ -1362,11 +1362,11 @@ main { background: var(--bg); }
 .hero__h-script {
   font-family: var(--script); font-weight: 400;
   font-size: clamp(3.1rem, 1.6rem + 5.4vw, 6rem);      /* 96px */
-  line-height: 1; margin-top: -.12em;
+  line-height: .82; margin-top: -.2em;
   color: var(--amber);
 }
 .hero__place {
-  margin-top: .7rem;
+  margin-top: .45rem;
   font-family: var(--display); font-weight: 400;
   font-size: clamp(1.25rem, .95rem + 1.45vw, 2.23rem);  /* 35.7px */
   line-height: 1.2;
@@ -1374,20 +1374,20 @@ main { background: var(--bg); }
 .hero__place-script {
   font-family: var(--script); font-weight: 400;
   font-size: clamp(1.25rem, .95rem + 1.45vw, 2.23rem);  /* 35.7px */
-  line-height: 1.2; opacity: .92;
+  line-height: 1; margin-top: -.05em; opacity: .92;
 }
 .hero__rule {
-  width: min(668px, 100%); margin: 2.5rem 0 0;          /* 40px */
+  width: min(668px, 100%); margin: 1.5rem 0 0;
   border: 0; border-top: 1px solid rgba(255, 255, 255, .2);
 }
 .hero__lead {
-  margin-top: 1.25rem;                                  /* 20px */
+  margin-top: .95rem;
   max-width: 42rem;
   font-family: var(--display); font-weight: 400;
   font-size: clamp(.95rem, .9rem + .48vw, 1.31rem);     /* 21px */
   line-height: 1.5;
 }
-.hero__cta { margin-top: 2.2rem; }
+.hero__cta { margin-top: 1.6rem; }
 
 .js .hero__crest, .js .hero__h, .js .hero__place, .js .hero__place-script,
 .js .hero__rule, .js .hero__lead, .js .hero__cta {
