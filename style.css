@@ -24,7 +24,7 @@
   --ease:   cubic-bezier(.2, .7, .2, 1);
 
   /* темні блоки: колір балок під стелею, тепле світло ламп */
-  --hero-bg:   #2a2018;
+  --hero-bg:   #201410;   /* еспресо */
   --hero-text: #ffffff;
   --hero-line: rgba(201, 138, 60, .38);
 
@@ -252,14 +252,13 @@ body:has(> .back-btn) .topbar__logo { margin-left: 48px; }
   padding: calc(var(--frame) + 76px) calc(var(--frame) + 20px) calc(var(--frame) + 28px);
   text-align: center;
   color: var(--hero-text);
-  /* графіт; трохи світліше за написом, щоб золото «світилося»,
-     і ледь помітне зерно, як на дорогому папері (видно лише зблизька) */
+  /* шоколад у центрі, еспресо по краях; ледь помітне зерно —
+     воно зняте на м'яке світло, щоб колір не ставав каламутним */
   background:
     url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.4'/%3E%3C/svg%3E"),
-    radial-gradient(ellipse 80% 55% at 50% 30%, rgba(201, 138, 60, .26) 0%, transparent 70%),
-    radial-gradient(ellipse 120% 90% at 50% 40%, #3a2c20 0%, #241a13 62%, #1b130e 100%),
+    radial-gradient(ellipse 105% 72% at 50% 30%, #4a2f22 0%, #33201a 42%, #23150f 74%, #170d0a 100%),
     var(--hero-bg);
-  background-blend-mode: soft-light, screen, normal, normal;
+  background-blend-mode: soft-light, normal, normal;
 }
 .hero :focus-visible { outline-color: var(--hero-text); }
 .hero__inner { display: flex; flex-direction: column; align-items: center; margin-block: auto; }
@@ -801,7 +800,7 @@ body:has(> .back-btn) .topbar__logo { margin-left: 48px; }
 .rc__more { align-self: center; margin-top: .6rem; font-size: .82rem; text-underline-offset: .3em; }
 .rinfo {
   display: flex; flex-direction: column; align-items: flex-start; padding: clamp(20px, 2.4vw, 32px);
-  background: radial-gradient(ellipse 90% 60% at 50% 0%, #2a2a28 0%, transparent 70%), var(--hero-bg); color: var(--hero-text);
+  background: radial-gradient(ellipse 95% 65% at 50% 0%, #4a2f22 0%, transparent 72%), var(--hero-bg); color: var(--hero-text);
 }
 .rinfo__owl { width: 30px; height: 36px; margin-bottom: auto; color: var(--amber); }
 .rinfo__eye { margin-top: 1.6rem; font-size: .68rem; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; }
@@ -1015,7 +1014,7 @@ body:has(.dock) .foot { padding-bottom: 110px; }
 .leisure {                                      /* темна смуга посеред білого — як перший екран */
   padding: clamp(64px, 8vw, 112px) 0; color: var(--hero-text);
   background:
-    radial-gradient(ellipse 70% 60% at 50% 0%, #2a2a28 0%, transparent 70%),
+    radial-gradient(ellipse 80% 65% at 50% 0%, #4a2f22 0%, transparent 72%),
     var(--hero-bg);
 }
 .leisure :focus-visible { outline-color: var(--hero-text); }
@@ -1023,7 +1022,7 @@ body:has(.dock) .foot { padding-bottom: 110px; }
 .lgrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--gap); }
 .lcard { display: flex; flex-direction: column; border: 1px solid rgba(201, 138, 60, .28); transition: border-color .3s; }
 .lcard:hover { border-color: var(--amber); }
-.leisure .ph { background: linear-gradient(155deg, #2a2a28 0%, #1f1f1e 100%); }
+.leisure .ph { background: linear-gradient(155deg, #3a2620 0%, #241611 100%); }
 .leisure .ph::before { border-color: var(--amber-soft); }
 .leisure .ph__label { color: var(--amber); opacity: .7; }
 .leisure .ph__icon { width: 52px; height: 52px; stroke: var(--amber); opacity: .95; }
