@@ -1,0 +1,629 @@
+<!doctype html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Філін — кафе, номери та сауна в Кобеляках</title>
+  <meta name="description" content="Кафе «Філін» у Кобеляках: домашня кухня, затишні номери, сауна та більярд.">
+  <meta name="theme-color" content="#ffffff">
+  <meta property="og:title" content="Філін — Кобеляки">
+  <meta property="og:description" content="Домашня кухня, номери, сауна та більярд на виїзді з Кобеляк.">
+  <meta property="og:type" content="website">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="stylesheet" href="fonts.css">
+  <link rel="stylesheet" href="style.css">
+  <script>document.documentElement.classList.add('js');</script>
+</head>
+<body>
+
+<!-- Смуга зверху: з’являється, коли гортаєш сторінку -->
+<div class="topbar" data-topbar>
+  <nav class="topbar__nav" aria-label="Розділи сайту"><a href="#about">Про нас</a><a href="#rooms">Номери</a><a href="menu.html">Кафе</a><a href="vakansii.html">Вакансії</a><a href="#contacts">Контакти</a></nav>
+  <a class="topbar__logo" href="index.html" aria-label="Кафе «Філін» — на головну"><svg viewBox="0 0 60 72" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M13 4C11 14 10 22 12 30C10 46 18 60 30 67C42 60 50 46 48 30C50 22 49 14 47 4"/><path d="M13 4C20 12 26 18 30 25C34 18 40 12 47 4"/><circle cx="22.5" cy="26" r="4.6"/><circle cx="37.5" cy="26" r="4.6"/></g></svg><span>FILIN</span></a>
+</div>
+
+<!-- Кнопка-бургер справа зверху: відкриває висувну панель з розділами сайту -->
+<button class="menu-btn" type="button" aria-expanded="false" aria-controls="drawer" aria-label="Відкрити навігацію сайту">
+  <span class="menu-btn__lines" aria-hidden="true"><i></i><i></i><i></i></span>
+</button>
+
+<div class="drawer" id="drawer" aria-hidden="true">
+  <div class="drawer__backdrop" data-drawer-close></div>
+  <nav class="drawer__panel" aria-label="Меню сайту">
+    <p class="drawer__logo" aria-label="Філін">F<span class="lg-i">I</span>L<span class="lg-i">I</span>N</p>
+    <ul class="drawer__list">
+      <li style="--i:0"><a href="#about"><span>Про нас</span></a></li>
+      <li style="--i:1"><a href="#rooms"><span>Номери</span><small>бронювання</small></a></li>
+      <li style="--i:2"><a href="menu.html"><span>Кафе</span><small>меню страв</small></a></li>
+      <li style="--i:3"><a href="vakansii.html"><span>Вакансії</span><small>робота у нас</small></a></li>
+      <li style="--i:4"><a href="#contacts"><span>Контакти</span></a></li>
+    </ul>
+    <div class="drawer__foot">
+      <a class="btn btn--block" href="#rooms"><span>Дивитись усі номери</span></a>
+      <p class="drawer__meta">Кобеляки · щодня 07:00 — 23:00</p>
+    </div>
+  </nav>
+</div>
+
+<!-- ─────────────── 1. ГОЛОВНИЙ ЕКРАН ─────────────── -->
+<header class="hero" id="top">
+  <div class="hero__frame" aria-hidden="true"></div>
+
+  <div class="hero__inner">
+    <!-- Знак філіна: промальовується золотою лінією -->
+    <svg class="owl" viewBox="0 0 60 72" aria-hidden="true">
+      <defs>
+        <linearGradient id="owl-gold" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="0" y2="72">
+          <stop offset="0" stop-color="#fbedbd"/><stop offset=".35" stop-color="#e3c173"/><stop offset=".6" stop-color="#c79a45"/><stop offset=".85" stop-color="#eed28a"/><stop offset="1" stop-color="#d7b463"/>
+        </linearGradient>
+      </defs>
+      <g class="owl__lines" fill="none" stroke="url(#owl-gold)" stroke-linecap="round" stroke-linejoin="round">
+        <path pathLength="1" d="M13 4C11 14 10 22 12 30C10 46 18 60 30 67"/>
+        <path pathLength="1" d="M47 4C49 14 50 22 48 30C50 46 42 60 30 67"/>
+        <path pathLength="1" d="M13 4C20 12 26 18 30 25"/>
+        <path pathLength="1" d="M47 4C40 12 34 18 30 25"/>
+        <circle pathLength="1" cx="22.5" cy="26" r="4.6"/>
+        <circle pathLength="1" cx="37.5" cy="26" r="4.6"/>
+        <path pathLength="1" d="M28.6 27.5 30 32l1.4-4.5"/>
+        <path pathLength="1" d="M14 31c3 6 10 7 16 4 6 3 13 2 16-4"/>
+        <path pathLength="1" d="M25.5 45 30 48.5l4.5-3.5M26.5 51.5 30 54.5l3.5-3M27.8 57.5 30 59.5l2.2-2"/>
+        <path pathLength="1" d="M6 70h48"/>
+      </g>
+      <g class="owl__eyes" fill="url(#owl-gold)">
+        <circle cx="22.5" cy="26" r="1.7"/><circle cx="37.5" cy="26" r="1.7"/>
+      </g>
+    </svg>
+    <p class="hero__kicker">Кобеляки · Полтавщина</p>
+    <h1 class="hero__title" aria-label="Філін">
+      <span aria-hidden="true" style="--i:0">F</span><span aria-hidden="true" style="--i:1">I</span><span aria-hidden="true" style="--i:2">L</span><span aria-hidden="true" style="--i:3">I</span><span aria-hidden="true" style="--i:4">N</span>
+    </h1>
+    <p class="hero__tag">Кафе · Мотель · Сауна</p>
+    <p class="hero__lead">Домашня кухня та затишні номери на виїзді з Кобеляк у бік Дніпра.</p>
+    <div class="hero__cta">
+      <a class="btn" href="#rooms"><span>Забронювати номер</span></a>
+      <a class="btn btn--ghost" href="menu.html"><span>Меню кафе</span></a>
+    </div>
+  </div>
+
+  <ul class="hero__facts">
+    <li><b>07:00 — 23:00</b><span data-open-status>кафе працює щодня</span></li>
+    <li><b>5 типів номерів</b><span>від 1 до 4 гостей</span></li>
+    <li><b>Сауна</b><span>та більярд на території</span></li>
+    <li><b>Домашня кухня</b><span>страви як удома</span></li>
+  </ul>
+</header>
+
+<main>
+<!-- ─────────────── 2. ПРО НАС + ГАЛЕРЕЯ ─────────────── -->
+<section class="about" id="about">
+  <div class="wrap about__grid">
+    <div class="about__title reveal">
+      <p class="eyebrow">Про нас</p>
+      <h2 class="display">Місце, де дорога зупиняється</h2>
+    </div>
+
+    <div class="about__text reveal" style="--d:.15s">
+      <p>Кафе з домашньою кухнею та мотель на виїзді з Кобеляк у бік Дніпра.</p>
+      <dl class="facts">
+        <div><dt>Кухня</dt><dd>домашня</dd></div>
+        <div><dt>Мотель</dt><dd>затишні номери</dd></div>
+        <div><dt>Відпочинок</dt><dd>сауна та більярд</dd></div>
+        <div><dt>Щодня</dt><dd>07:00 — 23:00</dd></div>
+      </dl>
+    </div>
+  </div>
+
+  <!-- Галерея. Фото: gallery-1.jpg … gallery-6.jpg -->
+  <div class="wrap">
+    <div class="gallery reveal" aria-label="Галерея">
+      <button class="tile tile--1 ph" type="button" data-full="gallery-1.jpg" data-caption="Зал" data-icon="cup">
+        <span class="ph__label">Зал</span>
+        <img src="gallery-1.jpg" alt="Зал кафе «Філін»" loading="lazy" onerror="this.remove()">
+        <span class="tile__cap">Зал</span>
+      </button>
+      <button class="tile tile--2 ph" type="button" data-full="gallery-2.jpg" data-caption="Домашні страви" data-icon="dish">
+        <span class="ph__label">Страви</span>
+        <img src="gallery-2.jpg" alt="Домашні страви" loading="lazy" onerror="this.remove()">
+        <span class="tile__cap">Домашні страви</span>
+      </button>
+      <button class="tile tile--3 ph" type="button" data-full="gallery-3.jpg" data-caption="Сауна" data-icon="sauna">
+        <span class="ph__label">Сауна</span>
+        <img src="gallery-3.jpg" alt="Сауна" loading="lazy" onerror="this.remove()">
+        <span class="tile__cap">Сауна</span>
+      </button>
+      <button class="tile tile--4 ph" type="button" data-full="gallery-4.jpg" data-caption="Більярд" data-icon="billiard">
+        <span class="ph__label">Більярд</span>
+        <img src="gallery-4.jpg" alt="Більярдна" loading="lazy" onerror="this.remove()">
+        <span class="tile__cap">Більярд</span>
+      </button>
+      <button class="tile tile--5 ph" type="button" data-full="gallery-5.jpg" data-caption="Тераса" data-icon="sun">
+        <span class="ph__label">Тераса</span>
+        <img src="gallery-5.jpg" alt="Тераса" loading="lazy" onerror="this.remove()">
+        <span class="tile__cap">Тераса</span>
+      </button>
+      <button class="tile tile--6 ph" type="button" data-full="gallery-6.jpg" data-caption="Вечір у «Філіні»" data-icon="moon">
+        <span class="ph__label">Вечір</span>
+        <img src="gallery-6.jpg" alt="Вечір у «Філіні»" loading="lazy" onerror="this.remove()">
+        <span class="tile__cap">Вечір у «Філіні»</span>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────── 3. НОМЕРИ ─────────────── -->
+<section class="rooms" id="rooms">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div>
+        <p class="eyebrow">Номери</p>
+        <h2 class="display">Відпочинок після дороги</h2>
+      </div>
+    </div>
+
+    <!-- Кнопка «Фільтр» — фільтри за бажанням; за замовчуванням видно всі номери -->
+    <div class="rtools">
+      <button type="button" class="fbtn" data-open-filter><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M7 12h10M10 18h4"/></svg><span>Фільтр</span><b class="fbtn__n" data-filter-n hidden>0</b></button>
+      <p class="rtools__sum" data-filter-sum aria-live="polite">Усі номери</p>
+      <button type="button" class="pop__link" data-filter-reset hidden>Скинути</button>
+    </div>
+
+    <!-- Фото номерів: room-4-1.jpg (Одномісний), room-1-1.jpg (Стандарт), room-2-1.jpg (Твін), room-5-1.jpg (Люкс), room-3-1.jpg (Сімейний) -->
+    <div class="rgrid" data-rooms>
+      <article class="rc" id="odnomisnyi" data-room-id="odnomisnyi" data-cap="1" data-bed="single" data-href="odnomisnyi.html">
+        <a class="rc__photo ph" data-icon="bed" href="odnomisnyi.html" aria-label="Відкрити номер «Одномісний»">
+          <span class="ph__label">Фото</span>
+          <img src="room-4-1.jpg" alt="Номер «Одномісний»" loading="lazy" onerror="this.remove()">
+        </a>
+        <div class="rc__body">
+          <h3 class="rc__name"><a href="odnomisnyi.html">Одномісний</a></h3>
+          <p class="rc__meta">1 гість · односпальне ліжко</p>
+          <p class="rc__price" data-price>Ціну уточнимо</p>
+          <button class="btn btn--block" type="button" data-book="odnomisnyi"><span>Забронювати</span></button>
+          <a class="rc__more" href="odnomisnyi.html">Детальніше</a>
+        </div>
+      </article>
+      <article class="rc" id="standart" data-room-id="standart" data-cap="2" data-bed="double" data-href="standart.html">
+        <a class="rc__photo ph" data-icon="bed" href="standart.html" aria-label="Відкрити номер «Стандарт»">
+          <span class="ph__label">Фото</span>
+          <img src="room-1-1.jpg" alt="Номер «Стандарт»" loading="lazy" onerror="this.remove()">
+        </a>
+        <div class="rc__body">
+          <h3 class="rc__name"><a href="standart.html">Стандарт</a></h3>
+          <p class="rc__meta">До 2 гостей · двоспальне ліжко</p>
+          <p class="rc__price" data-price>Ціну уточнимо</p>
+          <button class="btn btn--block" type="button" data-book="standart"><span>Забронювати</span></button>
+          <a class="rc__more" href="standart.html">Детальніше</a>
+        </div>
+      </article>
+      <article class="rc" id="tvin" data-room-id="tvin" data-cap="2" data-bed="twin" data-href="tvin.html">
+        <a class="rc__photo ph" data-icon="bed" href="tvin.html" aria-label="Відкрити номер «Твін»">
+          <span class="ph__label">Фото</span>
+          <img src="room-2-1.jpg" alt="Номер «Твін»" loading="lazy" onerror="this.remove()">
+        </a>
+        <div class="rc__body">
+          <h3 class="rc__name"><a href="tvin.html">Твін</a></h3>
+          <p class="rc__meta">До 2 гостей · два окремі ліжка</p>
+          <p class="rc__price" data-price>Ціну уточнимо</p>
+          <button class="btn btn--block" type="button" data-book="tvin"><span>Забронювати</span></button>
+          <a class="rc__more" href="tvin.html">Детальніше</a>
+        </div>
+      </article>
+      <article class="rc" id="lyuks" data-room-id="lyuks" data-cap="3" data-bed="double" data-href="lyuks.html">
+        <a class="rc__photo ph" data-icon="bed" href="lyuks.html" aria-label="Відкрити номер «Люкс»">
+          <span class="ph__label">Фото</span>
+          <img src="room-5-1.jpg" alt="Номер «Люкс»" loading="lazy" onerror="this.remove()">
+        </a>
+        <div class="rc__body">
+          <h3 class="rc__name"><a href="lyuks.html">Люкс</a></h3>
+          <p class="rc__meta">До 3 гостей · двоспальне ліжко й диван</p>
+          <p class="rc__price" data-price>Ціну уточнимо</p>
+          <button class="btn btn--block" type="button" data-book="lyuks"><span>Забронювати</span></button>
+          <a class="rc__more" href="lyuks.html">Детальніше</a>
+        </div>
+      </article>
+      <article class="rc" id="simeinyi" data-room-id="simeinyi" data-cap="4" data-bed="family" data-href="simeinyi.html">
+        <a class="rc__photo ph" data-icon="bed" href="simeinyi.html" aria-label="Відкрити номер «Сімейний»">
+          <span class="ph__label">Фото</span>
+          <img src="room-3-1.jpg" alt="Номер «Сімейний»" loading="lazy" onerror="this.remove()">
+        </a>
+        <div class="rc__body">
+          <h3 class="rc__name"><a href="simeinyi.html">Сімейний</a></h3>
+          <p class="rc__meta">До 4 гостей · кілька спальних місць</p>
+          <p class="rc__price" data-price>Ціну уточнимо</p>
+          <button class="btn btn--block" type="button" data-book="simeinyi"><span>Забронювати</span></button>
+          <a class="rc__more" href="simeinyi.html">Детальніше</a>
+        </div>
+      </article>
+      <!-- Великою компанією: заповнює останню клітинку сітки номерів -->
+      <aside class="rinfo" data-rinfo>
+        <svg class="rinfo__owl" viewBox="0 0 60 72" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 4C11 14 10 22 12 30C10 46 18 60 30 67C42 60 50 46 48 30C50 22 49 14 47 4"/><path d="M13 4C20 12 26 18 30 25C34 18 40 12 47 4"/><circle cx="22.5" cy="26" r="4.6"/><circle cx="37.5" cy="26" r="4.6"/><path d="M28.6 27.5 30 32l1.4-4.5"/><path d="M6 70h48"/></g></svg>
+        <p class="rinfo__eye">Великою компанією?</p>
+        <p class="rinfo__h">Підберемо кілька номерів поруч</p>
+        <p class="rinfo__txt">Номер уміщує до 4 гостей. Якщо вас більше — зателефонуйте, усе організуємо. А сауну прогріємо до вашого приїзду.</p>
+        <a class="btn btn--light needs-phone" data-phone-link data-call hidden href="#"><span>Зателефонувати</span></a>
+        <a class="btn btn--light no-phone" href="https://www.instagram.com/cafe__filin__/" target="_blank" rel="noopener"><span>Написати в Instagram</span></a>
+      </aside>
+    </div>
+    <div class="rempty" data-empty hidden>
+      <p data-empty-text>Немає номерів за цими фільтрами.</p>
+      <div class="call-us" data-call-us hidden>
+        <a class="btn needs-phone" data-phone-link data-call hidden href="#"><span>Зателефонувати</span></a>
+        <a class="btn btn--ghost no-phone" href="https://www.instagram.com/cafe__filin__/" target="_blank" rel="noopener"><span>Написати в Instagram</span></a>
+      </div>
+      <button type="button" class="pop__link" data-filter-reset>Показати всі номери</button>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────── ВІДПОЧИНОК НА ТЕРИТОРІЇ ─────────────── -->
+<section class="leisure" id="leisure">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div>
+        <p class="eyebrow">Відпочинок</p>
+        <h2 class="display">Усе поруч, на території</h2>
+      </div>
+    </div>
+    <div class="lgrid">
+      <article class="lcard reveal">
+        <div class="lcard__photo ph" data-icon="sauna"><span class="ph__label">Сауна</span><img src="gallery-3.jpg" alt="Сауна" loading="lazy" onerror="this.remove()"></div>
+        <div class="lcard__body">
+          <h3>Сауна</h3>
+          <p>Прогрітися й відпочити після дороги. Вільний час і вартість підкажемо.</p>
+          <a class="lcard__link" href="https://www.instagram.com/cafe__filin__/" target="_blank" rel="noopener">Уточнити час ↗</a>
+        </div>
+      </article>
+      <article class="lcard reveal" style="--d:.1s">
+        <div class="lcard__photo ph" data-icon="billiard"><span class="ph__label">Більярд</span><img src="gallery-4.jpg" alt="Більярд" loading="lazy" onerror="this.remove()"></div>
+        <div class="lcard__body">
+          <h3>Більярд</h3>
+          <p>Партія для компанії ввечері, поки готується вечеря.</p>
+          <a class="lcard__link" href="https://www.instagram.com/cafe__filin__/" target="_blank" rel="noopener">Уточнити час ↗</a>
+        </div>
+      </article>
+      <article class="lcard reveal" style="--d:.2s">
+        <div class="lcard__photo ph" data-icon="cup"><span class="ph__label">Кафе</span><img src="menu.jpg" alt="Кафе «Філін»" loading="lazy" onerror="this.remove()"></div>
+        <div class="lcard__body">
+          <h3>Кафе</h3>
+          <p>Домашня кухня щодня з 07:00 до 23:00 — сніданки, обіди й вечері.</p>
+          <a class="lcard__link" href="menu.html">Меню кафе</a>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────── 4. КАФЕ → МЕНЮ ─────────────── -->
+<section class="cafe" id="cafe">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div>
+        <p class="eyebrow">Кафе</p>
+        <h2 class="display">Популярне в кафе</h2>
+      </div>
+      <a class="btn" href="menu.html"><span>Усе меню</span>
+        <svg viewBox="0 0 28 10" width="28" height="10" aria-hidden="true"><path d="M0 5h26M22 1l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.2"/></svg>
+      </a>
+    </div>
+    <!-- Страви з позначкою top: true у menu-data.js -->
+    <div class="dgrid dgrid--4" data-popular></div>
+    <noscript><p><a href="menu.html">Відкрити меню кафе</a></p></noscript>
+  </div>
+</section>
+<!-- ─────────────── ЯК ДОЇХАТИ ─────────────── -->
+<section class="route" id="route">
+  <div class="wrap route__grid">
+    <div class="reveal">
+      <p class="eyebrow">Як доїхати</p>
+      <h2 class="display">На виїзді з Кобеляк у бік Дніпра</h2>
+    </div>
+    <div class="route__info reveal" style="--d:.15s">
+      <dl class="facts">
+        <div><dt>Адреса</dt><dd>Кобеляки, Полтавська обл., об’їзна дорога</dd></div>
+        <div><dt>Кафе</dt><dd>щодня 07:00 — 23:00<span class="route__status" data-open-status hidden></span></dd></div>
+        <div><dt>Орієнтир</dt><dd>виїзд у бік Дніпра</dd></div>
+      </dl>
+      <div class="route__btns">
+        <a class="btn" href="https://www.google.com/maps/dir/?api=1&amp;destination=%D0%9A%D0%B0%D1%84%D0%B5+%D0%A4%D1%96%D0%BB%D1%96%D0%BD+%D0%9A%D0%BE%D0%B1%D0%B5%D0%BB%D1%8F%D0%BA%D0%B8" target="_blank" rel="noopener"><span>Маршрут у Google Maps</span></a>
+        <a class="btn btn--ghost" href="https://www.waze.com/live-map/directions/filin,-kafe-kobelyaki?to=place.w.22413803.224269106.14722059" target="_blank" rel="noopener"><span>Відкрити у Waze</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────── КОРИСНО ЗНАТИ ─────────────── -->
+<!-- ⚠ Відповіді з позначкою «уточнити» — приклад, замініть на справжні умови -->
+<section class="faq" id="faq">
+  <div class="wrap faq__grid">
+    <div class="faq__head reveal">
+      <p class="eyebrow">Корисно знати</p>
+      <h2 class="display">Перед приїздом</h2>
+      <p class="faq__more">Не знайшли відповідь? <a href="https://www.instagram.com/cafe__filin__/" target="_blank" rel="noopener">Напишіть нам в Instagram ↗</a></p>
+    </div>
+    <div class="faq__list reveal" style="--d:.15s">
+      <details class="faq__item">
+        <summary>О котрій заїзд і виїзд?</summary>
+        <!-- уточнити -->
+        <p>Заїзд — з 14:00, виїзд — до 12:00. Приїжджаєте раніше чи пізніше — напишіть, підлаштуємося.</p>
+      </details>
+      <details class="faq__item">
+        <summary>Чи є стоянка?</summary>
+        <!-- уточнити -->
+        <p>Так, безкоштовна стоянка біля мотелю — для легкових авто й вантажівок.</p>
+      </details>
+      <details class="faq__item">
+        <summary>Можна оплатити карткою?</summary>
+        <!-- уточнити -->
+        <p>Так, готівкою або карткою — і в кафе, і за номер.</p>
+      </details>
+      <details class="faq__item">
+        <summary>Можна з тваринами?</summary>
+        <!-- уточнити -->
+        <p>Невеликих тварин — за попередньою домовленістю. Напишіть нам перед приїздом.</p>
+      </details>
+      <details class="faq__item">
+        <summary>Де поснідати?</summary>
+        <p>Кафе відкривається о 07:00 — сніданки, кава та домашні страви з <a href="menu.html">меню</a>.</p>
+      </details>
+      <details class="faq__item">
+        <summary>Як забронювати сауну чи більярд?</summary>
+        <p>Сауну — позначте «Прогріти сауну», коли бронюєте номер, і до вашого часу вона буде гаряча. Про більярд напишіть нам в Instagram або зателефонуйте.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ─────────────── ПІДВАЛ / КОНТАКТИ ─────────────── -->
+<footer class="foot" id="contacts">
+  <div class="wrap">
+    <div class="foot__top">
+      <div class="foot__brand"><img class="foot__emblem" src="logo.png" alt="Логотип кафе «Філін»"><p class="foot__logo" aria-label="Філін">F<span class="lg-i">I</span>L<span class="lg-i">I</span>N</p></div>
+      <a class="btn btn--light" href="#rooms"><span>Дивитись усі номери</span></a>
+    </div>
+
+    <div class="foot__cols">
+      <div>
+        <h3>Адреса</h3>
+        <p>Кобеляки, Полтавська обл.<br>виїзд у бік Дніпра, об’їзна дорога</p>
+        <p><a href="https://www.google.com/maps/search/?api=1&amp;query=%D0%9A%D0%B0%D1%84%D0%B5+%D0%A4%D1%96%D0%BB%D1%96%D0%BD+%D0%9A%D0%BE%D0%B1%D0%B5%D0%BB%D1%8F%D0%BA%D0%B8" target="_blank" rel="noopener">Відкрити на карті ↗</a></p>
+      </div>
+      <div>
+        <h3>Години</h3>
+        <p>Щодня<br>07:00 — 23:00</p>
+      </div>
+      <div>
+        <h3>Зв’язок</h3>
+        <p data-foot-phones><a href="tel:+380681558595">068 155 85 95</a><br><a href="tel:+380662783888">066 278 38 88</a></p>
+        <p><a href="https://www.instagram.com/cafe__filin__/" target="_blank" rel="noopener">Instagram ↗</a></p>
+      </div>
+      <div>
+        <h3>Сайт</h3>
+        <ul>
+          <li><a href="#about">Про нас</a></li>
+          <li><a href="#rooms">Номери</a></li>
+          <li><a href="menu.html">Меню кафе</a></li>
+          <li><a href="vakansii.html">Вакансії</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="foot__bottom">
+      <p>© 2026 Кафе «Філін» · Кобеляки</p>
+      <button type="button" data-to-top>Нагору ↑</button>
+    </div>
+  </div>
+</footer>
+
+<!-- Перегляд фото -->
+<dialog class="lightbox" id="lightbox" aria-label="Перегляд фото">
+  <button class="lightbox__close" type="button" data-close aria-label="Закрити">×</button>
+  <button class="lightbox__nav lightbox__nav--prev" type="button" data-prev aria-label="Попереднє фото">←</button>
+  <figure>
+    <img alt="">
+    <figcaption></figcaption>
+  </figure>
+  <button class="lightbox__nav lightbox__nav--next" type="button" data-next aria-label="Наступне фото">→</button>
+</dialog>
+
+<script src="menu-data.js"></script>
+<!-- FILTER PANEL: дати, гості, ліжка — усе за бажанням -->
+<dialog class="bpanel fpanel" id="fpanel" aria-label="Фільтр номерів">
+  <div class="bpanel__head">
+    <p class="bpanel__title">Фільтр</p>
+    <button type="button" class="bpanel__close" data-dialog-close aria-label="Закрити">×</button>
+  </div>
+  <div class="fpanel__body">
+    <section class="fgroup">
+      <h3>Дати</h3>
+      <div class="bw" data-bw data-months="1">
+    <div class="bw__field">
+      <button class="bw__btn" type="button" data-pop="cal" aria-expanded="false">
+        <span class="bw__label">Заїзд — виїзд</span>
+        <span class="bw__value" data-text="dates">Оберіть дати</span>
+      </button>
+      <div class="pop pop--cal" data-panel="cal" hidden>
+        <div class="pop__head"><b>Дати проживання</b><button type="button" data-pop-close aria-label="Закрити">×</button></div>
+        <div class="cal" data-cal></div>
+        <div class="pop__foot"><span data-text="hint">Оберіть дату заїзду</span><button type="button" class="pop__link" data-cal-clear>Очистити</button></div>
+      </div>
+    </div>
+
+  </div>
+    </section>
+    <section class="fgroup">
+      <h3>Гості</h3>
+      <div class="step">
+        <div><b>Дорослі</b><small>від 13 років</small></div>
+        <div class="step__ctl">
+          <button type="button" data-fstep="adults" data-d="-1" aria-label="Дорослі: менше">−</button>
+          <output data-fval="adults">1</output>
+          <button type="button" data-fstep="adults" data-d="1" aria-label="Дорослі: більше">+</button>
+        </div>
+      </div>
+      <div class="step">
+        <div><b>Діти</b><small>до 12 років</small></div>
+        <div class="step__ctl">
+          <button type="button" data-fstep="children" data-d="-1" aria-label="Діти: менше">−</button>
+          <output data-fval="children">0</output>
+          <button type="button" data-fstep="children" data-d="1" aria-label="Діти: більше">+</button>
+        </div>
+      </div>
+      <p class="fgroup__hint" data-fhint>Покажемо номери, де всі вмістяться.</p>
+    </section>
+    <section class="fgroup">
+      <h3>Ліжка</h3>
+      <div class="chips"><button type="button" class="chip is-on" data-filter="bed" data-value="all" aria-pressed="true">Усі</button><button type="button" class="chip" data-filter="bed" data-value="single" aria-pressed="false">Односпальне</button><button type="button" class="chip" data-filter="bed" data-value="double" aria-pressed="false">Двоспальне</button><button type="button" class="chip" data-filter="bed" data-value="twin" aria-pressed="false">Окремі</button><button type="button" class="chip" data-filter="bed" data-value="family" aria-pressed="false">Для родини</button></div>
+    </section>
+  </div>
+  <div class="fpanel__foot">
+    <button type="button" class="pop__link" data-filter-reset>Скинути</button>
+    <button type="button" class="btn" data-dialog-close data-filter-show>Показати номери</button>
+  </div>
+</dialog>
+<!-- /FILTER PANEL -->
+
+<!-- ─────────────── БРОНЮВАННЯ: форма зліва, «чек» для гостя справа ─────────────── -->
+<dialog class="bk" id="bk" aria-labelledby="bk-title">
+  <div class="bk__bar">
+    <p class="bk__title" id="bk-title">Бронювання</p>
+    <button type="button" class="bpanel__close" data-dialog-close aria-label="Закрити">×</button>
+  </div>
+  <div class="bk__body">
+    <form class="bk__form booking" id="bk-form" novalidate>
+      <!-- Номер уже обрано кнопкою «Забронювати»; тут — лише нагадування, який саме -->
+      <div class="bk-sel" data-bk-sel>
+        <span class="bk-sel__ph ph" data-sel-ph></span>
+        <div>
+          <p class="bk-sel__eye">Ви бронюєте</p>
+          <p class="bk-sel__name" data-sel-name>—</p>
+          <p class="bk-sel__meta" data-sel-meta></p>
+        </div>
+      </div>
+      <div class="bk-rooms" hidden>
+        <input type="radio" name="room" value="odnomisnyi" data-name="Одномісний" data-cap="1" data-meta="1 гість · односпальне ліжко" data-img="room-4-1.jpg">
+        <input type="radio" name="room" value="standart" data-name="Стандарт" data-cap="2" data-meta="До 2 гостей · двоспальне ліжко" data-img="room-1-1.jpg">
+        <input type="radio" name="room" value="tvin" data-name="Твін" data-cap="2" data-meta="До 2 гостей · два окремі ліжка" data-img="room-2-1.jpg">
+        <input type="radio" name="room" value="lyuks" data-name="Люкс" data-cap="3" data-meta="До 3 гостей · двоспальне ліжко й диван" data-img="room-5-1.jpg">
+        <input type="radio" name="room" value="simeinyi" data-name="Сімейний" data-cap="4" data-meta="До 4 гостей · кілька спальних місць" data-img="room-3-1.jpg">
+      </div>
+
+      <section class="bk__sec" data-sec="dates">
+        <h3 class="bk__h"><i>1</i>Дати й гості</h3>
+        <div class="bw" data-bw data-months="1">
+          <div class="bw__field">
+            <button class="bw__btn" type="button" data-pop="cal" aria-expanded="false">
+              <span class="bw__label">Заїзд — виїзд</span>
+              <span class="bw__value" data-text="dates">Оберіть дати</span>
+            </button>
+            <div class="pop pop--cal" data-panel="cal" hidden>
+              <div class="pop__head"><b>Дати проживання</b><button type="button" data-pop-close aria-label="Закрити">×</button></div>
+              <div class="cal" data-cal></div>
+              <div class="pop__foot"><span data-text="hint">Оберіть дату заїзду</span><button type="button" class="pop__link" data-cal-clear>Очистити</button></div>
+            </div>
+          </div>
+          <div class="bk-guests">
+          <div class="step">
+            <div><b>Дорослі</b><small>від 13 років</small></div>
+            <div class="step__ctl">
+              <button type="button" data-step="adults" data-d="-1" aria-label="Дорослі: менше">−</button>
+              <output data-val="adults">0</output>
+              <button type="button" data-step="adults" data-d="1" aria-label="Дорослі: більше">+</button>
+            </div>
+          </div>
+          <div class="step">
+            <div><b>Діти</b><small>до 12 років</small></div>
+            <div class="step__ctl">
+              <button type="button" data-step="children" data-d="-1" aria-label="Діти: менше">−</button>
+              <output data-val="children">0</output>
+              <button type="button" data-step="children" data-d="1" aria-label="Діти: більше">+</button>
+            </div>
+          </div>
+          </div>
+        </div>
+        <!-- гостей більше, ніж вміщує номер: більший номер або дзвінок -->
+        <div class="bk__cap" data-cap-note role="status" hidden></div>
+      </section>
+
+      <section class="bk__sec">
+        <h3 class="bk__h"><i>2</i>Сауна <small>за бажанням</small></h3>
+        <div class="bk-ex" data-ex="sauna">
+          <label class="bk-ex__head">
+            <input type="checkbox" name="sauna">
+            <span class="bk-ex__box" aria-hidden="true"></span>
+            <span class="bk-ex__txt"><b>Прогріти сауну</b><small>Прогріємо заздалегідь — до вашого часу сауна буде гаряча.</small></span>
+            <em class="bk-ex__price" data-ex-price="sauna"></em>
+          </label>
+          <div class="bk-ex__more" hidden>
+            <div class="field-row">
+              <label class="field"><span>День</span><select name="saunaDay" data-days></select></label>
+              <label class="field"><span>На котру</span><select name="saunaTime"><option value="14:00">14:00</option><option value="15:00">15:00</option><option value="16:00">16:00</option><option value="17:00">17:00</option><option value="18:00">18:00</option><option value="19:00" selected>19:00</option><option value="20:00">20:00</option><option value="21:00">21:00</option><option value="22:00">22:00</option></select></label>
+            </div>
+            <div class="step">
+              <div><b>Скільки годин</b></div>
+              <div class="step__ctl">
+                <button type="button" data-xstep="saunaHours" data-d="-1" aria-label="Менше годин">−</button>
+                <output data-xval="saunaHours">2 год</output>
+                <button type="button" data-xstep="saunaHours" data-d="1" aria-label="Більше годин">+</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="bk__sec">
+        <h3 class="bk__h"><i>3</i>Ваші дані</h3>
+        <div class="field-row">
+          <label class="field"><span>Ім’я</span><input name="name" type="text" autocomplete="name" required></label>
+          <label class="field"><span>Телефон</span><input name="phone" type="tel" autocomplete="tel" inputmode="tel" required></label>
+        </div>
+        <p class="bk__label">Як з вами зв’язатися</p>
+        <div class="chips bk__via">
+          <label class="chip"><input type="radio" name="via" value="Дзвінок" checked>Дзвінок</label>
+          <label class="chip"><input type="radio" name="via" value="Viber">Viber</label>
+          <label class="chip"><input type="radio" name="via" value="Telegram">Telegram</label>
+        </div>
+        <label class="field"><span>Побажання</span><textarea name="note" rows="2" placeholder="Наприклад: потрібне дитяче ліжечко"></textarea></label>
+      </section>
+    </form>
+
+    <aside class="bk__side">
+      <div class="rcpt" data-rcpt>
+        <p class="rcpt__stamp" aria-hidden="true">Надіслано</p>
+        <div class="rcpt__head">
+          <p class="rcpt__logo" aria-label="Філін">FILIN</p>
+          <p class="rcpt__kind">Ваше бронювання</p>
+          <p class="rcpt__no" data-r-no></p>
+        </div>
+        <div class="rcpt__rows" data-r-rows></div>
+        <div class="rcpt__total"><span>Разом</span><b data-r-total>—</b></div>
+        <p class="rcpt__note">Попередній розрахунок. Ціну й вільні дати підтвердимо, коли зв’яжемося з вами. Нічого не списуємо.</p>
+      </div>
+
+      <div class="bk__go">
+        <div class="bk__progress"><span data-r-bar></span></div>
+        <p class="bk__left" data-r-left></p>
+        <p class="book__error" role="alert" hidden></p>
+        <button class="btn btn--block" type="submit" form="bk-form"><span>Надіслати заявку</span></button>
+      </div>
+
+      <div class="bk__done" hidden>
+        <p class="bk__done-title">Дякуємо! Заявку надіслано</p>
+        <p class="bk__done-hint">Ми зв’яжемося з вами, щоб підтвердити бронь. Збережіть цей чек — у ньому все, що ви обрали.</p>
+        <button class="btn btn--block" type="button" data-dialog-close><span>Готово</span></button>
+      </div>
+    </aside>
+  </div>
+
+  <!-- на телефоні: підсумок унизу, поки «чек» не на екрані -->
+  <div class="bk__mbar">
+    <div><b data-m-total>—</b><small data-m-sum>Оберіть дати</small></div>
+    <button type="button" class="btn" data-to-rcpt><span>До чеку ↓</span></button>
+  </div>
+</dialog>
+
+<script src="config.js"></script>
+<script src="main.js"></script>
+</body>
+</html>
