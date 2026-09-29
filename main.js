@@ -563,7 +563,7 @@
         var price = +prices[c.getAttribute('data-room-id')] || 0;
         var pEl = $('[data-price]', c);
         // ціни ще немає — рядок просто порожній, щоб не писати «Ціну уточнимо» на фото
-        if (pEl) pEl.textContent = !price ? ''
+        if (pEl) pEl.textContent = !price ? 'Ціну уточнимо'
           : n ? money(price * n) + ' за ' + nightsText(n) : 'від ' + money(price) + ' / ніч';
       });
       $('[data-empty]').hidden = shown > 0;

@@ -20,7 +20,7 @@
 
 <!-- Смуга зверху: з’являється, коли гортаєш сторінку -->
 <div class="topbar" data-topbar>
-  <nav class="topbar__nav" aria-label="Розділи сайту"><a href="#about">Про нас</a><a href="#rooms">Номери</a><a href="menu.html">Кафе</a><a href="vakansii.html">Вакансії</a><a href="#contacts">Контакти</a></nav>
+  <nav class="topbar__nav" aria-label="Розділи сайту"><a href="#gallery">Фотогалерея</a><a href="#rooms">Номери</a><a href="menu.html">Кафе</a><a href="vakansii.html">Вакансії</a><a href="#contacts">Контакти</a></nav>
   <a class="topbar__logo" href="index.html" aria-label="Кафе «Філін» — на головну"><img class="topbar__mark" src="logo-mark.png" alt="" width="447" height="360"></a>
 </div>
 
@@ -34,7 +34,7 @@
   <nav class="drawer__panel" aria-label="Меню сайту">
     <img class="drawer__logo" src="logo-mark.png" alt="Кафе «Філін»" width="447" height="360">
     <ul class="drawer__list">
-      <li style="--i:0"><a href="#about"><span>Про нас</span></a></li>
+      <li style="--i:0"><a href="#gallery"><span>Про нас</span></a></li>
       <li style="--i:1"><a href="#rooms"><span>Номери</span><small>бронювання</small></a></li>
       <li style="--i:2"><a href="menu.html"><span>Кафе</span><small>меню страв</small></a></li>
       <li style="--i:3"><a href="vakansii.html"><span>Вакансії</span><small>робота у нас</small></a></li>
@@ -75,25 +75,131 @@
 </header>
 
 <main>
-<!-- ─────────────── 2. ПРО НАС + ГАЛЕРЕЯ ─────────────── -->
-<section class="about" id="about">
-  <div class="wrap about__grid">
-    <div class="about__title reveal">
-      <p class="eyebrow">Про нас</p>
-      <h2 class="display">Місце, де дорога зупиняється</h2>
+<!-- ─────────────── 3. НОМЕРИ ─────────────── -->
+<section class="rooms" id="rooms">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div>
+        <p class="eyebrow">Номери</p>
+        <h2 class="display">Відпочинок після дороги</h2>
+      </div>
     </div>
 
-    <div class="about__text reveal" style="--d:.15s">
-      <p>Кафе з домашньою кухнею та мотель на виїзді з Кобеляк у бік Дніпра.</p>
-      <dl class="facts">
-        <div><dt>Кухня</dt><dd>домашня</dd></div>
-        <div><dt>Мотель</dt><dd>затишні номери</dd></div>
-        <div><dt>Відпочинок</dt><dd>сауна та більярд</dd></div>
-        <div><dt>Щодня</dt><dd>07:00 — 23:00</dd></div>
-      </dl>
+    <!-- Кнопка «Фільтр» — фільтри за бажанням; за замовчуванням видно всі номери -->
+    <div class="rtools">
+      <button type="button" class="fbtn" data-open-filter><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M7 12h10M10 18h4"/></svg><span>Фільтр</span><b class="fbtn__n" data-filter-n hidden>0</b></button>
+      <p class="rtools__sum" data-filter-sum aria-live="polite">Усі номери</p>
+      <button type="button" class="pop__link" data-filter-reset hidden>Скинути</button>
+    </div>
+
+    <!-- Фото номерів: room-4-1.jpg (Одномісний), room-1-1.jpg (Стандарт), room-2-1.jpg (Твін), room-5-1.jpg (Люкс), room-3-1.jpg (Сімейний) -->
+    <div class="rgrid" data-rooms>
+      <article class="rc" id="odnomisnyi" data-room-id="odnomisnyi" data-cap="1" data-bed="single" data-href="odnomisnyi.html">
+        <a class="rc__photo ph" data-icon="bed" href="odnomisnyi.html" aria-label="Відкрити номер «Одномісний»">
+          <span class="ph__label">Фото</span>
+          <img src="room-4-1.jpg" alt="Номер «Одномісний»" loading="lazy" onerror="this.remove()">
+        </a>
+        <div class="rc__body">
+          <p class="rc__kind">Номер у мотелі</p>
+          <h3 class="rc__name"><a href="odnomisnyi.html">Одномісний</a></h3>
+          <p class="rc__meta">1 гість · односпальне ліжко</p>
+          <div class="rc__foot">
+            <p class="rc__price" data-price></p>
+            <button class="btn" type="button" data-book="odnomisnyi"><span>Забронювати</span></button>
+          </div>
+        </div>
+      </article>
+      <article class="rc" id="standart" data-room-id="standart" data-cap="2" data-bed="double" data-href="standart.html">
+        <a class="rc__photo ph" data-icon="bed" href="standart.html" aria-label="Відкрити номер «Стандарт»">
+          <span class="ph__label">Фото</span>
+          <img src="room-1-1.jpg" alt="Номер «Стандарт»" loading="lazy" onerror="this.remove()">
+        </a>
+        <div class="rc__body">
+          <p class="rc__kind">Номер у мотелі</p>
+          <h3 class="rc__name"><a href="standart.html">Стандарт</a></h3>
+          <p class="rc__meta">До 2 гостей · двоспальне ліжко</p>
+          <div class="rc__foot">
+            <p class="rc__price" data-price></p>
+            <button class="btn" type="button" data-book="standart"><span>Забронювати</span></button>
+          </div>
+        </div>
+      </article>
+      <article class="rc" id="tvin" data-room-id="tvin" data-cap="2" data-bed="twin" data-href="tvin.html">
+        <a class="rc__photo ph" data-icon="bed" href="tvin.html" aria-label="Відкрити номер «Твін»">
+          <span class="ph__label">Фото</span>
+          <img src="room-2-1.jpg" alt="Номер «Твін»" loading="lazy" onerror="this.remove()">
+        </a>
+        <div class="rc__body">
+          <p class="rc__kind">Номер у мотелі</p>
+          <h3 class="rc__name"><a href="tvin.html">Твін</a></h3>
+          <p class="rc__meta">До 2 гостей · два окремі ліжка</p>
+          <div class="rc__foot">
+            <p class="rc__price" data-price></p>
+            <button class="btn" type="button" data-book="tvin"><span>Забронювати</span></button>
+          </div>
+        </div>
+      </article>
+      <article class="rc" id="lyuks" data-room-id="lyuks" data-cap="3" data-bed="double" data-href="lyuks.html">
+        <a class="rc__photo ph" data-icon="bed" href="lyuks.html" aria-label="Відкрити номер «Люкс»">
+          <span class="ph__label">Фото</span>
+          <img src="room-5-1.jpg" alt="Номер «Люкс»" loading="lazy" onerror="this.remove()">
+        </a>
+        <div class="rc__body">
+          <p class="rc__kind">Номер у мотелі</p>
+          <h3 class="rc__name"><a href="lyuks.html">Люкс</a></h3>
+          <p class="rc__meta">До 3 гостей · двоспальне ліжко й диван</p>
+          <div class="rc__foot">
+            <p class="rc__price" data-price></p>
+            <button class="btn" type="button" data-book="lyuks"><span>Забронювати</span></button>
+          </div>
+        </div>
+      </article>
+      <article class="rc" id="simeinyi" data-room-id="simeinyi" data-cap="4" data-bed="family" data-href="simeinyi.html">
+        <a class="rc__photo ph" data-icon="bed" href="simeinyi.html" aria-label="Відкрити номер «Сімейний»">
+          <span class="ph__label">Фото</span>
+          <img src="room-3-1.jpg" alt="Номер «Сімейний»" loading="lazy" onerror="this.remove()">
+        </a>
+        <div class="rc__body">
+          <p class="rc__kind">Номер у мотелі</p>
+          <h3 class="rc__name"><a href="simeinyi.html">Сімейний</a></h3>
+          <p class="rc__meta">До 4 гостей · кілька спальних місць</p>
+          <div class="rc__foot">
+            <p class="rc__price" data-price></p>
+            <button class="btn" type="button" data-book="simeinyi"><span>Забронювати</span></button>
+          </div>
+        </div>
+      </article>
+      <!-- Великою компанією: заповнює останню клітинку сітки номерів -->
+      <aside class="rinfo" data-rinfo>
+        <svg class="rinfo__owl" viewBox="0 0 60 72" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 4C11 14 10 22 12 30C10 46 18 60 30 67C42 60 50 46 48 30C50 22 49 14 47 4"/><path d="M13 4C20 12 26 18 30 25C34 18 40 12 47 4"/><circle cx="22.5" cy="26" r="4.6"/><circle cx="37.5" cy="26" r="4.6"/><path d="M28.6 27.5 30 32l1.4-4.5"/><path d="M6 70h48"/></g></svg>
+        <p class="rinfo__eye">Великою компанією?</p>
+        <p class="rinfo__h">Підберемо кілька номерів поруч</p>
+        <p class="rinfo__txt">Номер уміщує до 4 гостей. Якщо вас більше — зателефонуйте, усе організуємо. А сауну прогріємо до вашого приїзду.</p>
+        <a class="btn btn--light needs-phone" data-phone-link data-call hidden href="#"><span>Зателефонувати</span></a>
+        <a class="btn btn--light no-phone" href="https://www.instagram.com/cafe__filin__/" target="_blank" rel="noopener"><span>Написати в Instagram</span></a>
+      </aside>
+    </div>
+    <div class="rempty" data-empty hidden>
+      <p data-empty-text>Немає номерів за цими фільтрами.</p>
+      <div class="call-us" data-call-us hidden>
+        <a class="btn needs-phone" data-phone-link data-call hidden href="#"><span>Зателефонувати</span></a>
+        <a class="btn btn--ghost no-phone" href="https://www.instagram.com/cafe__filin__/" target="_blank" rel="noopener"><span>Написати в Instagram</span></a>
+      </div>
+      <button type="button" class="pop__link" data-filter-reset>Показати всі номери</button>
     </div>
   </div>
+</section>
 
+<!-- ─────────────── ФОТОГАЛЕРЕЯ ─────────────── -->
+<section class="about" id="gallery">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div>
+        <p class="eyebrow">Фотогалерея</p>
+        <h2 class="display">Подивіться, як у нас</h2>
+      </div>
+    </div>
+  </div>
   <!-- Галерея альбомами. Фото кожного альбому — у data-album, через кому.
        Кількість знімків рахується сама; поки фото немає, пишемо «фото скоро». -->
   <div class="wrap">
@@ -134,81 +240,6 @@
         <button class="slider__btn" type="button" data-gal-nav="-1" aria-label="Гортати назад"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></button>
         <button class="slider__btn" type="button" data-gal-nav="1" aria-label="Гортати вперед"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
       </div>
-    </div>
-  </div>
-</section>
-
-<!-- ─────────────── 3. НОМЕРИ ─────────────── -->
-<section class="rooms" id="rooms">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <div>
-        <p class="eyebrow">Номери</p>
-        <h2 class="display">Відпочинок після дороги</h2>
-      </div>
-    </div>
-
-    <!-- Кнопка «Фільтр» — фільтри за бажанням; за замовчуванням видно всі номери -->
-    <div class="rtools">
-      <button type="button" class="fbtn" data-open-filter><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M7 12h10M10 18h4"/></svg><span>Фільтр</span><b class="fbtn__n" data-filter-n hidden>0</b></button>
-      <p class="rtools__sum" data-filter-sum aria-live="polite">Усі номери</p>
-      <button type="button" class="pop__link" data-filter-reset hidden>Скинути</button>
-    </div>
-
-    <!-- Фото номерів: room-4-1.jpg (Одномісний), room-1-1.jpg (Стандарт), room-2-1.jpg (Твін), room-5-1.jpg (Люкс), room-3-1.jpg (Сімейний) -->
-    <div class="rgrid" data-rooms>
-      <article class="rc" id="odnomisnyi" data-room-id="odnomisnyi" data-cap="1" data-bed="single" data-href="odnomisnyi.html">
-        <a class="rc__photo ph" data-icon="bed" href="odnomisnyi.html" aria-label="Відкрити номер «Одномісний»">
-          <span class="ph__label">Фото</span>
-          <img src="room-4-1.jpg" alt="Номер «Одномісний»" loading="lazy" onerror="this.remove()">
-          <span class="rc__cap"><b>Одномісний</b><span>1 гість · односпальне ліжко</span><span class="rc__price" data-price></span></span>
-        </a>
-      </article>
-      <article class="rc" id="standart" data-room-id="standart" data-cap="2" data-bed="double" data-href="standart.html">
-        <a class="rc__photo ph" data-icon="bed" href="standart.html" aria-label="Відкрити номер «Стандарт»">
-          <span class="ph__label">Фото</span>
-          <img src="room-1-1.jpg" alt="Номер «Стандарт»" loading="lazy" onerror="this.remove()">
-          <span class="rc__cap"><b>Стандарт</b><span>До 2 гостей · двоспальне ліжко</span><span class="rc__price" data-price></span></span>
-        </a>
-      </article>
-      <article class="rc" id="tvin" data-room-id="tvin" data-cap="2" data-bed="twin" data-href="tvin.html">
-        <a class="rc__photo ph" data-icon="bed" href="tvin.html" aria-label="Відкрити номер «Твін»">
-          <span class="ph__label">Фото</span>
-          <img src="room-2-1.jpg" alt="Номер «Твін»" loading="lazy" onerror="this.remove()">
-          <span class="rc__cap"><b>Твін</b><span>До 2 гостей · два окремі ліжка</span><span class="rc__price" data-price></span></span>
-        </a>
-      </article>
-      <article class="rc" id="lyuks" data-room-id="lyuks" data-cap="3" data-bed="double" data-href="lyuks.html">
-        <a class="rc__photo ph" data-icon="bed" href="lyuks.html" aria-label="Відкрити номер «Люкс»">
-          <span class="ph__label">Фото</span>
-          <img src="room-5-1.jpg" alt="Номер «Люкс»" loading="lazy" onerror="this.remove()">
-          <span class="rc__cap"><b>Люкс</b><span>До 3 гостей · двоспальне ліжко й диван</span><span class="rc__price" data-price></span></span>
-        </a>
-      </article>
-      <article class="rc" id="simeinyi" data-room-id="simeinyi" data-cap="4" data-bed="family" data-href="simeinyi.html">
-        <a class="rc__photo ph" data-icon="bed" href="simeinyi.html" aria-label="Відкрити номер «Сімейний»">
-          <span class="ph__label">Фото</span>
-          <img src="room-3-1.jpg" alt="Номер «Сімейний»" loading="lazy" onerror="this.remove()">
-          <span class="rc__cap"><b>Сімейний</b><span>До 4 гостей · кілька спальних місць</span><span class="rc__price" data-price></span></span>
-        </a>
-      </article>
-      <!-- Великою компанією: заповнює останню клітинку сітки номерів -->
-      <aside class="rinfo" data-rinfo>
-        <svg class="rinfo__owl" viewBox="0 0 60 72" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 4C11 14 10 22 12 30C10 46 18 60 30 67C42 60 50 46 48 30C50 22 49 14 47 4"/><path d="M13 4C20 12 26 18 30 25C34 18 40 12 47 4"/><circle cx="22.5" cy="26" r="4.6"/><circle cx="37.5" cy="26" r="4.6"/><path d="M28.6 27.5 30 32l1.4-4.5"/><path d="M6 70h48"/></g></svg>
-        <p class="rinfo__eye">Великою компанією?</p>
-        <p class="rinfo__h">Підберемо кілька номерів поруч</p>
-        <p class="rinfo__txt">Номер уміщує до 4 гостей. Якщо вас більше — зателефонуйте, усе організуємо. А сауну прогріємо до вашого приїзду.</p>
-        <a class="btn btn--light needs-phone" data-phone-link data-call hidden href="#"><span>Зателефонувати</span></a>
-        <a class="btn btn--light no-phone" href="https://www.instagram.com/cafe__filin__/" target="_blank" rel="noopener"><span>Написати в Instagram</span></a>
-      </aside>
-    </div>
-    <div class="rempty" data-empty hidden>
-      <p data-empty-text>Немає номерів за цими фільтрами.</p>
-      <div class="call-us" data-call-us hidden>
-        <a class="btn needs-phone" data-phone-link data-call hidden href="#"><span>Зателефонувати</span></a>
-        <a class="btn btn--ghost no-phone" href="https://www.instagram.com/cafe__filin__/" target="_blank" rel="noopener"><span>Написати в Instagram</span></a>
-      </div>
-      <button type="button" class="pop__link" data-filter-reset>Показати всі номери</button>
     </div>
   </div>
 </section>
@@ -359,7 +390,7 @@
       <div>
         <h3>Сайт</h3>
         <ul>
-          <li><a href="#about">Про нас</a></li>
+          <li><a href="#gallery">Фотогалерея</a></li>
           <li><a href="#rooms">Номери</a></li>
           <li><a href="menu.html">Меню кафе</a></li>
           <li><a href="vakansii.html">Вакансії</a></li>
