@@ -25,7 +25,7 @@
 
   /* темні блоки: колір балок під стелею, тепле світло ламп */
   --hero-bg:   #2a2018;
-  --hero-text: #f6ecdc;
+  --hero-text: #ffffff;
   --hero-line: rgba(201, 138, 60, .38);
 
   --amber:      #c98a3c;   /* світло лампи — акцентні дрібниці */
@@ -128,7 +128,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 }
 /* поки під кнопкою темний перший блок — вона прозора зі світлою рамкою */
 .menu-btn.on-dark:not([aria-expanded="true"]) {
-  background: rgba(28, 28, 27, .45); color: var(--hero-text); border-color: rgba(246, 241, 230, .6);
+  background: rgba(28, 28, 27, .45); color: var(--hero-text); border-color: rgba(255, 255, 255, .6);
   -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
 }
 .menu-btn.on-dark:not([aria-expanded="true"]):hover { background: var(--hero-text); color: var(--hero-bg); border-color: var(--hero-text); }
@@ -184,7 +184,7 @@ body:has(> .back-btn) .topbar__logo { margin-left: 48px; }
 .menu-btn, .back-btn { transition: background .3s, color .3s, border-color .3s, opacity .3s, visibility .3s, top .45s var(--ease), right .45s var(--ease), left .45s var(--ease); }
 .bar-on .menu-btn { top: 7px; right: 16px; }
 .bar-on .back-btn { top: 7px; left: 16px; }
-.back-btn.on-dark { background: rgba(28, 28, 27, .45); color: var(--hero-text); border-color: rgba(246, 241, 230, .6); }
+.back-btn.on-dark { background: rgba(28, 28, 27, .45); color: var(--hero-text); border-color: rgba(255, 255, 255, .6); }
 .back-btn.on-dark:hover { background: var(--hero-text); color: var(--hero-bg); border-color: var(--hero-text); }
 
 /* на головній кнопка з’являється після заставки, на інших сторінках — одразу */
@@ -281,7 +281,7 @@ body:has(> .back-btn) .topbar__logo { margin-left: 48px; }
 /* кнопки на темному: світла основна та світла контурна */
 .hero .btn { background: var(--hero-text); color: var(--hero-bg); border-color: var(--hero-text); }
 .hero .btn:hover { background: transparent; color: var(--hero-text); }
-.hero .btn--ghost { background: transparent; color: var(--hero-text); border-color: rgba(246, 241, 230, .7); }
+.hero .btn--ghost { background: transparent; color: var(--hero-text); border-color: rgba(255, 255, 255, .7); }
 .hero .btn--ghost:hover { background: var(--hero-text); color: var(--hero-bg); border-color: var(--hero-text); }
 
 .hero__facts {
@@ -1050,7 +1050,7 @@ body:has(.dock) .foot { padding-bottom: 110px; }
 .status--closed { --dot: #9a9a9a; }
 .hero .status--open   { --dot: #5fd38a; }
 .hero .status--soon   { --dot: #5fd38a; }
-.hero .status--closed { --dot: rgba(246, 241, 230, .45); }
+.hero .status--closed { --dot: rgba(255, 255, 255, .45); }
 .status--open .status__dot, .status--soon .status__dot { box-shadow: 0 0 8px var(--dot); }
 .status--open .status__dot::after {
   content: ""; position: absolute; inset: 0; background: var(--dot);
