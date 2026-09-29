@@ -275,11 +275,6 @@ body:has(> .back-btn) .topbar__logo { margin-left: 48px; }
   background-blend-mode: soft-light, normal, normal;
 }
 .hero :focus-visible { outline-color: var(--hero-text); }
-.hero__frame {
-  position: absolute; inset: var(--frame); pointer-events: none;
-  border: 1px solid var(--hero-line);
-  opacity: 0; animation: frameIn 1.6s var(--ease) .2s forwards;
-}
 .hero__inner { display: flex; flex-direction: column; align-items: center; margin-block: auto; }
 /* знак філіна: золота лінія промальовує сову */
 .owl { display: block; width: clamp(46px, 24px + 3vw, 64px); height: auto; aspect-ratio: 60 / 72; margin-bottom: 1.5rem; overflow: visible; }
@@ -360,7 +355,6 @@ body:has(> .back-btn) .topbar__logo { margin-left: 48px; }
 
 @keyframes fadeIn { to { opacity: 1; } }
 @keyframes riseIn { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
-@keyframes frameIn { from { opacity: 0; transform: scale(1.02); } to { opacity: 1; transform: none; } }
 @keyframes letterIn {
   from { opacity: 0; transform: translateY(.16em); filter: blur(10px); }
   to   { opacity: 1; transform: none;              filter: blur(0); }
