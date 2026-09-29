@@ -1341,3 +1341,9 @@ a:hover > .ico--ext { transform: translate(2px, -2px); }
 @media (prefers-reduced-motion: reduce) {
   .hero__inner, .hero__facts { transform: none; opacity: 1; filter: none; }
 }
+
+/* ── Картка номера — саме фото з підписом, як «Варіанти проживання» ── */
+.rc { overflow: hidden; border-radius: 4px; }
+.rc__photo { display: block; aspect-ratio: 4 / 3; }
+.rc__price { font-size: .9rem; font-weight: 600; margin-top: .25rem; }
+.rc__price:empty { display: none; }
