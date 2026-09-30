@@ -1603,3 +1603,29 @@ main {
 .pay__copy:hover { background: var(--accent); color: #fff; }
 .pay__hint { margin: 0; font-size: .86rem; opacity: .7; }
 .pay--done { margin-top: 1.1rem; text-align: left; }
+
+/* ── Сторінки «Сауна» й «Більярд»: фото ліворуч, текст праворуч ── */
+.pgrid { display: grid; grid-template-columns: repeat(12, 1fr); column-gap: var(--gap); align-items: center; }
+.pgrid__photo {
+  grid-column: 1 / span 6; position: relative; aspect-ratio: 4 / 3;
+  overflow: hidden; border: 1px solid var(--line);
+}
+.pgrid__photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.pgrid__text { grid-column: 8 / span 5; }
+.pgrid__text p { font-size: 1.05rem; line-height: 1.7; }
+.pgrid__text p + p { margin-top: .9rem; }
+.pgrid__text .btn { margin-top: 1.9rem; }
+@media (max-width: 900px) {
+  .pgrid { grid-template-columns: minmax(0, 1fr); row-gap: 1.8rem; }
+  .pgrid__photo, .pgrid__text { grid-column: 1 / -1; }
+}
+
+/* ── Сторінка «Кафе»: опис по центру й кнопка в меню ── */
+.plead { max-width: 44rem; margin-inline: auto; text-align: center; }
+.plead p { font-size: clamp(1.08rem, 1rem + .45vw, 1.32rem); line-height: 1.66; }
+.plead p + p { margin-top: .9rem; }
+.plead .btn { margin-top: 2.1rem; }
+
+/* ── Три картки відпочинку: натискається вся картка, не лише напис ── */
+.lcard { position: relative; }
+.lcard__link::after { content: ""; position: absolute; inset: 0; z-index: 1; }

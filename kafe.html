@@ -3,18 +3,18 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Більярд — кафе «Філін»</title>
-  <meta name="description" content="Більярд на території кафе «Філін» у Кобеляках: партія ввечері, поки готується вечеря.">
+  <title>Кафе «Філін» у Кобеляках — домашня кухня</title>
+  <meta name="description" content="Кафе «Філін» у Кобеляках: домашня кухня щодня з 07:00 до 23:00, борщ, вареники, гаряче з печі.">
   <!-- Як сторінка виглядає, коли кидають посиланням у Viber, Telegram чи Facebook -->
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Кафе «Філін»">
   <meta property="og:locale" content="uk_UA">
-  <meta property="og:title" content="Більярд — кафе «Філін»">
-  <meta property="og:description" content="Більярд на території кафе «Філін» у Кобеляках: партія ввечері, поки готується вечеря.">
-  <meta property="og:url" content="https://arikpromax.github.io/filin/bilyard.html">
+  <meta property="og:title" content="Кафе «Філін» у Кобеляках — домашня кухня">
+  <meta property="og:description" content="Кафе «Філін» у Кобеляках: домашня кухня щодня з 07:00 до 23:00, борщ, вареники, гаряче з печі.">
+  <meta property="og:url" content="https://arikpromax.github.io/filin/kafe.html">
   <meta property="og:image" content="https://arikpromax.github.io/filin/hero-2.webp">
   <meta name="twitter:card" content="summary_large_image">
-  <link rel="canonical" href="https://arikpromax.github.io/filin/bilyard.html">
+  <link rel="canonical" href="https://arikpromax.github.io/filin/kafe.html">
   <meta name="theme-color" content="#ffffff">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -27,7 +27,7 @@
 
 <!-- Смуга зверху: з’являється, коли гортаєш сторінку -->
 <div class="topbar" data-topbar>
-  <nav class="topbar__nav" aria-label="Розділи сайту"><a href="index.html#gallery">Фотогалерея</a><a href="index.html#rooms">Номери</a><a href="kafe.html">Кафе</a><a href="vakansii.html">Вакансії</a><a href="#contacts">Контакти</a></nav>
+  <nav class="topbar__nav" aria-label="Розділи сайту"><a href="index.html#gallery">Фотогалерея</a><a href="index.html#rooms">Номери</a><a href="kafe.html" aria-current="page">Кафе</a><a href="vakansii.html">Вакансії</a><a href="#contacts">Контакти</a></nav>
   <a class="topbar__logo" href="index.html" aria-label="Кафе «Філін» — на головну"><img class="topbar__mark" src="logo-mark.png" alt="" width="447" height="360"></a>
 </div>
 
@@ -59,30 +59,23 @@
   </nav>
 </div>
 
-<!-- Шапка сторінки: фото, а на ньому назва — проявляється плавно -->
+<!-- Шапка сторінки: фото кафе, а на ньому назва — проявляється плавно -->
 <header class="phero">
   <div class="phero__media">
-    <img src="bilyard.jpg" alt="Більярд у кафе «Філін»" onerror="this.remove()">
+    <img src="menu.jpg" alt="Кафе «Філін» у Кобеляках" onerror="this.remove()">
     <div class="phero__in">
-      <p class="phero__eyebrow">Відпочинок на території</p>
-      <h1 class="phero__title">Більярд</h1>
-      <p class="phero__text">Партія для компанії ввечері — поки на кухні готується вечеря.</p>
+      <p class="phero__eyebrow">Кобеляки · щодня 07:00 — 23:00</p>
+      <h1 class="phero__title">Кафе</h1>
     </div>
   </div>
 </header>
 
 <main class="page page--phero">
   <div class="wrap">
-    <div class="pgrid">
-      <div class="pgrid__photo ph reveal" data-icon="billiard">
-        <span class="ph__label">Фото більярда</span>
-        <img src="bilyard.jpg" alt="Більярд у кафе «Філін»" loading="lazy" onerror="this.remove()">
-      </div>
-      <div class="pgrid__text reveal" style="--d:.15s">
-        <p>Стіл працює в ті самі години, що й кафе — щодня з 07:00 до 23:00.</p>
-        <p>Окремо домовлятися не треба: подзвоніть або спитайте на місці, і ми скажемо, чи вільний він зараз.</p>
-        <a class="btn needs-phone" data-phone-link data-call hidden href="#"><span>Зателефонувати</span></a>
-      </div>
+    <div class="plead reveal">
+      <p>Борщ, вареники, гаряче з печі — те, що готують удома, а не на потоці.</p>
+      <p>Хтось заїжджає пообідати дорогою на Дніпро, хтось сідає снідати о сьомій ранку, а хтось лишається на вечерю й ночує тут же, у номері.</p>
+      <a class="btn" href="menu.html"><span>Подивитись меню</span></a>
     </div>
   </div>
 </main>

@@ -19,15 +19,15 @@
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display+SC:wght@400;700&display=swap">
-  <link rel="stylesheet" href="fonts.css?v=22">
-  <link rel="stylesheet" href="style.css?v=22">
+  <link rel="stylesheet" href="fonts.css?v=23">
+  <link rel="stylesheet" href="style.css?v=23">
   <script>document.documentElement.classList.add('js');</script>
 </head>
 <body>
 
 <!-- Смуга зверху: з’являється, коли гортаєш сторінку -->
 <div class="topbar" data-topbar>
-  <nav class="topbar__nav" aria-label="Розділи сайту"><a href="index.html#gallery">Фотогалерея</a><a href="index.html#rooms">Номери</a><a href="menu.html">Кафе</a><a href="vakansii.html">Вакансії</a><a href="#contacts">Контакти</a></nav>
+  <nav class="topbar__nav" aria-label="Розділи сайту"><a href="index.html#gallery">Фотогалерея</a><a href="index.html#rooms">Номери</a><a href="kafe.html">Кафе</a><a href="vakansii.html">Вакансії</a><a href="#contacts">Контакти</a></nav>
   <a class="topbar__logo" href="index.html" aria-label="Кафе «Філін» — на головну"><img class="topbar__mark" src="logo-mark.png" alt="" width="447" height="360"></a>
 </div>
 
@@ -48,7 +48,7 @@
     <ul class="drawer__list">
       <li style="--i:0"><a href="pro-nas.html"><span>Про нас</span></a></li>
       <li style="--i:1"><a href="index.html#rooms"><span>Номери</span><small>бронювання</small></a></li>
-      <li style="--i:2"><a href="menu.html"><span>Кафе</span><small>меню страв</small></a></li>
+      <li style="--i:2"><a href="kafe.html"><span>Кафе</span><small>кухня й меню</small></a></li>
       <li style="--i:3"><a href="vakansii.html"><span>Вакансії</span><small>робота у нас</small></a></li>
       <li style="--i:4"><a href="#contacts"><span>Контакти</span></a></li>
     </ul>
@@ -73,20 +73,16 @@
 
 <main class="page page--phero">
   <div class="wrap">
-    <div class="route__grid">
-      <div class="route__info reveal">
-        <p class="route__text">Сауна стоїть на тій самій території, що кафе й номери. Можна заїхати ввечері дорогою, а можна зробити з цього цілий вечір: сауна, більярд, вечеря з печі й ночівля — не виїжджаючи за ворота.</p>
-        <dl class="route__list">
-          <div><dt>Де</dt><dd>на території кафе «Філін»</dd></div>
-          <div><dt>Коли</dt><dd>за попереднім записом</dd></div>
-          <div><dt>Поруч</dt><dd>більярд, кафе, номери</dd></div>
-          <div><dt>Вільний час і ціна</dt><dd>підкажемо телефоном</dd></div>
-        </dl>
-        <a class="btn needs-phone" data-phone-link data-call hidden href="#"><span>Зателефонувати</span></a>
-      </div>
-      <div class="route__map route__map--ph ph reveal" data-icon="sauna" style="--d:.15s">
+    <div class="pgrid">
+      <div class="pgrid__photo ph reveal" data-icon="sauna">
         <span class="ph__label">Фото сауни</span>
         <img src="sauna.jpg" alt="Сауна на території кафе «Філін»" loading="lazy" onerror="this.remove()">
+      </div>
+      <div class="pgrid__text reveal" style="--d:.15s">
+        <p>Прогріваємо заздалегідь — щоб до вашого часу сауна вже була гаряча.</p>
+        <p>Якщо берете номер, замовити її можна там же, у вікні бронювання: є окремий крок «Сауна» — день, година й скільки годин топити.</p>
+        <p>Без номера теж можна — подзвоніть, підкажемо вільний час і ціну.</p>
+        <a class="btn needs-phone" data-phone-link data-call hidden href="#"><span>Зателефонувати</span></a>
       </div>
     </div>
   </div>
@@ -133,7 +129,7 @@
   </div>
 </footer>
 
-<script src="config.js?v=22"></script>
-<script src="main.js?v=22"></script>
+<script src="config.js?v=23"></script>
+<script src="main.js?v=23"></script>
 </body>
 </html>
