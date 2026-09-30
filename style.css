@@ -1442,3 +1442,7 @@ main { background: var(--bg); }
   .hero__place, .hero__place-script { font-size: 2.625rem; }  /* 42px */
   .hero__lead { font-size: 1.3125rem; }      /* 21px */
 }
+
+/* фото в розділі «Про нас» — така сама рамка, як у карти */
+.route__map--ph { display: block; }
+.route__map--ph img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
