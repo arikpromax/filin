@@ -19,8 +19,8 @@
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display+SC:wght@400;700&display=swap">
-  <link rel="stylesheet" href="fonts.css?v=24">
-  <link rel="stylesheet" href="style.css?v=24">
+  <link rel="stylesheet" href="fonts.css?v=25">
+  <link rel="stylesheet" href="style.css?v=25">
   <script>document.documentElement.classList.add('js');</script>
 </head>
 <body>
@@ -134,8 +134,14 @@
         <h2>Зручності</h2>
         <div class="fgroups" data-facilities></div>
 
-        <h2>Правила проживання</h2>
-        <div class="rules" data-rules></div>
+        <details class="rbox">
+          <summary class="rbox__head">
+            <h2>Правила проживання</h2>
+            <span class="rbox__hint" aria-hidden="true"></span>
+            <svg class="rbox__chev" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </summary>
+          <div class="rules" data-rules></div>
+        </details>
       </section>
     </div>
 
@@ -386,8 +392,8 @@
   <button class="btn" type="button" data-book="standart"><span>Забронювати</span></button>
 </div>
 
-<script src="menu-data.js?v=24"></script>
-<script src="config.js?v=24"></script>
-<script src="main.js?v=24"></script>
+<script src="menu-data.js?v=25"></script>
+<script src="config.js?v=25"></script>
+<script src="main.js?v=25"></script>
 </body>
 </html>

@@ -79,13 +79,11 @@
     if (RL.checkIn) rrows.push({ icon: 'clock', title: 'Заїзд', text: 'з ' + RL.checkIn });
     if (RL.checkOut) rrows.push({ icon: 'clock', title: 'Виїзд', text: 'до ' + RL.checkOut });
     (RL.items || []).forEach(function (i) { if (i && i.text) rrows.push(i); });
-    if (!rrows.length) hideWithHead(rulesBox);
+    // порожньо — ховаємо всю коробку разом із заголовком-кнопкою
+    if (!rrows.length) { var rbox = rulesBox.closest('details'); if (rbox) rbox.hidden = true; else hideWithHead(rulesBox); }
     else rulesBox.innerHTML = rrows.map(function (r) {
-      // <details> розкривається сам, без скрипта — і працює з клавіатури
-      return '<details class="rule"><summary class="rule__head">' + fsvg(r.icon) +
-        '<b>' + hesc(r.title || '') + '</b>' +
-        '<svg class="rule__chev" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></summary>' +
-        '<div class="rule__body"><p>' + hesc(r.text) + '</p></div></details>';
+      return '<div class="rule">' + fsvg(r.icon) +
+        '<div><b>' + hesc(r.title || '') + '</b><span>' + hesc(r.text) + '</span></div></div>';
     }).join('');
   }
 
