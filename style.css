@@ -1021,11 +1021,32 @@ body:has(.dock) .foot { padding-bottom: 110px; }
 .cafe { padding: clamp(64px, 8vw, 112px) 0; }
 
 .route { padding: clamp(60px, 7.5vw, 104px) 0; background: var(--bg); }
-.route__grid { display: grid; grid-template-columns: repeat(12, 1fr); column-gap: var(--gap); align-items: start; }
-.route__grid > div:first-child { grid-column: 1 / span 6; }
-.route__info { grid-column: 8 / span 5; }
-.route__info .facts { margin-top: 0; }
-.route__btns { display: flex; flex-wrap: wrap; gap: .6rem; margin-top: 1.6rem; }
+.route__grid { display: grid; grid-template-columns: repeat(12, 1fr); column-gap: var(--gap); align-items: center; }
+.route__info { grid-column: 1 / span 6; }
+.route__map  { grid-column: 8 / span 5; }
+.route__h { font-size: clamp(1.6rem, 1.2rem + 1.6vw, 2.35rem); font-weight: 400; line-height: 1.15; }
+.route__text { margin-top: 1.2rem; max-width: 34rem; font-size: 1rem; line-height: 1.6; }
+.route__list { margin-top: 2.2rem; }
+.route__list > div {
+  display: flex; align-items: baseline; justify-content: space-between; gap: 1.5rem;
+  padding: .95rem 0; border-bottom: 1px solid var(--line);
+}
+.route__list > div:first-child { border-top: 1px solid var(--line); }
+.route__list dt { font-family: var(--display); font-size: .88rem; letter-spacing: .02em; }
+.route__list dd { font-size: .95rem; text-align: right; }
+.route__link {
+  display: inline-flex; align-items: center; gap: .6rem; margin-top: 1.8rem;
+  padding-bottom: .3rem; border-bottom: 1px solid var(--text);
+  font-size: 1rem;
+}
+.route__g { width: 19px; height: 19px; flex: none; fill: currentColor; }
+.route__map { position: relative; aspect-ratio: 4 / 3; overflow: hidden; border: 1px solid var(--line); }
+.route__map iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+
+@media (max-width: 900px) {
+  .route__grid { grid-template-columns: minmax(0, 1fr); row-gap: 2rem; }
+  .route__info, .route__map { grid-column: 1 / -1; }
+}
 
 /* ── «Зараз відкрито / зачинено»: квадратна крапка, у відкритого — «дихає» ── */
 .status { display: inline-flex; align-items: center; justify-content: center; gap: .55em; }
@@ -1042,7 +1063,6 @@ body:has(.dock) .foot { padding-bottom: 110px; }
   animation: statusPulse 2.4s ease-out infinite;
 }
 @keyframes statusPulse { from { opacity: .7; transform: scale(1); } to { opacity: 0; transform: scale(2.8); } }
-.status.route__status { display: flex; justify-content: flex-end; margin-top: .15rem; font-size: .84rem; }
 
 /* ── Корисно знати: питання, що розкриваються ── */
 .faq { padding: clamp(60px, 7.5vw, 104px) 0; }
@@ -1167,7 +1187,6 @@ body:has(.dock) .foot { padding-bottom: 110px; }
   .qty { justify-content: space-between; }
   .qty__add { width: 100%; }
   .lgrid { grid-template-columns: minmax(0, 1fr); }
-  .route__btns .btn { width: 100%; }
 
   .bpanel { width: 100vw; border-left: 0; }
   .bpanel .bpanel__head { padding: 12px 20px; }

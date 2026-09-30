@@ -135,6 +135,17 @@
     });
   }
 
+  /* ── Карта: позначка з’являється, щойно в config.js є координати ── */
+  var mapFrame = $('[data-map]');
+  if (mapFrame && CFG.map && CFG.map.lat && CFG.map.lng) {
+    var la = parseFloat(CFG.map.lat), ln = parseFloat(CFG.map.lng);
+    if (!isNaN(la) && !isNaN(ln)) {
+      var d = 0.012;   // приблизно кілометр навколо точки
+      mapFrame.src = 'https://www.openstreetmap.org/export/embed.html?bbox=' +
+        (ln - d) + '%2C' + (la - d / 2) + '%2C' + (ln + d) + '%2C' + (la + d / 2) +
+        '&layer=mapnik&marker=' + la + '%2C' + ln;
+    }
+  }
   /* ── Рядки першого блоку тануть по черзі, кожен коли дійде до верху ── */
   // «Кафе» і «Філін» — окремі рядки, інакше вони тануть удвох одночасно
   var heroLines = [];
