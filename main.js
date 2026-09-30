@@ -558,8 +558,13 @@
       }
       var gt = $('[data-text="guests"]', bw);
       if (gt) gt.textContent = guestsText();
-      $('[data-text="hint"]', bw).textContent = !S.in ? 'Оберіть дату заїзду'
-        : !S.out ? 'Оберіть дату виїзду' : nightsText(nights(S.in, S.out));
+      var hintEl = $('[data-text="hint"]', bw);
+      if (hintEl) {
+        hintEl.textContent = !S.in ? 'Оберіть дату заїзду'
+          : !S.out ? 'Тепер оберіть дату виїзду' : nightsText(nights(S.in, S.out));
+        // заїзд є, виїзду ще немає — підказку підсвічуємо, щоб гість не загубився
+        hintEl.classList.toggle('is-wait', !!(S.in && !S.out));
+      }
       var box = bw.closest('.booking');
       var cap = box ? +box.getAttribute('data-cap') || 0 : 0;
       var full = cap && S.adults >= cap * S.rooms;
