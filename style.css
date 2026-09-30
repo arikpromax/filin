@@ -1242,7 +1242,15 @@ main, .foot { position: relative; z-index: 2; }
 main { background: var(--bg); }
 
 /* ── Перший екран: фото на весь екран, прибите до вікна ── */
-.hero__media { position: fixed; inset: 0; overflow: hidden; z-index: 0; }
+/* Висота задана сталою величиною, а не краями вікна: на телефоні під час
+   прокрутки ховається адресний рядок, вікно стрибає — і фон разом із ним
+   різко змінював масштаб. lvh — висота вікна з прибраним рядком, вона не
+   міняється; 100vh лишено запасом для старих браузерів. */
+.hero__media {
+  position: fixed; top: 0; left: 0; right: 0; bottom: auto;
+  height: 100vh; height: 100lvh;
+  overflow: hidden; z-index: 0;
+}
 .hero__media img {
   position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
   opacity: 0;
