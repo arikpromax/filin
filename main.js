@@ -81,8 +81,11 @@
     (RL.items || []).forEach(function (i) { if (i && i.text) rrows.push(i); });
     if (!rrows.length) hideWithHead(rulesBox);
     else rulesBox.innerHTML = rrows.map(function (r) {
-      return '<div class="rule">' + fsvg(r.icon) +
-        '<div><b>' + hesc(r.title || '') + '</b><span>' + hesc(r.text) + '</span></div></div>';
+      // <details> розкривається сам, без скрипта — і працює з клавіатури
+      return '<details class="rule"><summary class="rule__head">' + fsvg(r.icon) +
+        '<b>' + hesc(r.title || '') + '</b>' +
+        '<svg class="rule__chev" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></summary>' +
+        '<div class="rule__body"><p>' + hesc(r.text) + '</p></div></details>';
     }).join('');
   }
 
