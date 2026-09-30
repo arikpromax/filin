@@ -19,8 +19,8 @@
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display+SC:wght@400;700&display=swap">
-  <link rel="stylesheet" href="fonts.css?v=31">
-  <link rel="stylesheet" href="style.css?v=31">
+  <link rel="stylesheet" href="fonts.css?v=32">
+  <link rel="stylesheet" href="style.css?v=32">
   <script>document.documentElement.classList.add('js');</script>
 </head>
 <body>
@@ -263,8 +263,23 @@
         <input type="radio" name="room" value="simeinyi" data-name="Сімейний" data-cap="4" data-meta="До 4 гостей · кілька спальних місць" data-img="room-3-1.jpg">
       </div>
 
+      <section class="bk__sec">
+        <h3 class="bk__h"><i>1</i>Ваші дані</h3>
+        <div class="field-row">
+          <label class="field"><span>Ім’я <i>*</i></span><input name="name" type="text" autocomplete="name" placeholder="Як до вас звертатись" required></label>
+          <label class="field"><span>Телефон <i>*</i></span><input name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="068 000 00 00" required></label>
+        </div>
+        <p class="bk__label">Як з вами зв’язатися</p>
+        <div class="chips bk__via">
+          <label class="chip"><input type="radio" name="via" value="Дзвінок" checked>Дзвінок</label>
+          <label class="chip"><input type="radio" name="via" value="Viber">Viber</label>
+          <label class="chip"><input type="radio" name="via" value="Telegram">Telegram</label>
+        </div>
+        <label class="field"><span>Побажання</span><textarea name="note" rows="2" placeholder="Наприклад: потрібне дитяче ліжечко"></textarea></label>
+      </section>
+
       <section class="bk__sec" data-sec="dates">
-        <h3 class="bk__h"><i>1</i>Дати й гості</h3>
+        <h3 class="bk__h"><i>2</i>Дати й гості</h3>
         <div class="bw bw--form" data-bw data-months="1">
           <div class="field-row">
             <div class="field field--wide bw__field">
@@ -276,7 +291,7 @@
               <select data-gsel="adults"></select>
             </label>
             <label class="field">
-              <span>Кількість дітей до 12 років</span>
+              <span>Кількість дітей</span>
               <select data-gsel="children"></select>
             </label>
           </div>
@@ -294,7 +309,7 @@
       </section>
 
       <section class="bk__sec">
-        <h3 class="bk__h"><i>2</i>Сауна <small>за бажанням</small></h3>
+        <h3 class="bk__h"><i>3</i>Сауна <small>за бажанням</small></h3>
         <div class="bk-ex" data-ex="sauna">
           <label class="bk-ex__head">
             <input type="checkbox" name="sauna">
@@ -319,20 +334,6 @@
         </div>
       </section>
 
-      <section class="bk__sec">
-        <h3 class="bk__h"><i>3</i>Ваші дані</h3>
-        <div class="field-row">
-          <label class="field"><span>Ім’я <i>*</i></span><input name="name" type="text" autocomplete="name" placeholder="Як до вас звертатись" required></label>
-          <label class="field"><span>Телефон <i>*</i></span><input name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="068 000 00 00" required></label>
-        </div>
-        <p class="bk__label">Як з вами зв’язатися</p>
-        <div class="chips bk__via">
-          <label class="chip"><input type="radio" name="via" value="Дзвінок" checked>Дзвінок</label>
-          <label class="chip"><input type="radio" name="via" value="Viber">Viber</label>
-          <label class="chip"><input type="radio" name="via" value="Telegram">Telegram</label>
-        </div>
-        <label class="field"><span>Побажання</span><textarea name="note" rows="2" placeholder="Наприклад: потрібне дитяче ліжечко"></textarea></label>
-      </section>
 
       <!-- Передоплата: блок з’являється, лише якщо в config.js заповнено payment -->
       <section class="bk__sec" data-pay-sec hidden></section>
@@ -380,8 +381,8 @@
   <button class="btn" type="button" data-book="standart"><span>Забронювати</span></button>
 </div>
 
-<script src="menu-data.js?v=31"></script>
-<script src="config.js?v=31"></script>
-<script src="main.js?v=31"></script>
+<script src="menu-data.js?v=32"></script>
+<script src="config.js?v=32"></script>
+<script src="main.js?v=32"></script>
 </body>
 </html>

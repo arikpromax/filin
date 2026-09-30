@@ -841,7 +841,10 @@ dialog[open] { animation: dialogIn .45s var(--ease); }
 .field i, .bw__label i { font-style: normal; color: #b3392b; }
 .field > .chips { margin-top: .5rem; }
 .field input::placeholder, .field textarea::placeholder { color: var(--text); opacity: .38; }
-.field { display: block; margin-bottom: 1.3rem; }
+/* колонкою, щоб саме поле сідало донизу — тоді сусідні поля в рядку
+   стоять рівно, навіть коли один підпис перенісся у два рядки */
+.field { display: flex; flex-direction: column; margin-bottom: 1.3rem; }
+.field input, .field select, .field textarea, .field .bw__pick { margin-top: auto; }
 .field > span { display: block; margin-bottom: .42rem; font-size: .68rem; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; }
 .field input, .field select, .field textarea {
   width: 100%; padding: .72rem .85rem; font: inherit; font-size: 1rem; color: var(--text);

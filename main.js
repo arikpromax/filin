@@ -544,9 +544,15 @@
     var setText = function () {
       var dt = $('[data-text="dates"]', bw);
       if (dt) {
-        dt.textContent = S.in && S.out
-          ? fmtShort(S.in) + ' — ' + fmtShort(S.out) + ' · ' + nightsText(nights(S.in, S.out))
-          : (S.in ? fmtShort(S.in) + ' — оберіть виїзд' : 'Оберіть дати');
+        // у полі коротко: без дня тижня, а якщо місяць той самий — його пишемо раз
+        var dShort = function (iso) { var x = parse(iso); return x.getDate() + ' ' + MON[x.getMonth()]; };
+        var range = '';
+        if (S.in && S.out) {
+          var da = parse(S.in), db = parse(S.out);
+          range = (da.getMonth() === db.getMonth() ? String(da.getDate()) : dShort(S.in)) +
+            ' — ' + dShort(S.out) + ' · ' + nightsText(nights(S.in, S.out));
+        }
+        dt.textContent = range || (S.in ? dShort(S.in) + ' — оберіть виїзд' : 'Оберіть дати');
         var dbtn = dt.closest('button');
         if (dbtn) dbtn.classList.toggle('is-empty', !S.in);
       }
