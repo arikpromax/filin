@@ -47,6 +47,7 @@
     card: '<rect x="2.6" y="5.4" width="18.8" height="13.2" rx="2"/><path d="M2.6 10h18.8M6 14.6h4.4"/>',
     smoke: '<path d="M3 16.4h12.4v3.2H3zM17.2 16.4h1.6v3.2h-1.6M20 16.4h1.4v3.2H20M18.4 13.2c0-2.2-2.6-1.6-2.6-4.4"/>',
     kids: '<circle cx="12" cy="6.6" r="3.1"/><path d="M12 9.7v6.1M8.3 12.6 12 10.8l3.7 1.8M9 20.4l3-4.6 3 4.6"/>',
+    cancel: '<circle cx="12" cy="12" r="8.6"/><path d="M9.2 9.2l5.6 5.6M14.8 9.2l-5.6 5.6"/>',
     dot: '<circle cx="12" cy="12" r="2.6"/>'
   };
   var fsvg = function (n) { return '<svg viewBox="0 0 24 24" aria-hidden="true">' + (FICO[n] || FICO.dot) + '</svg>'; };
@@ -92,7 +93,8 @@
   var payHTML = function (no) {
     if (!PAY.prepay) return '';
     var head = '<p class="pay__lead">Бронь підтверджуємо після передоплати <b>' + hesc(PAY.prepay) + '</b>.</p>';
-    if (!PAY.iban) return head + '<p class="pay__hint">Реквізити надішлемо у відповідь на заявку.</p>';
+    var tail = PAY.note ? '<p class="pay__hint">' + hesc(PAY.note) + '</p>' : '';
+    if (!PAY.iban) return head + '<p class="pay__hint">Реквізити надішлемо у відповідь на заявку.</p>' + tail;
     var rows = [['Отримувач', PAY.recipient], ['IBAN', PAY.iban], ['ЄДРПОУ / ІПН', PAY.edrpou]];
     // призначення платежу має сенс лише з номером броні — він зʼявляється в чеку
     if (no) rows.push(['Призначення', ((PAY.purpose || '') + ' ' + no).trim()]);
@@ -101,7 +103,7 @@
     }).join('');
     return head + '<div class="pay__rows">' + body + '</div>' +
       '<button class="pay__copy" type="button" data-pay-copy>Скопіювати IBAN</button>' +
-      (PAY.note ? '<p class="pay__hint">' + hesc(PAY.note) + '</p>' : '');
+      tail;
   };
   var paySec = $('[data-pay-sec]');
   if (paySec && PAY.prepay) {
