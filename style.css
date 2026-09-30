@@ -348,7 +348,7 @@ body:has(> .back-btn) .topbar__logo { margin-left: 48px; }
 /* ==========================================================
    3. НОМЕРИ (на головній)
    ========================================================== */
-.rooms { background: var(--bg-soft); padding: clamp(64px, 8vw, 112px) 0; }
+.rooms { background: var(--bg); padding: clamp(64px, 8vw, 112px) 0; }
 .sec-head {
   display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 1.5rem 3rem;
   margin-bottom: clamp(32px, 4vw, 52px);
@@ -1020,7 +1020,7 @@ body:has(.dock) .foot { padding-bottom: 110px; }
 
 .cafe { padding: clamp(64px, 8vw, 112px) 0; }
 
-.route { padding: clamp(60px, 7.5vw, 104px) 0; background: var(--bg-soft); }
+.route { padding: clamp(60px, 7.5vw, 104px) 0; background: var(--bg); }
 .route__grid { display: grid; grid-template-columns: repeat(12, 1fr); column-gap: var(--gap); align-items: start; }
 .route__grid > div:first-child { grid-column: 1 / span 6; }
 .route__info { grid-column: 8 / span 5; }
@@ -1365,7 +1365,7 @@ main { background: var(--bg); }
   line-height: 1; margin-top: .04em;
 }
 .hero__place {
-  margin-top: .45rem;
+  margin-top: 0;
   font-family: var(--display); font-weight: 400;
   font-size: 1.5rem;
   line-height: 1.2;
@@ -1376,11 +1376,11 @@ main { background: var(--bg); }
   line-height: 1.15;
 }
 .hero__rule {
-  width: min(668px, 100%); margin: 1.5rem 0 0;
+  width: min(668px, 100%); margin: 2.5rem 0 0;   /* 40px */
   border: 0; border-top: 1px solid rgba(255, 255, 255, .2);
 }
 .hero__lead {
-  margin-top: .95rem;
+  margin-top: 1.25rem;                                  /* 20px */
   max-width: 42rem;
   font-family: var(--display); font-weight: 400;
   font-size: 1.05rem;
@@ -1397,7 +1397,8 @@ main { background: var(--bg); }
 .hero__inner, .hero__facts { position: relative; z-index: 1; }
 .hero { padding-top: 21vh; padding-bottom: 9vh; }
 /* між групами рядків — пауза, але не порожній екран */
-.hero__next { margin-top: 2.9rem; }
+.hero__next { margin-top: 5.5rem; }
+@media (min-width: 960px) { .hero__next { margin-top: 10.8rem; } }   /* 173px */
 
 /* ── Розміри першого екрана: від 1200px рівно як на greatpolonia ── */
 @media (min-width: 640px) {
