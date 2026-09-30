@@ -1677,14 +1677,14 @@ main {
 
 /* ── Підказка в календарі: коли заїзд обрано, а виїзд ще ні ── */
 .pop__foot [data-text="hint"] { transition: color .25s; }
+/* не плашка й не кнопка — інакше на підказку хочеться натиснути.
+   Просто текст: колір, жирність, трохи більший кегль і коротке «дихання» */
 .pop__foot .is-wait {
-  padding: .34rem .72rem; border-radius: 4px;
-  background: var(--accent); color: #fff; font-weight: 600;
-  animation: hintPulse 1.5s ease-out 3;
+  color: var(--accent); font-weight: 700; font-size: 1.02rem; letter-spacing: .01em;
+  animation: hintBreathe 1.3s ease-in-out 3;
 }
-@keyframes hintPulse {
-  0%   { box-shadow: 0 0 0 0 rgba(122, 85, 51, .5); }
-  70%  { box-shadow: 0 0 0 8px rgba(122, 85, 51, 0); }
-  100% { box-shadow: 0 0 0 0 rgba(122, 85, 51, 0); }
+@keyframes hintBreathe {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: .45; }
 }
 @media (prefers-reduced-motion: reduce) { .pop__foot .is-wait { animation: none; } }
