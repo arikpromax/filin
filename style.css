@@ -186,8 +186,6 @@ body:has(> .back-btn) .topbar__logo { margin-left: 48px; }
 .back-btn.on-dark { background: rgba(28, 28, 27, .45); color: var(--hero-text); border-color: rgba(255, 255, 255, .6); }
 .back-btn.on-dark:hover { background: var(--hero-text); color: var(--hero-bg); border-color: var(--hero-text); }
 
-/* на головній кнопка з’являється після заставки, на інших сторінках — одразу */
-.js body:has(> .hero) .menu-btn { opacity: 0; animation: fadeIn 1s ease .6s forwards; }
 
 .drawer { position: fixed; inset: 0; z-index: 65; visibility: hidden; pointer-events: none; transition: visibility 0s linear .7s; }
 .drawer.is-open { visibility: visible; pointer-events: auto; transition-delay: 0s; }
