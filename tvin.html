@@ -19,8 +19,8 @@
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display+SC:wght@400;700&display=swap">
-  <link rel="stylesheet" href="fonts.css?v=27">
-  <link rel="stylesheet" href="style.css?v=27">
+  <link rel="stylesheet" href="fonts.css?v=28">
+  <link rel="stylesheet" href="style.css?v=28">
   <script>document.documentElement.classList.add('js');</script>
 </head>
 <body>
@@ -268,7 +268,7 @@
         <div class="bw" data-bw data-months="1">
           <div class="bw__field">
             <button class="bw__btn" type="button" data-pop="cal" aria-expanded="false">
-              <span class="bw__label">Заїзд — виїзд</span>
+              <span class="bw__label">Заїзд — виїзд <i>*</i></span>
               <span class="bw__value" data-text="dates">Оберіть дати</span>
             </button>
             <div class="pop pop--cal" data-panel="cal" hidden>
@@ -334,14 +334,16 @@
       <section class="bk__sec">
         <h3 class="bk__h"><i>3</i>Ваші дані</h3>
         <div class="field-row">
-          <label class="field"><span>Ім’я</span><input name="name" type="text" autocomplete="name" required></label>
-          <label class="field"><span>Телефон</span><input name="phone" type="tel" autocomplete="tel" inputmode="tel" required></label>
-        </div>
-        <p class="bk__label">Як з вами зв’язатися</p>
-        <div class="chips bk__via">
-          <label class="chip"><input type="radio" name="via" value="Дзвінок" checked>Дзвінок</label>
-          <label class="chip"><input type="radio" name="via" value="Viber">Viber</label>
-          <label class="chip"><input type="radio" name="via" value="Telegram">Telegram</label>
+          <label class="field"><span>Ім’я <i>*</i></span><input name="name" type="text" autocomplete="name" placeholder="Як до вас звертатись" required></label>
+          <label class="field"><span>Телефон <i>*</i></span><input name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="068 000 00 00" required></label>
+          <div class="field">
+            <span>Як з вами зв’язатися</span>
+            <div class="chips bk__via">
+              <label class="chip"><input type="radio" name="via" value="Дзвінок" checked>Дзвінок</label>
+              <label class="chip"><input type="radio" name="via" value="Viber">Viber</label>
+              <label class="chip"><input type="radio" name="via" value="Telegram">Telegram</label>
+            </div>
+          </div>
         </div>
         <label class="field"><span>Побажання</span><textarea name="note" rows="2" placeholder="Наприклад: потрібне дитяче ліжечко"></textarea></label>
       </section>
@@ -392,8 +394,8 @@
   <button class="btn" type="button" data-book="tvin"><span>Забронювати</span></button>
 </div>
 
-<script src="menu-data.js?v=27"></script>
-<script src="config.js?v=27"></script>
-<script src="main.js?v=27"></script>
+<script src="menu-data.js?v=28"></script>
+<script src="config.js?v=28"></script>
+<script src="main.js?v=28"></script>
 </body>
 </html>
