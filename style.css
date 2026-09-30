@@ -1421,7 +1421,6 @@ main { background: var(--bg); }
 
 /* поява — одна на весь стовпчик; на окремих рядках вона б назавжди
    зафіксувала їхню прозорість, і прокрутка не змогла б їх розчинити */
-.js .hero__inner { animation: fadeIn 1.3s var(--ease) .15s backwards; }
 
 /* ── Перший блок: один стовпчик, трохи вищий за вікно ── */
 .hero { min-height: 100vh; min-height: 100svh; }
@@ -1458,3 +1457,30 @@ main { background: var(--bg); }
 /* фото в розділі «Про нас» — така сама рамка, як у карти */
 .route__map--ph { display: block; }
 .route__map--ph img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+
+/* ── Наведення: фото темніє. У номерів іще й проступає підпис ── */
+.rc__photo::before, .gal__card::before {
+  content: ""; position: absolute; inset: 0; z-index: 2;
+  background: rgba(23, 13, 10, .5);
+  opacity: 0; transition: opacity .4s var(--ease);
+  pointer-events: none;
+}
+.rc:hover .rc__photo::before,
+.gal__card:hover::before, .gal__card:focus-visible::before { opacity: 1; }
+
+.rc__hover {
+  position: absolute; left: 20px; right: 20px; bottom: 20px; z-index: 3;
+  display: grid; gap: .3rem; color: #fff; text-align: left;
+  opacity: 0; transform: translateY(10px);
+  transition: opacity .4s var(--ease), transform .4s var(--ease);
+  pointer-events: none;
+}
+.rc__hover b { font-family: var(--display); font-weight: 400; font-size: 1.3rem; line-height: 1.15; }
+.rc__hover span { font-size: .85rem; opacity: .85; }
+.rc:hover .rc__hover { opacity: 1; transform: none; }
+
+/* на дотику наведення немає — підпис не потрібен зовсім */
+@media (hover: none) {
+  .rc__hover { display: none; }
+  .rc__photo::before, .gal__card::before { content: none; }
+}
