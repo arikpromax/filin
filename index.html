@@ -19,8 +19,8 @@
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display+SC:wght@400;700&display=swap">
-  <link rel="stylesheet" href="fonts.css?v=28">
-  <link rel="stylesheet" href="style.css?v=28">
+  <link rel="stylesheet" href="fonts.css?v=29">
+  <link rel="stylesheet" href="style.css?v=29">
   <script>document.documentElement.classList.add('js');</script>
 </head>
 <body>
@@ -413,7 +413,7 @@
   <button class="lightbox__nav lightbox__nav--next" type="button" data-next aria-label="Наступне фото"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
 </dialog>
 
-<script src="menu-data.js?v=28"></script>
+<script src="menu-data.js?v=29"></script>
 <!-- FILTER PANEL: дати, гості, ліжка — усе за бажанням -->
 <!-- /FILTER PANEL -->
 
@@ -444,41 +444,39 @@
 
       <section class="bk__sec" data-sec="dates">
         <h3 class="bk__h"><i>1</i>Дати й гості</h3>
-        <div class="bw" data-bw data-months="1">
-          <div class="bw__field">
-            <button class="bw__btn" type="button" data-pop="cal" aria-expanded="false">
-              <span class="bw__label">Заїзд — виїзд <i>*</i></span>
-              <span class="bw__value" data-text="dates">Оберіть дати</span>
-            </button>
-            <div class="pop pop--cal" data-panel="cal" hidden>
-              <div class="pop__head"><b>Дати проживання</b><button type="button" data-pop-close aria-label="Закрити">×</button></div>
-              <div class="cal" data-cal></div>
-              <div class="pop__foot"><span data-text="hint">Оберіть дату заїзду</span><button type="button" class="pop__link" data-cal-clear>Очистити</button></div>
+        <div class="bw bw--form" data-bw data-months="1">
+          <div class="field-row">
+            <div class="field bw__field">
+              <span>Дата заїзду <i>*</i></span>
+              <button class="bw__pick is-empty" type="button" data-pop="cal" aria-expanded="false"><span data-text="in">Оберіть дату</span></button>
             </div>
-          </div>
-          <div class="bk-guests">
-          <div class="step">
-            <div><b>Дорослі</b><small>від 13 років</small></div>
-            <div class="step__ctl">
-              <button type="button" data-step="adults" data-d="-1" aria-label="Дорослі: менше">−</button>
-              <output data-val="adults">0</output>
-              <button type="button" data-step="adults" data-d="1" aria-label="Дорослі: більше">+</button>
+            <div class="field bw__field">
+              <span>Дата виїзду <i>*</i></span>
+              <button class="bw__pick is-empty" type="button" data-pop="cal" aria-expanded="false"><span data-text="out">Оберіть дату</span></button>
             </div>
+            <label class="field">
+              <span>Кількість дорослих <i>*</i></span>
+              <select data-gsel="adults"></select>
+            </label>
+            <label class="field" data-kids-row hidden>
+              <span>Кількість дітей</span>
+              <select data-gsel="children"></select>
+            </label>
           </div>
-          <label class="step step--check">
-            <div><b>З дітьми</b><small>до 12 років</small></div>
+
+          <!-- календар один на обидві дати: спочатку заїзд, потім виїзд -->
+          <div class="pop pop--cal" data-panel="cal" hidden>
+            <div class="pop__head"><b>Дати проживання</b><button type="button" data-pop-close aria-label="Закрити">×</button></div>
+            <div class="cal" data-cal></div>
+            <div class="pop__foot"><span data-text="hint">Оберіть дату заїзду</span><button type="button" class="pop__link" data-cal-clear>Очистити</button></div>
+          </div>
+
+          <label class="bk-kids">
             <input type="checkbox" data-kids-on>
             <span class="step__box" aria-hidden="true"></span>
+            <span>Їду з дітьми <small>до 12 років, не займають місце дорослого</small></span>
           </label>
-          <div class="step" data-kids-row hidden>
-            <div><b>Скільки дітей</b><small>не займають місце дорослого</small></div>
-            <div class="step__ctl">
-              <button type="button" data-step="children" data-d="-1" aria-label="Діти: менше">−</button>
-              <output data-val="children">0</output>
-              <button type="button" data-step="children" data-d="1" aria-label="Діти: більше">+</button>
-            </div>
-          </div>
-          </div>
+          <p class="bw__sum" data-text="dates"></p>
         </div>
         <!-- гостей більше, ніж вміщує номер: більший номер або дзвінок -->
         <div class="bk__cap" data-cap-note role="status" hidden></div>
@@ -567,8 +565,8 @@
   </div>
 </dialog>
 
-<script src="config.js?v=28"></script>
-<script src="main.js?v=28"></script>
+<script src="config.js?v=29"></script>
+<script src="main.js?v=29"></script>
 
 <!-- Картка закладу для пошуковиків: назва, адреса, телефони, години, координати.
      Дані ті самі, що на сторінці. Змінюються контакти — правити і тут. -->

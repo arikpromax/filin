@@ -539,9 +539,18 @@
     var openPanel = null;
 
     var setText = function () {
-      $('[data-text="dates"]', bw).textContent = S.in && S.out
+      var dt = $('[data-text="dates"]', bw);
+      if (dt) dt.textContent = S.in && S.out
         ? fmtShort(S.in) + ' — ' + fmtShort(S.out) + ' · ' + nightsText(nights(S.in, S.out))
         : (S.in ? fmtShort(S.in) + ' — оберіть виїзд' : 'Оберіть дати');
+      // окремі поля «дата заїзду» й «дата виїзду»: обидва відкривають той самий календар
+      [['in', S.in], ['out', S.out]].forEach(function (pr) {
+        var el = $('[data-text="' + pr[0] + '"]', bw);
+        if (!el) return;
+        el.textContent = pr[1] ? fmtShort(pr[1]) : 'Оберіть дату';
+        var btn = el.closest('button');
+        if (btn) btn.classList.toggle('is-empty', !pr[1]);
+      });
       var gt = $('[data-text="guests"]', bw);
       if (gt) gt.textContent = guestsText();
       $('[data-text="hint"]', bw).textContent = !S.in ? 'Оберіть дату заїзду'
@@ -558,6 +567,14 @@
         });
       });
       // підказка про місткість номера — під лічильниками гостей
+      // випадайки «скільки гостей» показують те саме число, що й стан
+      $$('[data-gsel]', bw).forEach(function (sel) {
+        var gk = sel.getAttribute('data-gsel');
+        if (+sel.value !== S[gk]) sel.value = S[gk];
+        if (gk === 'adults' && cap) {
+          $$('option', sel).forEach(function (o) { o.disabled = +o.value > cap * S.rooms; });
+        }
+      });
       var gp = $('[data-panel="guests"]', bw);
       if (gp && cap) {
         var hint = $('[data-cap-hint]', gp);
@@ -660,6 +677,25 @@
         var k = b.getAttribute('data-step'), d = +b.getAttribute('data-d');
         S[k] = Math.min(LIMITS[k][1], Math.max(LIMITS[k][0], S[k] + d));
         if (k !== 'rooms') S.gset = true;
+        var box = bw.closest('.booking');
+        if (box) clampGuests(+box.getAttribute('data-cap') || 0);
+        changed();
+      });
+    });
+
+    // випадайки замість лічильників: зрозуміліше, що саме обираєш
+    $$('[data-gsel]', bw).forEach(function (sel) {
+      var k = sel.getAttribute('data-gsel');
+      var w = k === 'children' ? ['дитина', 'дитини', 'дітей'] : ['дорослий', 'дорослі', 'дорослих'];
+      var from = k === 'children' ? 1 : LIMITS[k][0];
+      for (var i = from; i <= LIMITS[k][1]; i++) {
+        var o = document.createElement('option');
+        o.value = i; o.textContent = i + ' ' + plural(i, w[0], w[1], w[2]);
+        sel.appendChild(o);
+      }
+      sel.addEventListener('change', function () {
+        S[k] = +sel.value;
+        S.gset = true;
         var box = bw.closest('.booking');
         if (box) clampGuests(+box.getAttribute('data-cap') || 0);
         changed();

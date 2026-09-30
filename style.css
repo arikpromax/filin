@@ -1652,3 +1652,26 @@ main {
 /* ── Три картки відпочинку: натискається вся картка, не лише напис ── */
 .lcard { position: relative; }
 .lcard__link::after { content: ""; position: absolute; inset: 0; z-index: 1; }
+
+/* ── Крок «Дати й гості»: звичайні поля з підписами замість лічильників ── */
+.bw--form { display: block; border: 0; margin-bottom: 0; }
+.bw--form .bw__field + .bw__field { border-top: 0; }
+.field[hidden] { display: none; }
+.bw__pick {
+  display: block; width: 100%; padding: .55rem 0; text-align: left;
+  font: inherit; font-size: 1rem; color: var(--text);
+  background: transparent; border: 0; border-bottom: 1px solid var(--line); border-radius: 0;
+  transition: border-color .3s;
+}
+.bw__pick:hover, .bw__pick[aria-expanded="true"] { border-bottom-color: var(--text); }
+.bw__pick.is-empty span { opacity: .38; }
+/* календар один на обидві дати — лежить під полями, на всю ширину */
+.bw--form .pop { border: 1px solid var(--line); border-radius: 4px; margin: 0 0 1.2rem; }
+.bw__sum { margin: .1rem 0 0; font-size: .88rem; opacity: .7; }
+/* галочка «їду з дітьми» */
+.bk-kids { display: flex; align-items: center; gap: .7rem; padding: .1rem 0 .3rem; cursor: pointer; }
+.bk-kids input { position: absolute; opacity: 0; width: 0; height: 0; }
+.bk-kids small { display: block; font-size: .8rem; opacity: .7; }
+.bk-kids input:checked ~ .step__box { background: var(--accent); border-color: var(--accent); }
+.bk-kids input:checked ~ .step__box::after { opacity: 1; transform: rotate(45deg) scale(1); }
+.bk-kids input:focus-visible ~ .step__box { outline: 2px solid var(--text); outline-offset: 2px; }
