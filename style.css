@@ -180,7 +180,7 @@ body:has(> .back-btn) .topbar__logo { margin-left: 48px; }
   body:has(> .back-btn) .topbar__logo { margin-left: 64px; }
 }
 /* кнопки «Меню» й «Назад» сідають у смугу */
-.menu-btn, .back-btn { transition: background .3s, color .3s, border-color .3s, opacity .3s, visibility .3s, top .45s var(--ease), right .45s var(--ease), left .45s var(--ease); }
+.menu-btn, .back-btn { transition: background .3s, color .3s, border-color .3s, opacity .18s, visibility .18s, top .45s var(--ease), right .45s var(--ease), left .45s var(--ease); }
 .bar-on .menu-btn { top: 7px; right: 16px; }
 .bar-on .back-btn { top: 7px; left: 16px; }
 .back-btn.on-dark { background: rgba(28, 28, 27, .45); color: var(--hero-text); border-color: rgba(255, 255, 255, .6); }
@@ -1506,12 +1506,8 @@ main { background: var(--bg); }
 /* ── Зерно на світлій частині сайту: поверхня стає схожою на папір.
    Починається з другого блоку — на першому екрані своє, під фото. ── */
 main {
-  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)' opacity='.22'/%3E%3C/svg%3E") repeat 0 0 / 180px 180px, var(--bg);
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)' opacity='.45'/%3E%3C/svg%3E") repeat 0 0 / 180px 180px, var(--bg);
 }
 .foot {
-  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)' opacity='.22'/%3E%3C/svg%3E") repeat 0 0 / 180px 180px, var(--bg-soft);
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)' opacity='.45'/%3E%3C/svg%3E") repeat 0 0 / 180px 180px, var(--bg-soft);
 }
-
-/* Герб при прокрутці тільки меншає й тане — без розмиття.
-   Розмите тонке лого перетворюється на пляму, на відміну від тексту. */
-.hero__crest { filter: none !important; }

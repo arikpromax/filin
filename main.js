@@ -165,7 +165,7 @@
     else { heroLines.push(el); }
   });
   if (heroLines.length && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    var lQueued = false;
+    var lQueued = false, lSettle = 0;
     var lineFade = function () {
       lQueued = false;
       var vh = window.innerHeight;
@@ -184,6 +184,8 @@
     lineFade();
     window.addEventListener('scroll', function () {
       if (!lQueued) { lQueued = true; requestAnimationFrame(lineFade); }
+      clearTimeout(lSettle);
+      lSettle = setTimeout(lineFade, 120);   // останній кадр, коли прокрутка стихла
     }, { passive: true });
     // зум, поворот екрана чи дозавантажений шрифт зсувають розкладку —
     // збережені початкові місця стають хибними, тож забуваємо їх і міряємо наново
@@ -209,7 +211,7 @@
       toneQueued = false;
       if (topbar) {
         // на головній — після першого екрана, на інших сторінках — щойно почали гортати
-        var on = window.scrollY > (heroTop ? heroTop.offsetHeight - 80 : 60);
+        var on = window.scrollY > (heroTop ? heroTop.offsetHeight - 320 : 60);
         topbar.classList.toggle('is-on', on);
         root.classList.toggle('bar-on', on);
       }
