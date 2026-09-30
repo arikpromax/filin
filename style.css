@@ -8,13 +8,13 @@
    ========================================================== */
 
 :root {
-  --bg:           #fdfaf5;   /* тепле кремове, а не біле */
-  --bg-soft:      #f3ece0;   /* світле дерево */
+  --bg:           #f9f9f9;   /* світло-сіре, заміряне з надісланого зразка */
+  --bg-soft:      #f0f0f0;   /* на крок темніше — підвал */
   --text:         #241f18;   /* тепло-коричневий замість чорного */
   --line:         rgba(36, 31, 24, .16);
   --accent:       #7a5533;   /* тепле дерево — кнопки, акценти */
   --accent-hover: #93683f;
-  --ph:           #e9e0d0;   /* заглушка під фото */
+  --ph:           #ececec;   /* заглушка під фото */
 
   --font:    'Manrope', 'Helvetica Neue', Arial, sans-serif;
   --display: 'Playfair Display SC', Georgia, 'Times New Roman', serif;
@@ -1233,7 +1233,7 @@ a:hover > .ico--ext { transform: translate(2px, -2px); }
 .topbar__mark, .foot__emblem { display: block; flex: none; width: auto; }
 
 /* світла заглушка тепла, а не сіра */
-.ph { background: linear-gradient(155deg, #f5efe3 0%, #e7dcc8 100%); }
+.ph { background: linear-gradient(155deg, #f4f4f4 0%, #e6e6e6 100%); }
 .ph__label { color: #8a6a3a; letter-spacing: .14em; }
 
 
