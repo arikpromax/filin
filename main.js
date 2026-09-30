@@ -1007,18 +1007,6 @@
         '</div></div></article>';
   };
 
-  // «Популярне в кафе» на головній
-  var popular = $('[data-popular]');
-  if (popular) {
-    var tops = [];
-    MENU.forEach(function (c) { c.items.forEach(function (d) { if (d.top) tops.push(d); }); });
-    popular.innerHTML = tops.slice(0, 4).map(function (d) { return cardHTML(d, false); }).join('');
-    $$('img', popular).forEach(dropBroken);
-    popular.addEventListener('click', function (e) {
-      var c = e.target.closest('.dcard');
-      if (c && !e.target.closest('a')) location.href = 'menu.html#dish-' + c.getAttribute('data-dish');
-    });
-  }
 
   var menuRoot = $('[data-menu]');
   if (menuRoot) {

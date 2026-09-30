@@ -772,7 +772,7 @@ body:has(> .back-btn) .topbar__logo { margin-left: 48px; }
 .rtools__sum { font-size: .9rem; font-weight: 500; }
 
 .rgrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--gap); }
-.rc { display: flex; flex-direction: column; background: var(--bg); border: 1px solid var(--line); cursor: pointer; }
+.rc { display: flex; flex-direction: column; background: #fff; border: 1px solid var(--line); cursor: pointer; }
 
 .rc__photo { display: block; aspect-ratio: 4 / 3; }
 .rc__photo img { transition: transform 1.2s var(--ease); }
@@ -1356,23 +1356,23 @@ main { background: var(--bg); }
 .hero__h { display: grid; margin: 0; font-weight: 400; }
 .hero__h-top {
   font-family: var(--display); font-weight: 400;
-  font-size: clamp(2.1rem, 1.2rem + 3.4vw, 4rem);      /* 64px */
+  font-size: 2.6rem;
   line-height: 1;
 }
 .hero__h-script {
   font-family: var(--script); font-weight: 400;
-  font-size: clamp(3.1rem, 1.6rem + 5.4vw, 6rem);      /* 96px */
+  font-size: 3.6rem;
   line-height: 1; margin-top: .04em;
 }
 .hero__place {
   margin-top: .45rem;
   font-family: var(--display); font-weight: 400;
-  font-size: clamp(1.25rem, .95rem + 1.45vw, 2.23rem);  /* 35.7px */
+  font-size: 1.5rem;
   line-height: 1.2;
 }
 .hero__place-script {
   font-family: var(--script); font-weight: 400;
-  font-size: clamp(1.25rem, .95rem + 1.45vw, 2.23rem);  /* 35.7px */
+  font-size: 1.5rem;
   line-height: 1.15;
 }
 .hero__rule {
@@ -1383,7 +1383,7 @@ main { background: var(--bg); }
   margin-top: .95rem;
   max-width: 42rem;
   font-family: var(--display); font-weight: 400;
-  font-size: clamp(.95rem, .9rem + .48vw, 1.31rem);     /* 21px */
+  font-size: 1.05rem;
   line-height: 1.5;
 }
 .hero__cta { margin-top: 1.6rem; }
@@ -1406,3 +1406,23 @@ main { background: var(--bg); }
 .hero { padding-top: 21vh; padding-bottom: 9vh; }
 /* між групами рядків — пауза, але не порожній екран */
 .hero__next { margin-top: 2.9rem; }
+
+/* ── Розміри першого екрана: від 1200px рівно як на greatpolonia ── */
+@media (min-width: 640px) {
+  .hero__h-top { font-size: 4rem; }
+  .hero__h-script { font-size: 5.5rem; }
+  .hero__place, .hero__place-script { font-size: 1.9rem; }
+  .hero__lead { font-size: 1.15rem; }
+}
+@media (min-width: 960px) {
+  .hero__h-top { font-size: 6rem; }
+  .hero__h-script { font-size: 8.25rem; }
+  .hero__place, .hero__place-script { font-size: 2.35rem; }
+  .hero__lead { font-size: 1.25rem; }
+}
+@media (min-width: 1200px) {
+  .hero__h-top { font-size: 8rem; }          /* 128px */
+  .hero__h-script { font-size: 11rem; }      /* 176px */
+  .hero__place, .hero__place-script { font-size: 2.625rem; }  /* 42px */
+  .hero__lead { font-size: 1.3125rem; }      /* 21px */
+}
