@@ -396,7 +396,7 @@ body:has(> .back-btn) .topbar__logo { margin-left: 48px; }
 /* ==========================================================
    СТОРІНКА «НОМЕРИ»
    ========================================================== */
-.page { padding: clamp(110px, 12vw, 160px) 0 clamp(70px, 8vw, 120px); }
+.page { padding: clamp(84px, 7vw, 108px) 0 clamp(60px, 7vw, 100px); }
 .page-head { margin-bottom: clamp(24px, 3vw, 40px); }
 .page-head h1 { font-size: clamp(2.6rem, 1.6rem + 4vw, 4.6rem); }
 .page-head p:not(.eyebrow) { margin-top: .8rem; }
