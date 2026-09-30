@@ -506,7 +506,10 @@
   var S = { in: '', out: '', adults: 2, children: 0, rooms: 1, gset: false };   // gset — гостей обрав сам гість
   try {
     var saved = JSON.parse(sessionStorage.getItem(KEY) || 'null');
-    if (saved) Object.keys(S).forEach(function (k) { if (saved[k] !== undefined) S[k] = saved[k]; });
+    // дати навмисне не відновлюємо: поки гість їх не обрав, поле має бути порожнє
+    if (saved) Object.keys(S).forEach(function (k) {
+      if (k !== 'in' && k !== 'out' && saved[k] !== undefined) S[k] = saved[k];
+    });
   } catch (x) {}
   if (S.in && S.in < todayISO) { S.in = ''; S.out = ''; }
   var save = function () { try { sessionStorage.setItem(KEY, JSON.stringify(S)); } catch (x) {} };
@@ -540,17 +543,13 @@
 
     var setText = function () {
       var dt = $('[data-text="dates"]', bw);
-      if (dt) dt.textContent = S.in && S.out
-        ? fmtShort(S.in) + ' — ' + fmtShort(S.out) + ' · ' + nightsText(nights(S.in, S.out))
-        : (S.in ? fmtShort(S.in) + ' — оберіть виїзд' : 'Оберіть дати');
-      // окремі поля «дата заїзду» й «дата виїзду»: обидва відкривають той самий календар
-      [['in', S.in], ['out', S.out]].forEach(function (pr) {
-        var el = $('[data-text="' + pr[0] + '"]', bw);
-        if (!el) return;
-        el.textContent = pr[1] ? fmtShort(pr[1]) : 'Оберіть дату';
-        var btn = el.closest('button');
-        if (btn) btn.classList.toggle('is-empty', !pr[1]);
-      });
+      if (dt) {
+        dt.textContent = S.in && S.out
+          ? fmtShort(S.in) + ' — ' + fmtShort(S.out) + ' · ' + nightsText(nights(S.in, S.out))
+          : (S.in ? fmtShort(S.in) + ' — оберіть виїзд' : 'Оберіть дати');
+        var dbtn = dt.closest('button');
+        if (dbtn) dbtn.classList.toggle('is-empty', !S.in);
+      }
       var gt = $('[data-text="guests"]', bw);
       if (gt) gt.textContent = guestsText();
       $('[data-text="hint"]', bw).textContent = !S.in ? 'Оберіть дату заїзду'

@@ -1659,6 +1659,7 @@ main {
 .bw--form { display: block; border: 0; margin-bottom: 0; }
 .bw--form .bw__field + .bw__field { border-top: 0; }
 .field[hidden] { display: none; }
+.field--wide { grid-column: 1 / -1; }
 .bw__pick {
   display: block; width: 100%; padding: .72rem .85rem; text-align: left;
   font: inherit; font-size: 1rem; color: var(--text);
@@ -1670,4 +1671,3 @@ main {
 .bw__pick.is-empty span { opacity: .38; }
 /* календар один на обидві дати — лежить під полями, на всю ширину */
 .bw--form .pop { border: 1px solid var(--line); border-radius: 4px; margin: 0 0 1.2rem; }
-.bw__sum { margin: .1rem 0 0; font-size: .88rem; opacity: .7; }
