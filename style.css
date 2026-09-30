@@ -1254,11 +1254,12 @@ main { background: var(--bg); }
 .hero__media img {
   position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
   opacity: 0;
-  animation: heroFade 26s linear infinite, heroZoom 26s ease-in-out infinite;
+  transform-origin: 32% 68%;
+  animation: heroFade 12s linear infinite, heroZoom 12s ease-out infinite;
 }
-.hero__media img:nth-child(2) { animation-delay: -13s; }
+.hero__media img:nth-child(2) { animation-delay: -6s; transform-origin: 68% 32%; }
 /* друге фото ще не поклали — перше просто поволі наїжджає, без миготіння */
-.hero__media img:only-child { opacity: 1; animation: heroZoom 26s ease-in-out infinite; }
+.hero__media img:only-child { opacity: 1; animation: heroZoom 12s ease-out infinite; }
 
 /* вуаль поверх фото, щоб білий текст читався; фото немає — вуалі теж */
 .hero__media::after {
@@ -1271,8 +1272,10 @@ main { background: var(--bg); }
 .hero__inner, .hero__facts { position: relative; z-index: 1; }
 
 @keyframes heroFade { 0%, 42% { opacity: 1; } 50%, 92% { opacity: 0; } 100% { opacity: 1; } }
-/* наїзд ледь помітний: кожен зайвий відсоток збільшення — це зайве розтягування фото */
-@keyframes heroZoom { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
+/* Кадр від'їжджає від 1.1 до звичайного розміру рівно за той час, поки він на
+   екрані, — тож наприкінці показу картинка найрізкіша. Точка відліку в кожного
+   фото своя, тому рух іще й трохи вбік, а не просто вглиб. */
+@keyframes heroZoom { 0% { transform: scale(1.1); } 50% { transform: scale(1); } 100% { transform: scale(1.1); } }
 
 @media (prefers-reduced-motion: reduce) {
   .hero__media img { animation: none; opacity: 1; }
