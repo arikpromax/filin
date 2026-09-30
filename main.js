@@ -2,6 +2,33 @@
   'use strict';
 
   var CFG = window.FILIN || {};
+
+  /* ── Зайняті дати в календарі. Поки в config.js немає booking.api,
+     список порожній і всі дати вільні, як і раніше. ── */
+  var BUSY = {};          // { lyuks: { "2026-10-05": true } }
+  var busyLoaded = {};    // за який номер уже питали
+  var redrawCal = function () {};   // сюди календар підставить свою перемальовку
+  var busyFor = function (id) { return BUSY[id] || {}; };
+  var curRoomId = function () {
+    var r = document.querySelector('input[name="room"]:checked');
+    return r ? r.value : '';
+  };
+  var loadBusy = function (id) {
+    var api = (CFG.booking && CFG.booking.api) || '';
+    if (!api || !id || busyLoaded[id]) return;
+    busyLoaded[id] = true;
+    fetch(api + (api.indexOf('?') < 0 ? '?' : '&') + 'room=' + encodeURIComponent(id))
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (j) {
+        var list = j && (j.dates || j);   // { dates: [...] } або просто [...]
+        if (!list || !list.length) return;
+        var map = {};
+        list.forEach(function (d) { map[String(d).slice(0, 10)] = true; });
+        BUSY[id] = map;
+        redrawCal();
+      })
+      .catch(function () { busyLoaded[id] = false; });
+  };
   var $  = function (s, r) { return (r || document).querySelector(s); };
   var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
   var root = document.documentElement;
@@ -476,16 +503,20 @@
         for (var d = 1; d <= days; d++) {
           var iso = toISO(new Date(first.getFullYear(), first.getMonth(), d));
           var cls = 'cal__day';
+          var busy = busyFor(curRoomId())[iso];
+          if (busy) cls += ' is-busy';
           if (iso === todayISO) cls += ' is-today';
           if (iso === S.in) cls += ' is-start';
           if (iso === S.out) cls += ' is-end';
           if (S.in && S.out && iso > S.in && iso < S.out) cls += ' is-range';
-          html += '<button type="button" class="' + cls + '" data-day="' + iso + '"' + (iso < todayISO ? ' disabled' : '') + '>' + d + '</button>';
+          html += '<button type="button" class="' + cls + '" data-day="' + iso + '"' + (iso < todayISO || busy ? ' disabled' : '') + (busy ? ' title="Уже заброньовано"' : '') + '>' + d + '</button>';
         }
         html += '</div></div>';
       }
       cal.innerHTML = html + '</div>';
     };
+
+    redrawCal = renderCal;
 
     var close = function () {
       if (!openPanel) return;
@@ -799,6 +830,7 @@
       $('[data-sel-ph]', bk).innerHTML = '<img src="' + r.getAttribute('data-img') + '" alt="" onerror="this.remove()">';
     };
     var setRoom = function () {
+      loadBusy(curRoomId());
       showSel();
       var r = getRoom();
       bkForm.setAttribute('data-room', r ? r.name : '');
@@ -855,6 +887,7 @@
         bkErr.hidden = true;
         capNote = false;
         setRoom();
+        busyLoaded = {};   // бронь могли скасувати — перепитуємо
         openDialog(bk);
         // одразу показуємо календар (після цього кліку — інакше він закриє календар як «клік поза ним»)
         if (!S.in || !S.out) setTimeout(function () { $('[data-bw]', bkForm).openDates(); }, 0);
