@@ -19,8 +19,8 @@
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display+SC:wght@400;700&display=swap">
-  <link rel="stylesheet" href="fonts.css?v=9">
-  <link rel="stylesheet" href="style.css?v=9">
+  <link rel="stylesheet" href="fonts.css?v=10">
+  <link rel="stylesheet" href="style.css?v=10">
   <script>document.documentElement.classList.add('js');</script>
 </head>
 <body>
@@ -100,12 +100,6 @@
     </div>
 
     <!-- Кнопка «Фільтр» — фільтри за бажанням; за замовчуванням видно всі номери -->
-    <div class="rtools">
-      <button type="button" class="fbtn" data-open-filter><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M7 12h10M10 18h4"/></svg><span>Фільтр</span><b class="fbtn__n" data-filter-n hidden>0</b></button>
-      <p class="rtools__sum" data-filter-sum aria-live="polite">Усі номери</p>
-      <button type="button" class="pop__link" data-filter-reset hidden>Скинути</button>
-    </div>
-
     <!-- Фото номерів: room-4-1.jpg (Одномісний), room-1-1.jpg (Стандарт), room-2-1.jpg (Твін), room-5-1.jpg (Люкс), room-3-1.jpg (Сімейний) -->
     <div class="rgrid" data-rooms>
       <article class="rc" id="odnomisnyi" data-room-id="odnomisnyi" data-cap="1" data-bed="single" data-href="odnomisnyi.html">
@@ -199,7 +193,7 @@
       </aside>
     </div>
     <div class="rempty" data-empty hidden>
-      <p data-empty-text>Немає номерів за цими фільтрами.</p>
+      <p data-empty-text>Вільних номерів на ці дати немає.</p>
       <div class="call-us" data-call-us hidden>
         <a class="btn needs-phone" data-phone-link data-call hidden href="#"><span>Зателефонувати</span></a>
         <a class="btn btn--ghost no-phone" href="https://www.instagram.com/cafe__filin__/" target="_blank" rel="noopener"><span>Написати в Instagram</span></a>
@@ -419,61 +413,8 @@
   <button class="lightbox__nav lightbox__nav--next" type="button" data-next aria-label="Наступне фото"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
 </dialog>
 
-<script src="menu-data.js?v=9"></script>
+<script src="menu-data.js?v=10"></script>
 <!-- FILTER PANEL: дати, гості, ліжка — усе за бажанням -->
-<dialog class="bpanel fpanel" id="fpanel" aria-label="Фільтр номерів">
-  <div class="bpanel__head">
-    <p class="bpanel__title">Фільтр</p>
-    <button type="button" class="bpanel__close" data-dialog-close aria-label="Закрити">×</button>
-  </div>
-  <div class="fpanel__body">
-    <section class="fgroup">
-      <h3>Дати</h3>
-      <div class="bw" data-bw data-months="1">
-    <div class="bw__field">
-      <button class="bw__btn" type="button" data-pop="cal" aria-expanded="false">
-        <span class="bw__label">Заїзд — виїзд</span>
-        <span class="bw__value" data-text="dates">Оберіть дати</span>
-      </button>
-      <div class="pop pop--cal" data-panel="cal" hidden>
-        <div class="pop__head"><b>Дати проживання</b><button type="button" data-pop-close aria-label="Закрити">×</button></div>
-        <div class="cal" data-cal></div>
-        <div class="pop__foot"><span data-text="hint">Оберіть дату заїзду</span><button type="button" class="pop__link" data-cal-clear>Очистити</button></div>
-      </div>
-    </div>
-
-  </div>
-    </section>
-    <section class="fgroup">
-      <h3>Гості</h3>
-      <div class="step">
-        <div><b>Дорослі</b><small>від 13 років</small></div>
-        <div class="step__ctl">
-          <button type="button" data-fstep="adults" data-d="-1" aria-label="Дорослі: менше">−</button>
-          <output data-fval="adults">1</output>
-          <button type="button" data-fstep="adults" data-d="1" aria-label="Дорослі: більше">+</button>
-        </div>
-      </div>
-      <div class="step">
-        <div><b>Діти</b><small>до 12 років</small></div>
-        <div class="step__ctl">
-          <button type="button" data-fstep="children" data-d="-1" aria-label="Діти: менше">−</button>
-          <output data-fval="children">0</output>
-          <button type="button" data-fstep="children" data-d="1" aria-label="Діти: більше">+</button>
-        </div>
-      </div>
-      <p class="fgroup__hint" data-fhint>Покажемо номери, де всі вмістяться.</p>
-    </section>
-    <section class="fgroup">
-      <h3>Ліжка</h3>
-      <div class="chips"><button type="button" class="chip is-on" data-filter="bed" data-value="all" aria-pressed="true">Усі</button><button type="button" class="chip" data-filter="bed" data-value="single" aria-pressed="false">Односпальне</button><button type="button" class="chip" data-filter="bed" data-value="double" aria-pressed="false">Двоспальне</button><button type="button" class="chip" data-filter="bed" data-value="twin" aria-pressed="false">Окремі</button><button type="button" class="chip" data-filter="bed" data-value="family" aria-pressed="false">Для родини</button></div>
-    </section>
-  </div>
-  <div class="fpanel__foot">
-    <button type="button" class="pop__link" data-filter-reset>Скинути</button>
-    <button type="button" class="btn" data-dialog-close data-filter-show>Показати номери</button>
-  </div>
-</dialog>
 <!-- /FILTER PANEL -->
 
 <!-- ─────────────── БРОНЮВАННЯ: форма зліва, «чек» для гостя справа ─────────────── -->
@@ -524,8 +465,13 @@
               <button type="button" data-step="adults" data-d="1" aria-label="Дорослі: більше">+</button>
             </div>
           </div>
-          <div class="step">
-            <div><b>Діти</b><small>до 12 років</small></div>
+          <label class="step step--check">
+            <div><b>З дітьми</b><small>до 12 років</small></div>
+            <input type="checkbox" data-kids-on>
+            <span class="step__box" aria-hidden="true"></span>
+          </label>
+          <div class="step" data-kids-row hidden>
+            <div><b>Скільки дітей</b><small>не займають місце дорослого</small></div>
             <div class="step__ctl">
               <button type="button" data-step="children" data-d="-1" aria-label="Діти: менше">−</button>
               <output data-val="children">0</output>
@@ -615,8 +561,8 @@
   </div>
 </dialog>
 
-<script src="config.js?v=9"></script>
-<script src="main.js?v=9"></script>
+<script src="config.js?v=10"></script>
+<script src="main.js?v=10"></script>
 
 <!-- Картка закладу для пошуковиків: назва, адреса, телефони, години, координати.
      Дані ті самі, що на сторінці. Змінюються контакти — правити і тут. -->

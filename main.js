@@ -405,9 +405,9 @@
   var clampGuests = function (cap) {
     if (!cap) return;
     var max = cap * S.rooms;
-    if (S.adults + S.children <= max) return;
+    if (S.adults <= max) return;
     S.adults = Math.max(1, Math.min(S.adults, max));
-    S.children = Math.max(0, Math.min(S.children, max - S.adults));
+    // дітей не чіпаємо — вони не входять у місткість
   };
   var listeners = [];
   var changed = function () { save(); listeners.forEach(function (fn) { fn(); }); };
@@ -434,7 +434,7 @@
         : !S.out ? 'Оберіть дату виїзду' : nightsText(nights(S.in, S.out));
       var box = bw.closest('.booking');
       var cap = box ? +box.getAttribute('data-cap') || 0 : 0;
-      var full = cap && S.adults + S.children >= cap * S.rooms;
+      var full = cap && S.adults >= cap * S.rooms;
       Object.keys(LIMITS).forEach(function (k) {
         if (!$('[data-val="' + k + '"]', bw)) return;
         $('[data-val="' + k + '"]', bw).textContent = S[k];
@@ -563,96 +563,47 @@
     d.addEventListener('click', function (e) { if (e.target === d) d.close(); });
   });
 
-  /* ── Номери на головній: кнопка «Фільтр» (усе за бажанням) ── */
+  /* ── Галочка «З дітьми»: відкриває лічильник, знята — обнуляє ── */
+  var kidsOn = $('[data-kids-on]'), kidsRow = $('[data-kids-row]');
+  if (kidsOn && kidsRow) {
+    kidsOn.checked = S.children > 0;
+    kidsRow.hidden = !kidsOn.checked;
+    kidsOn.addEventListener('change', function () {
+      kidsRow.hidden = !kidsOn.checked;
+      if (kidsOn.checked) { if (!S.children) S.children = 1; }
+      else S.children = 0;
+      S.gset = true;
+      changed();
+    });
+  }
+  /* ── Номери на головній: ціни й підказка, коли гостей більше, ніж уміщує номер ── */
   var grid = $('[data-rooms]');
-  var fpanel = $('#fpanel');
   if (grid) {
     var rcs = $$('.rc', grid);
-    var FLIM = { adults: [1, 8], children: [0, 6] };
-    var F = { adults: 1, children: 0, bed: 'all' };   // 1 дорослий — вміщується всюди, тобто видно всі номери
-    var BED = { single: 'односпальне', double: 'двоспальне', twin: 'окремі ліжка', family: 'для родини' };
     var prices = CFG.prices || {};
-    var fGuests = function () { return F.adults + F.children; };
-    var fGuestsText = function () {
-      return F.adults + ' ' + plural(F.adults, 'дорослий', 'дорослих', 'дорослих') +
-        (F.children ? ', ' + F.children + ' ' + plural(F.children, 'дитина', 'дитини', 'дітей') : '');
-    };
 
     var render = function () {
-      // кнопки-«чіпи» (ліжка) та лічильники гостей у вікні фільтра
-      $$('[data-filter]').forEach(function (b) {
-        var on = F[b.getAttribute('data-filter')] === b.getAttribute('data-value');
-        b.classList.toggle('is-on', on);
-        b.setAttribute('aria-pressed', on ? 'true' : 'false');
-      });
-      Object.keys(FLIM).forEach(function (k) {
-        $('[data-fval="' + k + '"]').textContent = F[k];
-        $$('[data-fstep="' + k + '"]').forEach(function (b) {
-          b.disabled = +b.getAttribute('data-d') < 0 ? F[k] <= FLIM[k][0] : F[k] >= FLIM[k][1];
-        });
-      });
-      // список номерів: лише ті, де всі вмістяться
-      var shown = 0, total = fGuests();
       var n = S.in && S.out ? nights(S.in, S.out) : 0;
       rcs.forEach(function (c) {
-        var ok = +c.getAttribute('data-cap') >= total && (F.bed === 'all' || c.getAttribute('data-bed') === F.bed);
-        c.hidden = !ok;
-        if (ok) shown++;
         var price = +prices[c.getAttribute('data-room-id')] || 0;
         var pEl = $('[data-price]', c);
-        // ціни ще немає — рядок просто порожній, щоб не писати «Ціну уточнимо» на фото
         if (pEl) pEl.textContent = !price ? 'Ціну уточнимо'
           : n ? money(price * n) + ' за ' + nightsText(n) : 'від ' + money(price) + ' / ніч';
       });
-      $('[data-empty]').hidden = shown > 0;
-      var rinfo = $('[data-rinfo]');
-      if (rinfo) rinfo.hidden = !shown;   // коли номерів немає — є окрема підказка з дзвінком
+      // дорослих більше, ніж уміщує найбільший номер — підказуємо подзвонити
       var maxCap = Math.max.apply(null, rcs.map(function (c) { return +c.getAttribute('data-cap'); }));
-      var tooMany = total > maxCap;
-      $('[data-empty-text]').textContent = tooMany
-        ? 'Номера на ' + total + ' ' + plural(total, 'гостя', 'гостей', 'гостей') + ' у нас немає — найбільший уміщує ' + maxCap + '. Зателефонуйте нам — підберемо кілька номерів поруч.'
-        : 'Немає номерів за цими фільтрами.';
-      $('[data-call-us]').hidden = !tooMany;
-      var hint = $('[data-fhint]');
-      if (hint) hint.innerHTML = tooMany
-        ? 'Номера на ' + total + ' ' + plural(total, 'гостя', 'гостей', 'гостей') + ' немає — найбільший уміщує ' + maxCap + '. ' + callHTML() + ' — підберемо кілька номерів.'
-        : total > 1
-        ? 'Для ' + total + ' ' + plural(total, 'гостя', 'гостей', 'гостей') + ' підходить ' + shown + ' ' + plural(shown, 'номер', 'номери', 'номерів') + '.'
-        : 'Покажемо номери, де всі вмістяться.';
-      // підсумок біля кнопки «Фільтр»
-      var parts = [];
-      if (n) parts.push(fmtShort(S.in) + ' — ' + fmtShort(S.out) + ' · ' + nightsText(n));
-      if (total > 1) parts.push(fGuestsText());
-      if (F.bed !== 'all') parts.push(BED[F.bed]);
-      $('[data-filter-sum]').textContent = parts.length ? parts.join(' · ') + ' — ' + shown + ' з ' + rcs.length : 'Усі номери · ' + rcs.length;
-      var active = (n ? 1 : 0) + (total > 1 ? 1 : 0) + (F.bed !== 'all' ? 1 : 0);
-      var badge = $('[data-filter-n]');
-      badge.textContent = active; badge.hidden = !active;
-      $$('.rtools [data-filter-reset]').forEach(function (b) { b.hidden = !active; });
-      var show = $('[data-filter-show]');
-      if (show) show.textContent = shown ? 'Показати ' + shown + ' ' + plural(shown, 'номер', 'номери', 'номерів') : 'Немає номерів';
+      var tooMany = S.adults > maxCap;
+      var empty = $('[data-empty]');
+      if (empty) empty.hidden = !tooMany;
+      var rinfo = $('[data-rinfo]');
+      if (rinfo) rinfo.hidden = tooMany;
+      var et = $('[data-empty-text]');
+      if (et) et.textContent = 'Номера на ' + S.adults + ' ' + plural(S.adults, 'дорослого', 'дорослих', 'дорослих') +
+        ' у нас немає — найбільший уміщує ' + maxCap + '. Зателефонуйте — підберемо кілька номерів поруч.';
+      var cu = $('[data-call-us]');
+      if (cu) cu.hidden = !tooMany;
     };
 
-    $$('[data-filter]').forEach(function (b) {
-      b.addEventListener('click', function () { F[b.getAttribute('data-filter')] = b.getAttribute('data-value'); render(); });
-    });
-    $$('[data-fstep]').forEach(function (b) {
-      b.addEventListener('click', function () {
-        var k = b.getAttribute('data-fstep');
-        F[k] = Math.min(FLIM[k][1], Math.max(FLIM[k][0], F[k] + (+b.getAttribute('data-d'))));
-        S.adults = F.adults; S.children = F.children; S.gset = true;   // одразу підставляємо у бронювання
-        changed();
-      });
-    });
-    $$('[data-filter-reset]').forEach(function (b) {
-      b.addEventListener('click', function () {
-        F = { adults: 1, children: 0, bed: 'all' };
-        S.in = ''; S.out = ''; S.adults = 2; S.children = 0; S.gset = false;
-        changed(); render();
-      });
-    });
-    var ob = $('[data-open-filter]');
-    if (ob && fpanel) ob.addEventListener('click', function () { openDialog(fpanel); });
     // уся картка номера відкриває його сторінку (крім кнопки «Забронювати»)
     grid.addEventListener('click', function (e) {
       var card = e.target.closest('.rc[data-href]');
@@ -661,7 +612,6 @@
     listeners.push(render);
     render();
   }
-
   /* ── «Інші номери»: гортання вбік ── */
   $$('[data-carousel]').forEach(function (c) {
     var track = $('[data-car-track]', c), btns = $$('[data-car]', c);
@@ -795,7 +745,7 @@
 
       // гостей більше, ніж уміщує номер: пропонуємо більший номер, а якщо це найбільший — зателефонувати
       var rr = getRoom(), note = $('[data-cap-note]', bk);
-      var full = rr && S.adults + S.children >= rr.cap;
+      var full = rr && S.adults >= rr.cap;
       if (!full) capNote = false;
       // «+» у повному номері лишається натискним (блідим) — натискання показує підказку
       $$('[data-step][data-d="1"]', bkForm).forEach(function (btn) {
@@ -852,13 +802,13 @@
       bkForm.setAttribute('data-room', r ? r.name : '');
       bkForm.setAttribute('data-cap', r ? r.cap : '');
       S.rooms = 1;                                   // кілька номерів — телефоном
-      if (r && S.adults + S.children > r.cap) { clampGuests(r.cap); capNote = S.gset; }   // зменшили те, що гість обрав сам — пояснюємо
+      if (r && S.adults > r.cap) { clampGuests(r.cap); capNote = S.gset; }   // зменшили те, що гість обрав сам — пояснюємо
       changed();
     };
     // «+» у повному номері не мовчить — пояснює, що робити
     bkForm.addEventListener('click', function (e) {
-      var plus = e.target.closest('[data-step][data-d="1"]'), r = getRoom();
-      if (plus && r && S.adults + S.children >= r.cap) { e.stopPropagation(); capNote = true; render(); }
+      var plus = e.target.closest('[data-step="adults"][data-d="1"]'), r = getRoom();
+      if (plus && r && S.adults >= r.cap) { e.stopPropagation(); capNote = true; render(); }
     }, true);
     $('[data-cap-note]', bk).addEventListener('click', function (e) {
       var pick = e.target.closest('[data-pick]');
@@ -922,7 +872,7 @@
       fe.name.classList.toggle('invalid', m.indexOf('ім’я') > -1);
       fe.phone.classList.toggle('invalid', m.indexOf('телефон') > -1);
       var msg = m.length ? 'Заповніть: ' + m.join(', ') + '.' : '';
-      if (r && S.adults + S.children > r.cap * S.rooms) {
+      if (r && S.adults > r.cap * S.rooms) {
         msg += (msg ? ' ' : '') + 'У номері «' + r.name + '» до ' + r.cap + ' ' + plural(r.cap, 'гостя', 'гостей', 'гостей') + ' — додайте ще номер або оберіть інший.';
       }
       if (msg) {
