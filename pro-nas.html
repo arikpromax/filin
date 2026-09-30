@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Вакансії — кафе «Філін»</title>
-  <meta name="description" content="Робота в кафе «Філін» у Кобеляках: актуальні вакансії, телефони й заявка онлайн.">
+  <title>Про нас — кафе «Філін»</title>
+  <meta name="description" content="Кафе «Філін» у Кобеляках: домашня кухня, номери та сауна на об’їзній дорозі.">
   <meta name="theme-color" content="#ffffff">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -17,7 +17,7 @@
 
 <!-- Смуга зверху: з’являється, коли гортаєш сторінку -->
 <div class="topbar" data-topbar>
-  <nav class="topbar__nav" aria-label="Розділи сайту"><a href="index.html#gallery">Фотогалерея</a><a href="index.html#rooms">Номери</a><a href="menu.html">Кафе</a><a href="vakansii.html" aria-current="page">Вакансії</a><a href="#contacts">Контакти</a></nav>
+  <nav class="topbar__nav" aria-label="Розділи сайту"><a href="index.html#gallery">Фотогалерея</a><a href="index.html#rooms">Номери</a><a href="menu.html">Кафе</a><a href="vakansii.html">Вакансії</a><a href="#contacts">Контакти</a></nav>
   <a class="topbar__logo" href="index.html" aria-label="Кафе «Філін» — на головну"><img class="topbar__mark" src="logo-mark.png" alt="" width="447" height="360"></a>
 </div>
 
@@ -49,37 +49,28 @@
   </nav>
 </div>
 
-<main class="page jobs-page">
+<main class="page">
   <div class="wrap">
     <header class="page-head reveal">
-      <p class="eyebrow">Робота у «Філіні»</p>
-      <h1 class="display">Вакансії</h1>
-      <p>Шукаємо людей у команду кафе в Кобеляках. Телефонуйте — обговоримо все на місці.</p>
+      <h1 class="display">Про нас</h1>
     </header>
 
-    <!-- Вакансії беруться з config.js → jobs.list; кожна — окремою карткою -->
-    <div class="vcards" data-jobs>
-      <article class="vcard">
-        <span class="vcard__icon" data-vicon="dish"></span>
-        <h2 class="vcard__h">Офіціант</h2>
-        <ul class="vcard__list"><li>Зустрічати гостей і приймати замовлення</li><li>Подавати страви й напої</li><li>Тримати зал у порядку</li></ul>
-        <div class="vcard__act">
-          <a class="btn" href="tel:+380681558595"><span>Відгукнутись</span></a>
-          <a class="vcard__tel" href="tel:+380681558595">068 155 85 95</a>
-        </div>
-      </article>
-      <article class="vcard">
-        <span class="vcard__icon" data-vicon="chef"></span>
-        <h2 class="vcard__h">Помічник кухаря</h2>
-        <ul class="vcard__list"><li>Допомагати кухарю з приготуванням</li><li>Робити заготовки й нарізку</li><li>Тримати кухню в чистоті</li></ul>
-        <div class="vcard__act">
-          <a class="btn" href="tel:+380681558595"><span>Відгукнутись</span></a>
-          <a class="vcard__tel" href="tel:+380681558595">068 155 85 95</a>
-        </div>
-      </article>
+    <div class="route__grid">
+      <div class="route__info reveal">
+        <p class="route__text">Кафе з домашньою кухнею, номери й сауна — усе на одній території, на об’їзній дорозі Кобеляк. Хтось заїжджає пообідати дорогою на Дніпро, хтось лишається переночувати, а хтось приїжджає ввечері на сауну з більярдом.</p>
+        <dl class="route__list">
+          <div><dt>Кухня</dt><dd>домашня, щодня з 07:00</dd></div>
+          <div><dt>Номери</dt><dd>п’ять типів, від 1 до 4 гостей</dd></div>
+          <div><dt>Відпочинок</dt><dd>сауна та більярд на території</dd></div>
+          <div><dt>Де ми</dt><dd>Кобеляки, об’їзна дорога</dd></div>
+        </dl>
+        <a class="route__link" href="index.html#rooms"><span>Подивитись номери</span></a>
+      </div>
+      <div class="route__map route__map--ph ph reveal" data-icon="cup" style="--d:.15s">
+        <span class="ph__label">Фото залу</span>
+        <img src="about.jpg" alt="Зал кафе «Філін»" loading="lazy" onerror="this.remove()">
+      </div>
     </div>
-    <p class="jobs__note">Графік і оплату розкажемо телефоном.</p>
-
   </div>
 </main>
 
