@@ -136,7 +136,12 @@
   }
 
   /* ── Рядки першого блоку тануть по черзі, кожен коли дійде до верху ── */
-  var heroLines = $$('.hero__inner > *');
+  // «Кафе» і «Філін» — окремі рядки, інакше вони тануть удвох одночасно
+  var heroLines = [];
+  $$('.hero__inner > *').forEach(function (el) {
+    if (el.classList.contains('hero__h')) { heroLines = heroLines.concat(Array.prototype.slice.call(el.children)); }
+    else { heroLines.push(el); }
+  });
   if (heroLines.length && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
     var lQueued = false;
     var lineFade = function () {

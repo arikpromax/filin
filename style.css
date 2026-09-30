@@ -1318,14 +1318,14 @@ main { background: var(--bg); }
 .rc__cap b, .gal__cap b { font-family: var(--display); font-weight: 400; letter-spacing: .02em; }
 
 /* ── Перший екран: при скролі вміст меншає, тане й розмивається ── */
-.hero__inner > *, .hero__facts {
+.hero__inner > *, .hero__h > * {
   transform: scale(var(--hs, 1));
   opacity: var(--ho, 1);
   filter: blur(var(--hb, 0px));
   will-change: transform, opacity, filter;
 }
 @media (prefers-reduced-motion: reduce) {
-  .hero__inner > *, .hero__facts { transform: none; opacity: 1; filter: none; }
+  .hero__inner > *, .hero__h > * { transform: none; opacity: 1; filter: none; }
 }
 
 /* ── Картка номера — саме фото з підписом, як «Варіанти проживання» ── */
