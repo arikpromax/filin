@@ -136,16 +136,18 @@
   }
 
   /* ── Рядки першого блоку тануть по черзі, кожен коли дійде до верху ── */
-  var heroLines = $$('.hero__inner > *').concat($$('.hero__facts'));
+  var heroLines = $$('.hero__inner > *');
   if (heroLines.length && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
     var lQueued = false;
     var lineFade = function () {
       lQueued = false;
       var vh = window.innerHeight;
-      var start = vh * 0.35;    // рядок починає танути, дійшовши до верхньої третини
-      var span  = vh * 0.45;    // і зникає, коли виходить за край вікна
+      var span = vh * 0.45;   // шлях, за який рядок повністю зникає
       heroLines.forEach(function (el) {
         var top = el.getBoundingClientRect().top;
+        if (el.__top0 === undefined) el.__top0 = top + window.scrollY;   // де рядок стоїть без прокрутки
+        // танути починає з верхньої третини вікна, але не раніше, ніж зрушить з місця
+        var start = Math.min(vh * 0.35, el.__top0);
         var p = Math.min(1, Math.max(0, (start - top) / span));
         el.style.setProperty('--hs', (1 - p * 0.5).toFixed(3));
         el.style.setProperty('--ho', (1 - p).toFixed(3));

@@ -1388,17 +1388,9 @@ main { background: var(--bg); }
 }
 .hero__cta { margin-top: 1.6rem; }
 
-.js .hero__crest, .js .hero__h, .js .hero__place, .js .hero__place-script,
-.js .hero__rule, .js .hero__lead, .js .hero__cta {
-  opacity: 0; animation: riseIn 1.1s var(--ease) forwards;
-}
-.js .hero__crest        { animation-delay: .15s; }
-.js .hero__h            { animation-delay: .3s; }
-.js .hero__place        { animation-delay: .5s; }
-.js .hero__place-script { animation-delay: .62s; }
-.js .hero__rule         { animation-delay: .74s; }
-.js .hero__lead         { animation-delay: .86s; }
-.js .hero__cta          { animation-delay: 1s; }
+/* поява — одна на весь стовпчик; на окремих рядках вона б назавжди
+   зафіксувала їхню прозорість, і прокрутка не змогла б їх розчинити */
+.js .hero__inner { animation: fadeIn 1.3s var(--ease) .15s backwards; }
 
 /* ── Перший блок: один стовпчик, трохи вищий за вікно ── */
 .hero { min-height: 100vh; min-height: 100svh; }
