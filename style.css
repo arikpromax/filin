@@ -348,7 +348,7 @@ body:has(> .back-btn) .topbar__logo { margin-left: 48px; }
 /* ==========================================================
    3. НОМЕРИ (на головній)
    ========================================================== */
-.rooms { background: var(--bg); padding: clamp(64px, 8vw, 112px) 0; }
+.rooms { padding: clamp(64px, 8vw, 112px) 0; }
 .sec-head {
   display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 1.5rem 3rem;
   margin-bottom: clamp(32px, 4vw, 52px);
@@ -1020,7 +1020,7 @@ body:has(.dock) .foot { padding-bottom: 110px; }
 
 .cafe { padding: clamp(64px, 8vw, 112px) 0; }
 
-.route { padding: clamp(60px, 7.5vw, 104px) 0; background: var(--bg); }
+.route { padding: clamp(60px, 7.5vw, 104px) 0; }
 .route__grid { display: grid; grid-template-columns: repeat(12, 1fr); column-gap: var(--gap); align-items: center; }
 .route__info { grid-column: 1 / span 6; }
 .route__map  { grid-column: 8 / span 5; }
@@ -1502,3 +1502,16 @@ main { background: var(--bg); }
 .step--check input:checked ~ .step__box { background: var(--accent); border-color: var(--accent); }
 .step--check input:checked ~ .step__box::after { opacity: 1; transform: rotate(45deg) scale(1); }
 .step--check input:focus-visible ~ .step__box { outline: 2px solid var(--text); outline-offset: 2px; }
+
+/* ── Зерно на світлій частині сайту: поверхня стає схожою на папір.
+   Починається з другого блоку — на першому екрані своє, під фото. ── */
+main {
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)' opacity='.22'/%3E%3C/svg%3E") repeat 0 0 / 180px 180px, var(--bg);
+}
+.foot {
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)' opacity='.22'/%3E%3C/svg%3E") repeat 0 0 / 180px 180px, var(--bg-soft);
+}
+
+/* Герб при прокрутці тільки меншає й тане — без розмиття.
+   Розмите тонке лого перетворюється на пляму, на відміну від тексту. */
+.hero__crest { filter: none !important; }
