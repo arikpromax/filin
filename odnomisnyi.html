@@ -19,8 +19,8 @@
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display+SC:wght@400;700&display=swap">
-  <link rel="stylesheet" href="fonts.css?v=29">
-  <link rel="stylesheet" href="style.css?v=29">
+  <link rel="stylesheet" href="fonts.css?v=30">
+  <link rel="stylesheet" href="style.css?v=30">
   <script>document.documentElement.classList.add('js');</script>
 </head>
 <body>
@@ -279,8 +279,8 @@
               <span>Кількість дорослих <i>*</i></span>
               <select data-gsel="adults"></select>
             </label>
-            <label class="field" data-kids-row hidden>
-              <span>Кількість дітей</span>
+            <label class="field">
+              <span>Кількість дітей до 12 років</span>
               <select data-gsel="children"></select>
             </label>
           </div>
@@ -292,11 +292,6 @@
             <div class="pop__foot"><span data-text="hint">Оберіть дату заїзду</span><button type="button" class="pop__link" data-cal-clear>Очистити</button></div>
           </div>
 
-          <label class="bk-kids">
-            <input type="checkbox" data-kids-on>
-            <span class="step__box" aria-hidden="true"></span>
-            <span>Їду з дітьми <small>до 12 років, не займають місце дорослого</small></span>
-          </label>
           <p class="bw__sum" data-text="dates"></p>
         </div>
         <!-- гостей більше, ніж вміщує номер: більший номер або дзвінок -->
@@ -334,14 +329,12 @@
         <div class="field-row">
           <label class="field"><span>Ім’я <i>*</i></span><input name="name" type="text" autocomplete="name" placeholder="Як до вас звертатись" required></label>
           <label class="field"><span>Телефон <i>*</i></span><input name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="068 000 00 00" required></label>
-          <div class="field">
-            <span>Як з вами зв’язатися</span>
-            <div class="chips bk__via">
-              <label class="chip"><input type="radio" name="via" value="Дзвінок" checked>Дзвінок</label>
-              <label class="chip"><input type="radio" name="via" value="Viber">Viber</label>
-              <label class="chip"><input type="radio" name="via" value="Telegram">Telegram</label>
-            </div>
-          </div>
+        </div>
+        <p class="bk__label">Як з вами зв’язатися</p>
+        <div class="chips bk__via">
+          <label class="chip"><input type="radio" name="via" value="Дзвінок" checked>Дзвінок</label>
+          <label class="chip"><input type="radio" name="via" value="Viber">Viber</label>
+          <label class="chip"><input type="radio" name="via" value="Telegram">Telegram</label>
         </div>
         <label class="field"><span>Побажання</span><textarea name="note" rows="2" placeholder="Наприклад: потрібне дитяче ліжечко"></textarea></label>
       </section>
@@ -392,8 +385,8 @@
   <button class="btn" type="button" data-book="odnomisnyi"><span>Забронювати</span></button>
 </div>
 
-<script src="menu-data.js?v=29"></script>
-<script src="config.js?v=29"></script>
-<script src="main.js?v=29"></script>
+<script src="menu-data.js?v=30"></script>
+<script src="config.js?v=30"></script>
+<script src="main.js?v=30"></script>
 </body>
 </html>

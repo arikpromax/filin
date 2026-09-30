@@ -655,8 +655,9 @@ body:has(> .back-btn) .topbar__logo { margin-left: 48px; }
 .bk-ex__more output { min-width: 3.4rem; }
 .bk__arrive { margin: 1.3rem 0 0; }
 .field select {
-  -webkit-appearance: none; appearance: none; padding-right: 22px; cursor: pointer;
-  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5l5 5 5-5' fill='none' stroke='%231a1a1a' stroke-width='1.4'/%3E%3C/svg%3E") no-repeat right 2px center / 11px 8px;
+  -webkit-appearance: none; appearance: none; padding-right: 34px; cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5l5 5 5-5' fill='none' stroke='%231a1a1a' stroke-width='1.4'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 12px center; background-size: 11px 8px;
 }
 .bk__label { margin-bottom: .55rem; font-size: .68rem; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; }
 .bk__via { margin-bottom: 1.4rem; }
@@ -841,15 +842,16 @@ dialog[open] { animation: dialogIn .45s var(--ease); }
 .field > .chips { margin-top: .5rem; }
 .field input::placeholder, .field textarea::placeholder { color: var(--text); opacity: .38; }
 .field { display: block; margin-bottom: 1.3rem; }
-.field span { display: block; font-size: .68rem; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; }
+.field > span { display: block; margin-bottom: .42rem; font-size: .68rem; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; }
 .field input, .field select, .field textarea {
-  width: 100%; padding: .55rem 0; font: inherit; font-size: 1rem; color: var(--text);
-  background: transparent; border: 0; border-bottom: 1px solid var(--line); outline: 0; border-radius: 0;
-  transition: border-color .3s;
+  width: 100%; padding: .72rem .85rem; font: inherit; font-size: 1rem; color: var(--text);
+  background: #fff; border: 1px solid var(--line); border-radius: 4px; outline: 0;
+  transition: border-color .25s, box-shadow .25s;
 }
 .field textarea { resize: vertical; }
-.field input:focus, .field select:focus, .field textarea:focus { border-bottom-color: var(--text); box-shadow: 0 1px 0 var(--text); }
-.field input.invalid { border-bottom-color: #b3392b; }
+.field input:hover, .field select:hover, .field textarea:hover { border-color: rgba(36, 31, 24, .34); }
+.field input:focus, .field select:focus, .field textarea:focus { border-color: var(--text); box-shadow: 0 0 0 1px var(--text); }
+.field input.invalid { border-color: #b3392b; box-shadow: 0 0 0 1px rgba(179, 57, 43, .3); }
 .book__error { margin-bottom: 1rem; font-size: .9rem; color: #b3392b; }
 
 .book__actions { display: grid; gap: .7rem; }
@@ -1658,20 +1660,14 @@ main {
 .bw--form .bw__field + .bw__field { border-top: 0; }
 .field[hidden] { display: none; }
 .bw__pick {
-  display: block; width: 100%; padding: .55rem 0; text-align: left;
+  display: block; width: 100%; padding: .72rem .85rem; text-align: left;
   font: inherit; font-size: 1rem; color: var(--text);
-  background: transparent; border: 0; border-bottom: 1px solid var(--line); border-radius: 0;
-  transition: border-color .3s;
+  background: #fff; border: 1px solid var(--line); border-radius: 4px;
+  transition: border-color .25s, box-shadow .25s;
 }
-.bw__pick:hover, .bw__pick[aria-expanded="true"] { border-bottom-color: var(--text); }
+.bw__pick:hover { border-color: rgba(36, 31, 24, .34); }
+.bw__pick[aria-expanded="true"] { border-color: var(--text); box-shadow: 0 0 0 1px var(--text); }
 .bw__pick.is-empty span { opacity: .38; }
 /* календар один на обидві дати — лежить під полями, на всю ширину */
 .bw--form .pop { border: 1px solid var(--line); border-radius: 4px; margin: 0 0 1.2rem; }
 .bw__sum { margin: .1rem 0 0; font-size: .88rem; opacity: .7; }
-/* галочка «їду з дітьми» */
-.bk-kids { display: flex; align-items: center; gap: .7rem; padding: .1rem 0 .3rem; cursor: pointer; }
-.bk-kids input { position: absolute; opacity: 0; width: 0; height: 0; }
-.bk-kids small { display: block; font-size: .8rem; opacity: .7; }
-.bk-kids input:checked ~ .step__box { background: var(--accent); border-color: var(--accent); }
-.bk-kids input:checked ~ .step__box::after { opacity: 1; transform: rotate(45deg) scale(1); }
-.bk-kids input:focus-visible ~ .step__box { outline: 2px solid var(--text); outline-offset: 2px; }

@@ -687,10 +687,10 @@
     $$('[data-gsel]', bw).forEach(function (sel) {
       var k = sel.getAttribute('data-gsel');
       var w = k === 'children' ? ['дитина', 'дитини', 'дітей'] : ['дорослий', 'дорослі', 'дорослих'];
-      var from = k === 'children' ? 1 : LIMITS[k][0];
-      for (var i = from; i <= LIMITS[k][1]; i++) {
+      for (var i = LIMITS[k][0]; i <= LIMITS[k][1]; i++) {
         var o = document.createElement('option');
-        o.value = i; o.textContent = i + ' ' + plural(i, w[0], w[1], w[2]);
+        o.value = i;
+        o.textContent = i === 0 ? 'Без дітей' : i + ' ' + plural(i, w[0], w[1], w[2]);
         sel.appendChild(o);
       }
       sel.addEventListener('change', function () {
