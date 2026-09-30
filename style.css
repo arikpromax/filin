@@ -346,7 +346,7 @@ body:has(> .back-btn) .topbar__logo { margin-left: 48px; }
 /* ==========================================================
    3. НОМЕРИ (на головній)
    ========================================================== */
-.rooms { padding: clamp(64px, 8vw, 112px) 0; }
+.rooms { padding: clamp(64px, 8vw, 112px) 0 clamp(40px, 4vw, 60px); }
 .sec-head {
   display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 1.5rem 3rem;
   margin-bottom: clamp(32px, 4vw, 52px);
@@ -1513,3 +1513,51 @@ main {
 
 /* зайнятий день: перекреслений і недоступний */
 .cal__day.is-busy { opacity: .4; text-decoration: line-through; cursor: not-allowed; }
+
+/* ── Фотогалерея на всю ширину екрана, як на osonnya ── */
+.wrap--gal { max-width: none; padding-inline: clamp(16px, 1.3vw, 24px); }
+#gallery { padding-top: clamp(36px, 3.6vw, 56px); }
+/* стрілка потрібна й на картці без фото — інакше картка виглядає незавершеною */
+.gal__card:not(:has(img)) .gal__arrow { display: block; stroke: var(--accent); opacity: .55; }
+
+/* ── Шапка внутрішньої сторінки: фото на всю ширину, а на ньому назва ── */
+.phero { position: relative; }
+.phero__media {
+  position: relative; height: clamp(320px, 52vh, 520px); overflow: hidden;
+  background: linear-gradient(155deg, #3a2620 0%, #241611 100%);
+}
+.phero__media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.phero__media::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(22, 14, 11, .34) 0%, rgba(22, 14, 11, .68) 100%);
+}
+.phero__in {
+  position: absolute; inset: 0; z-index: 1;
+  display: grid; align-content: center; justify-items: center; gap: .55rem;
+  padding: 0 var(--gutter); text-align: center; color: var(--hero-text);
+}
+.phero__eyebrow {
+  margin: 0; font-size: .68rem; font-weight: 600;
+  letter-spacing: .26em; text-transform: uppercase; color: var(--amber);
+}
+.phero__title {
+  margin: 0; font-family: var(--script); font-weight: 400;
+  font-size: clamp(3.2rem, 2rem + 5.6vw, 6.2rem); line-height: 1; letter-spacing: .01em;
+}
+.phero__text {
+  margin: .5rem 0 0; max-width: 46ch;
+  font-size: clamp(1rem, .95rem + .3vw, 1.125rem); line-height: 1.65;
+  color: rgba(255, 255, 255, .86);
+}
+/* назва й опис проявляються один за одним, а не разом */
+@keyframes pheroUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: none; } }
+.phero__eyebrow, .phero__title, .phero__text { animation: pheroUp 1.15s var(--ease) both; }
+.phero__eyebrow { animation-delay: .12s; }
+.phero__title { animation-delay: .32s; }
+.phero__text { animation-delay: .52s; }
+@media (prefers-reduced-motion: reduce) {
+  .phero__eyebrow, .phero__title, .phero__text { animation: none; }
+}
+/* під такою шапкою зайвий відступ згори ні до чого */
+.page--phero { padding-top: clamp(40px, 4.5vw, 68px); }
+@media (max-width: 640px) { .phero__media { height: clamp(280px, 46vh, 400px); } }

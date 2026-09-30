@@ -6,6 +6,11 @@
     <priority>1.0</priority>
   </url>
   <url>
+    <loc>https://arikpromax.github.io/filin/bilyard.html</loc>
+    <lastmod>2026-09-30</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://arikpromax.github.io/filin/lyuks.html</loc>
     <lastmod>2026-09-30</lastmod>
     <priority>0.7</priority>
@@ -22,6 +27,11 @@
   </url>
   <url>
     <loc>https://arikpromax.github.io/filin/pro-nas.html</loc>
+    <lastmod>2026-09-30</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://arikpromax.github.io/filin/sauna.html</loc>
     <lastmod>2026-09-30</lastmod>
     <priority>0.7</priority>
   </url>

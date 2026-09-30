@@ -3,18 +3,18 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Про нас — кафе «Філін»</title>
-  <meta name="description" content="Кафе «Філін» у Кобеляках: домашня кухня, номери та сауна на об’їзній дорозі.">
+  <title>Сауна — кафе «Філін»</title>
+  <meta name="description" content="Сауна на території кафе «Філін» у Кобеляках: поруч більярд, кафе й номери.">
   <!-- Як сторінка виглядає, коли кидають посиланням у Viber, Telegram чи Facebook -->
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Кафе «Філін»">
   <meta property="og:locale" content="uk_UA">
-  <meta property="og:title" content="Про нас — кафе «Філін»">
-  <meta property="og:description" content="Кафе «Філін» у Кобеляках: домашня кухня, номери та сауна на об’їзній дорозі.">
-  <meta property="og:url" content="https://arikpromax.github.io/filin/pro-nas.html">
+  <meta property="og:title" content="Сауна — кафе «Філін»">
+  <meta property="og:description" content="Сауна на території кафе «Філін» у Кобеляках: поруч більярд, кафе й номери.">
+  <meta property="og:url" content="https://arikpromax.github.io/filin/sauna.html">
   <meta property="og:image" content="https://arikpromax.github.io/filin/hero-2.webp">
   <meta name="twitter:card" content="summary_large_image">
-  <link rel="canonical" href="https://arikpromax.github.io/filin/pro-nas.html">
+  <link rel="canonical" href="https://arikpromax.github.io/filin/sauna.html">
   <meta name="theme-color" content="#ffffff">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -59,26 +59,34 @@
   </nav>
 </div>
 
-<main class="page">
-  <div class="wrap">
-    <header class="page-head reveal">
-      <h1 class="display">Про нас</h1>
-    </header>
+<!-- Шапка сторінки: фото, а на ньому назва — проявляється плавно -->
+<header class="phero">
+  <div class="phero__media">
+    <img src="sauna.jpg" alt="Сауна на території кафе «Філін»" onerror="this.remove()">
+    <div class="phero__in">
+      <p class="phero__eyebrow">Відпочинок на території</p>
+      <h1 class="phero__title">Сауна</h1>
+      <p class="phero__text">Прогрітися після дороги, посидіти компанією — і лишитися ночувати тут же, у номері.</p>
+    </div>
+  </div>
+</header>
 
+<main class="page page--phero">
+  <div class="wrap">
     <div class="route__grid">
       <div class="route__info reveal">
-        <p class="route__text">Кафе з домашньою кухнею, номери й сауна — усе на одній території, на об’їзній дорозі Кобеляк. Хтось заїжджає пообідати дорогою на Дніпро, хтось лишається переночувати, а хтось приїжджає ввечері на сауну з більярдом.</p>
+        <p class="route__text">Сауна стоїть на тій самій території, що кафе й номери. Можна заїхати ввечері дорогою, а можна зробити з цього цілий вечір: сауна, більярд, вечеря з печі й ночівля — не виїжджаючи за ворота.</p>
         <dl class="route__list">
-          <div><dt>Кухня</dt><dd>домашня, щодня з 07:00</dd></div>
-          <div><dt>Номери</dt><dd>п’ять типів, від 1 до 4 гостей</dd></div>
-          <div><dt>Відпочинок</dt><dd>сауна та більярд на території</dd></div>
-          <div><dt>Де ми</dt><dd>Кобеляки, об’їзна дорога</dd></div>
+          <div><dt>Де</dt><dd>на території кафе «Філін»</dd></div>
+          <div><dt>Коли</dt><dd>за попереднім записом</dd></div>
+          <div><dt>Поруч</dt><dd>більярд, кафе, номери</dd></div>
+          <div><dt>Вільний час і ціна</dt><dd>підкажемо телефоном</dd></div>
         </dl>
-        <a class="route__link" href="index.html#rooms"><span>Подивитись номери</span></a>
+        <a class="btn needs-phone" data-phone-link data-call hidden href="#"><span>Зателефонувати</span></a>
       </div>
-      <div class="route__map route__map--ph ph reveal" data-icon="cup" style="--d:.15s">
-        <span class="ph__label">Фото залу</span>
-        <img src="about.jpg" alt="Зал кафе «Філін»" loading="lazy" onerror="this.remove()">
+      <div class="route__map route__map--ph ph reveal" data-icon="sauna" style="--d:.15s">
+        <span class="ph__label">Фото сауни</span>
+        <img src="sauna.jpg" alt="Сауна на території кафе «Філін»" loading="lazy" onerror="this.remove()">
       </div>
     </div>
   </div>

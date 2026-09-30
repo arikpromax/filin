@@ -19,8 +19,8 @@
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display+SC:wght@400;700&display=swap">
-  <link rel="stylesheet" href="fonts.css?v=20">
-  <link rel="stylesheet" href="style.css?v=20">
+  <link rel="stylesheet" href="fonts.css?v=21">
+  <link rel="stylesheet" href="style.css?v=21">
   <script>document.documentElement.classList.add('js');</script>
 </head>
 <body>
@@ -59,11 +59,22 @@
   </nav>
 </div>
 
-<main class="page menu-page">
+<!-- Шапка сторінки: фото кафе, а на ньому назва — проявляється плавно -->
+<header class="phero">
+  <div class="phero__media">
+    <img src="menu.jpg" alt="Кафе «Філін» у Кобеляках" onerror="this.remove()">
+    <div class="phero__in">
+      <p class="phero__eyebrow">Кобеляки · щодня 07:00 — 23:00</p>
+      <h1 class="phero__title">Кафе</h1>
+      <p class="phero__text">Домашня кухня з печі — борщ, вареники, гаряче. Сніданок дорогою, обід чи спокійна вечеря: заходьте, коли зручно.</p>
+    </div>
+  </div>
+</header>
+
+<main class="page page--phero menu-page">
   <div class="wrap">
     <header class="page-head reveal">
-      <p class="eyebrow">Кафе «Філін»</p>
-      <h1 class="display">Меню</h1>
+      <h2 class="display">Меню</h2>
       <p>Оберіть страви заздалегідь — коли підійде офіціант, просто продиктуйте замовлення з кошика.</p>
     </header>
 
@@ -170,8 +181,8 @@
   </button>
 </div>
 
-<script src="menu-data.js?v=20"></script>
-<script src="config.js?v=20"></script>
-<script src="main.js?v=20"></script>
+<script src="menu-data.js?v=21"></script>
+<script src="config.js?v=21"></script>
+<script src="main.js?v=21"></script>
 </body>
 </html>

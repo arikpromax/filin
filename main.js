@@ -226,9 +226,9 @@
     window.addEventListener('load', remeasure);
   }
   /* ── Смуга з логотипом зверху (коли гортаєш) і кнопки «Меню» / «Назад» у тон темних місць під ними ── */
-  var darkEls = $$('.hero, .leisure');
-  var topbar = $('[data-topbar]'), heroTop = $('.hero'), backBtn = $('.back-btn');
-  if (darkEls.length && burger) {
+  var darkEls = $$('.hero, .leisure, .phero__media');
+  var topbar = $('[data-topbar]'), heroTop = $('.hero') || $('.phero__media'), backBtn = $('.back-btn');
+  if (burger) {
     var toneQueued = false;
     var overDark = function (btn) {
       if (root.classList.contains('bar-on')) return false;
