@@ -19,8 +19,8 @@
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display+SC:wght@400;700&display=swap">
-  <link rel="stylesheet" href="fonts.css?v=32">
-  <link rel="stylesheet" href="style.css?v=32">
+  <link rel="stylesheet" href="fonts.css?v=33">
+  <link rel="stylesheet" href="style.css?v=33">
   <script>document.documentElement.classList.add('js');</script>
 </head>
 <body>
@@ -413,7 +413,7 @@
   <button class="lightbox__nav lightbox__nav--next" type="button" data-next aria-label="Наступне фото"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
 </dialog>
 
-<script src="menu-data.js?v=32"></script>
+<script src="menu-data.js?v=33"></script>
 <!-- FILTER PANEL: дати, гості, ліжка — усе за бажанням -->
 <!-- /FILTER PANEL -->
 
@@ -454,7 +454,6 @@
           <label class="chip"><input type="radio" name="via" value="Viber">Viber</label>
           <label class="chip"><input type="radio" name="via" value="Telegram">Telegram</label>
         </div>
-        <label class="field"><span>Побажання</span><textarea name="note" rows="2" placeholder="Наприклад: потрібне дитяче ліжечко"></textarea></label>
       </section>
 
       <section class="bk__sec" data-sec="dates">
@@ -514,6 +513,11 @@
       </section>
 
 
+      <section class="bk__sec">
+        <h3 class="bk__h"><i>4</i>Побажання</h3>
+        <label class="field"><span>Що врахувати</span><textarea name="note" rows="2" placeholder="Наприклад: потрібне дитяче ліжечко"></textarea></label>
+      </section>
+
       <!-- Передоплата: блок з’являється, лише якщо в config.js заповнено payment -->
       <section class="bk__sec" data-pay-sec hidden></section>
     </form>
@@ -554,8 +558,8 @@
   </div>
 </dialog>
 
-<script src="config.js?v=32"></script>
-<script src="main.js?v=32"></script>
+<script src="config.js?v=33"></script>
+<script src="main.js?v=33"></script>
 
 <!-- Картка закладу для пошуковиків: назва, адреса, телефони, години, координати.
      Дані ті самі, що на сторінці. Змінюються контакти — правити і тут. -->

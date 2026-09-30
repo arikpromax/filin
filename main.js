@@ -107,7 +107,7 @@
   };
   var paySec = $('[data-pay-sec]');
   if (paySec && PAY.prepay) {
-    paySec.innerHTML = '<h3 class="bk__h"><i>4</i>Оплата</h3><div class="pay">' + payHTML('') + '</div>';
+    paySec.innerHTML = '<h3 class="bk__h"><i>5</i>Оплата</h3><div class="pay">' + payHTML('') + '</div>';
     paySec.hidden = false;
   }
   document.addEventListener('click', function (e) {
