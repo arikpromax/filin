@@ -174,7 +174,15 @@
     window.addEventListener('scroll', function () {
       if (!lQueued) { lQueued = true; requestAnimationFrame(lineFade); }
     }, { passive: true });
-    window.addEventListener('resize', lineFade);
+    // зум, поворот екрана чи дозавантажений шрифт зсувають розкладку —
+    // збережені початкові місця стають хибними, тож забуваємо їх і міряємо наново
+    var remeasure = function () {
+      heroLines.forEach(function (el) { el.__top0 = undefined; });
+      lineFade();
+    };
+    window.addEventListener('resize', remeasure);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(remeasure);
+    window.addEventListener('load', remeasure);
   }
   /* ── Смуга з логотипом зверху (коли гортаєш) і кнопки «Меню» / «Назад» у тон темних місць під ними ── */
   var darkEls = $$('.hero, .leisure');
