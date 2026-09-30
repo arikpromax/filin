@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://arikpromax.github.io/filin/sitemap.xml

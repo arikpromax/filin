@@ -6,9 +6,16 @@
   <title>Філін — кафе, номери та сауна в Кобеляках</title>
   <meta name="description" content="Кафе «Філін» у Кобеляках: домашня кухня, затишні номери, сауна та більярд.">
   <meta name="theme-color" content="#ffffff">
-  <meta property="og:title" content="Філін — Кобеляки">
-  <meta property="og:description" content="Домашня кухня, номери, сауна та більярд на виїзді з Кобеляк.">
+  <!-- Як сторінка виглядає, коли кидають посиланням у Viber, Telegram чи Facebook -->
   <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Кафе «Філін»">
+  <meta property="og:locale" content="uk_UA">
+  <meta property="og:title" content="Філін — кафе, номери та сауна в Кобеляках">
+  <meta property="og:description" content="Домашня кухня, номери, сауна та більярд на виїзді з Кобеляк.">
+  <meta property="og:url" content="https://arikpromax.github.io/filin/">
+  <meta property="og:image" content="https://arikpromax.github.io/filin/hero-2.webp">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="canonical" href="https://arikpromax.github.io/filin/">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display+SC:wght@400;700&display=swap">
@@ -605,5 +612,72 @@
 
 <script src="config.js"></script>
 <script src="main.js"></script>
+
+<!-- Картка закладу для пошуковиків: назва, адреса, телефони, години, координати.
+     Дані ті самі, що на сторінці. Змінюються контакти — правити і тут. -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": [
+    "Restaurant",
+    "LodgingBusiness"
+  ],
+  "name": "Кафе «Філін»",
+  "description": "Кафе з домашньою кухнею, номери та сауна на об’їзній дорозі Кобеляк.",
+  "url": "https://arikpromax.github.io/filin/",
+  "image": "https://arikpromax.github.io/filin/hero-2.webp",
+  "logo": "https://arikpromax.github.io/filin/logo-mark.png",
+  "telephone": [
+    "+380681558595",
+    "+380662783888"
+  ],
+  "sameAs": [
+    "https://www.instagram.com/cafe__filin__/"
+  ],
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Кобеляки",
+    "addressRegion": "Полтавська область",
+    "postalCode": "39200",
+    "addressCountry": "UA",
+    "streetAddress": "об’їзна дорога"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": 49.139976,
+    "longitude": 34.2241759
+  },
+  "hasMap": "https://www.google.com/maps/dir/?api=1&destination=49.139976,34.2241759",
+  "openingHoursSpecification": [
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": [
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
+        "Sunday"
+      ],
+      "opens": "07:00",
+      "closes": "23:00"
+    }
+  ],
+  "servesCuisine": "Домашня кухня",
+  "amenityFeature": [
+    {
+      "@type": "LocationFeatureSpecification",
+      "name": "Сауна",
+      "value": true
+    },
+    {
+      "@type": "LocationFeatureSpecification",
+      "name": "Більярд",
+      "value": true
+    }
+  ]
+}
+</script>
 </body>
 </html>
