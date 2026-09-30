@@ -181,9 +181,7 @@
       var d = 0.012;   // приблизно кілометр навколо точки
       mapFrame.src = 'https://www.openstreetmap.org/export/embed.html?bbox=' +
         (ln - d) + '%2C' + (la - d / 2) + '%2C' + (ln + d) + '%2C' + (la + d / 2) +
-        '&layer=mapnik';
-      var pin = $('[data-map-pin]');
-      if (pin) pin.hidden = false;
+        '&layer=mapnik&marker=' + la + '%2C' + ln;
     }
   }
   /* ── Рядки першого блоку тануть по черзі, кожен коли дійде до верху ── */
