@@ -135,30 +135,28 @@
     });
   }
 
-  /* ── Екрани першого блоку: кожен розчиняється, коли підіймається вгору ── */
-  var stages = $$('.hero__stage');
-  if (stages.length && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    var sQueued = false;
-    var stageFade = function () {
-      sQueued = false;
-      stages.forEach(function (st) {
-        var r = st.getBoundingClientRect();
-        // рух починається, щойно екран поповз угору, і добігає за третину вікна
-        var span = window.innerHeight * 0.33;
-        var p = Math.min(1, Math.max(0, -r.top / span));
-        var kids = st.children;
-        for (var i = 0; i < kids.length; i++) {
-          kids[i].style.setProperty('--hs', (1 - p * 0.5).toFixed(3));
-          kids[i].style.setProperty('--ho', (1 - p).toFixed(3));
-          kids[i].style.setProperty('--hb', (p * 50).toFixed(1) + 'px');
-        }
+  /* ── Рядки першого блоку тануть по черзі, кожен коли дійде до верху ── */
+  var heroLines = $$('.hero__inner > *').concat($$('.hero__facts'));
+  if (heroLines.length && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    var lQueued = false;
+    var lineFade = function () {
+      lQueued = false;
+      var vh = window.innerHeight;
+      var start = vh * 0.35;    // рядок починає танути, дійшовши до верхньої третини
+      var span  = vh * 0.45;    // і зникає, коли виходить за край вікна
+      heroLines.forEach(function (el) {
+        var top = el.getBoundingClientRect().top;
+        var p = Math.min(1, Math.max(0, (start - top) / span));
+        el.style.setProperty('--hs', (1 - p * 0.5).toFixed(3));
+        el.style.setProperty('--ho', (1 - p).toFixed(3));
+        el.style.setProperty('--hb', (p * 50).toFixed(1) + 'px');
       });
     };
-    stageFade();
+    lineFade();
     window.addEventListener('scroll', function () {
-      if (!sQueued) { sQueued = true; requestAnimationFrame(stageFade); }
+      if (!lQueued) { lQueued = true; requestAnimationFrame(lineFade); }
     }, { passive: true });
-    window.addEventListener('resize', stageFade);
+    window.addEventListener('resize', lineFade);
   }
   /* ── Смуга з логотипом зверху (коли гортаєш) і кнопки «Меню» / «Назад» у тон темних місць під ними ── */
   var darkEls = $$('.hero, .leisure');

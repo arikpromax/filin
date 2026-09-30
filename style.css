@@ -1318,14 +1318,14 @@ main { background: var(--bg); }
 .rc__cap b, .gal__cap b { font-family: var(--display); font-weight: 400; letter-spacing: .02em; }
 
 /* ── Перший екран: при скролі вміст меншає, тане й розмивається ── */
-.hero__stage > * {
+.hero__inner > *, .hero__facts {
   transform: scale(var(--hs, 1));
   opacity: var(--ho, 1);
   filter: blur(var(--hb, 0px));
   will-change: transform, opacity, filter;
 }
 @media (prefers-reduced-motion: reduce) {
-  .hero__stage > * { transform: none; opacity: 1; filter: none; }
+  .hero__inner > *, .hero__facts { transform: none; opacity: 1; filter: none; }
 }
 
 /* ── Картка номера — саме фото з підписом, як «Варіанти проживання» ── */
@@ -1362,8 +1362,7 @@ main { background: var(--bg); }
 .hero__h-script {
   font-family: var(--script); font-weight: 400;
   font-size: clamp(3.1rem, 1.6rem + 5.4vw, 6rem);      /* 96px */
-  line-height: .82; margin-top: -.2em;
-  color: var(--amber);
+  line-height: 1; margin-top: .04em;
 }
 .hero__place {
   margin-top: .45rem;
@@ -1374,7 +1373,7 @@ main { background: var(--bg); }
 .hero__place-script {
   font-family: var(--script); font-weight: 400;
   font-size: clamp(1.25rem, .95rem + 1.45vw, 2.23rem);  /* 35.7px */
-  line-height: 1; margin-top: -.05em; opacity: .92;
+  line-height: 1.15;
 }
 .hero__rule {
   width: min(668px, 100%); margin: 1.5rem 0 0;
@@ -1401,12 +1400,9 @@ main { background: var(--bg); }
 .js .hero__lead         { animation-delay: .86s; }
 .js .hero__cta          { animation-delay: 1s; }
 
-/* ── Екрани першого блоку: кожен на всю висоту вікна ── */
-.hero__stage {
-  position: relative; z-index: 1;
-  min-height: 100vh; min-height: 100svh;
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
-  padding: calc(var(--frame) + 86px) 0 calc(var(--frame) + 28px);
-}
-.hero__stage:last-child { justify-content: space-between; }
-.hero__stage:last-child .hero__inner { margin-block: auto; }
+/* ── Перший блок: один стовпчик, трохи вищий за вікно ── */
+.hero { min-height: 100vh; min-height: 100svh; }
+.hero__inner, .hero__facts { position: relative; z-index: 1; }
+.hero { padding-top: 21vh; padding-bottom: 9vh; }
+/* між групами рядків — пауза, але не порожній екран */
+.hero__next { margin-top: 2.9rem; }

@@ -55,50 +55,39 @@
        колір, сайт від цього не ламається. -->
   <div class="hero__media" aria-hidden="true"><img src="hero-1.jpg" alt="" onerror="this.remove()"><img src="hero-2.jpg" alt="" onerror="this.remove()"></div>
 
-  <!-- Екрани першого блоку. Фото під ними стоїть на місці, а ці екрани
-       проходять крізь нього один за одним і дорогою розчиняються. -->
-  <div class="hero__stage">
-    <div class="hero__inner">
-      <img class="hero__crest" src="logo-light.png" alt="Кафе «Філін» — Кобеляки" width="447" height="360">
-      <h1 class="hero__h">
-        <span class="hero__h-top">Кафе</span>
-        <span class="hero__h-script">Філін</span>
-      </h1>
-      <p class="hero__place">Кобеляки · Полтавщина</p>
-      <p class="hero__place-script">на об’їзній, у бік Дніпра</p>
-      <hr class="hero__rule">
-      <p class="hero__lead">Домашня кухня, затишні номери та сауна.</p>
+  <!-- Один стовпчик рядків. Фото під ним стоїть на місці, а рядки
+       підіймаються крізь нього і тануть по черзі, кожен своєю чергою. -->
+  <div class="hero__inner">
+    <img class="hero__crest" src="logo-light.png" alt="Кафе «Філін» — Кобеляки" width="447" height="360">
+    <h1 class="hero__h">
+      <span class="hero__h-top">Кафе</span>
+      <span class="hero__h-script">Філін</span>
+    </h1>
+    <p class="hero__place">Кобеляки · Полтавщина</p>
+    <p class="hero__place-script">на об’їзній, у бік Дніпра</p>
+    <hr class="hero__rule">
+    <p class="hero__lead">Домашня кухня, затишні номери та сауна.</p>
+
+    <p class="hero__place hero__next">Зупиніться поїсти</p>
+    <p class="hero__place-script">кухня працює з сьомої ранку</p>
+    <p class="hero__lead">Борщ, вареники, гаряче з печі — усе як удома.</p>
+
+    <p class="hero__place hero__next">Або лишіться на ніч</p>
+    <p class="hero__place-script">п’ять типів номерів і сауна</p>
+    <p class="hero__lead">Сауну прогріємо до вашого приїзду, а зранку внизу чекатиме сніданок.</p>
+
+    <div class="hero__cta">
+      <a class="btn" href="#rooms"><span>Забронювати номер</span></a>
+      <a class="btn btn--ghost" href="menu.html"><span>Меню кафе</span></a>
     </div>
   </div>
 
-  <div class="hero__stage">
-    <div class="hero__inner">
-      <p class="hero__place">Зупиніться поїсти</p>
-      <p class="hero__place-script">кухня працює з сьомої ранку</p>
-      <hr class="hero__rule">
-      <p class="hero__lead">Борщ, вареники, гаряче з печі — усе як удома, без черги й без поспіху.</p>
-    </div>
-  </div>
-
-  <div class="hero__stage">
-    <div class="hero__inner">
-      <p class="hero__place">Або лишіться на ніч</p>
-      <p class="hero__place-script">п’ять типів номерів і сауна</p>
-      <hr class="hero__rule">
-      <p class="hero__lead">Сауну прогріємо до вашого приїзду, а вранці внизу вже чекатиме сніданок.</p>
-      <div class="hero__cta">
-        <a class="btn" href="#rooms"><span>Забронювати номер</span></a>
-        <a class="btn btn--ghost" href="menu.html"><span>Меню кафе</span></a>
-      </div>
-    </div>
-
-    <ul class="hero__facts">
-      <li><b>07:00 — 23:00</b><span data-open-status>кафе працює щодня</span></li>
-      <li><b>5 типів номерів</b><span>від 1 до 4 гостей</span></li>
-      <li><b>Сауна</b><span>та більярд на території</span></li>
-      <li><b>Домашня кухня</b><span>страви як удома</span></li>
-    </ul>
-  </div>
+  <ul class="hero__facts">
+    <li><b>07:00 — 23:00</b><span data-open-status>кафе працює щодня</span></li>
+    <li><b>5 типів номерів</b><span>від 1 до 4 гостей</span></li>
+    <li><b>Сауна</b><span>та більярд на території</span></li>
+    <li><b>Домашня кухня</b><span>страви як удома</span></li>
+  </ul>
 
 </header>
 
