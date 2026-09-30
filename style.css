@@ -1371,7 +1371,7 @@ main { background: var(--bg); }
 .rc__foot .btn { padding: .85em 1.5em; font-size: .72rem; }
 
 /* ── Перший екран: типографіка за розмірами greatpolonia ── */
-.hero__crest { display: block; width: clamp(88px, 6rem + 2.6vw, 128px); height: auto; margin-bottom: .5rem; }
+.hero__crest { display: block; width: clamp(112px, 7rem + 3.6vw, 176px); height: auto; margin-bottom: .6rem; }
 .hero__h { display: grid; margin: 0; font-weight: 400; }
 .hero__h-top {
   font-family: var(--display); font-weight: 400;
