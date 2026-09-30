@@ -420,9 +420,6 @@ body:has(> .back-btn) .topbar__logo { margin-left: 48px; }
 .rblock__name a { text-decoration: none; }
 .rblock__name a:hover { text-decoration: underline; text-decoration-thickness: 1px; }
 .rblock__desc { margin-top: .7rem; }
-.feat { list-style: none; padding: 0; margin: 1.5rem 0 2rem; display: grid; gap: .75rem; }
-.feat li { display: flex; align-items: center; gap: .85rem; }
-.feat svg { width: 22px; height: 22px; flex: none; fill: none; stroke: var(--amber); stroke-width: 1.3; stroke-linecap: round; stroke-linejoin: round; }
 .rblock__note { margin-top: .8rem; font-size: .82rem; }
 
 /* Гортання фото */
@@ -482,7 +479,6 @@ body:has(> .back-btn) .topbar__logo { margin-left: 48px; }
 .room-about h2 { margin: 2.2rem 0 .9rem; font-size: .74rem; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; }
 .room-about h2:first-child { margin-top: 0; }
 .room-about p { max-width: 38rem; }
-.feat--grid { grid-template-columns: repeat(2, minmax(0, 1fr)); margin: 0; gap: .9rem 1.6rem; }
 
 .room-book__label { font-size: .68rem; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; }
 .room-book__price { margin-top: .45rem; font-size: 1.5rem; font-weight: 500; line-height: 1.25; }
@@ -1138,7 +1134,6 @@ body:has(.dock) .foot { padding-bottom: 110px; }
 
   .menu-btn { width: 42px; height: 42px; }   /* як кнопка «Назад» */
   .back-btn { width: 42px; height: 42px; }
-  .feat--grid { grid-template-columns: 1fr; }
   .field-row { grid-template-columns: 1fr; }
   .lightbox__nav { top: auto; bottom: var(--frame); translate: 0 0; }
   .hero { padding: calc(var(--frame) + 70px) calc(var(--frame) + 14px) calc(var(--frame) + 18px); }
@@ -1561,3 +1556,50 @@ main {
 /* під такою шапкою зайвий відступ згори ні до чого */
 .page--phero { padding-top: clamp(40px, 4.5vw, 68px); }
 @media (max-width: 640px) { .phero__media { height: clamp(280px, 46vh, 400px); } }
+
+/* ── Що є в номері: плитки, як у booking ── */
+.rbeds { margin: 1.4rem 0 0; font-size: 1rem; }
+.rbeds b { font-weight: 600; }
+.rchips { list-style: none; margin: .8rem 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: .5rem; }
+.rchips li {
+  display: inline-flex; align-items: center; gap: .5rem;
+  padding: .52rem .8rem; border: 1px solid var(--line); border-radius: 4px;
+  font-size: .9rem; line-height: 1.2;
+}
+.rchips svg, .fgroup h3 svg, .rule > svg {
+  width: 17px; height: 17px; flex: none;
+  fill: none; stroke: var(--accent); stroke-width: 1.3; stroke-linecap: round; stroke-linejoin: round;
+}
+
+/* ── Зручності розділами ── */
+.fgroups { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 1.6rem 2rem; margin-top: 1rem; }
+.fgroup h3 { display: flex; align-items: center; gap: .55rem; margin: 0 0 .5rem; font-size: 1.02rem; }
+.fgroup ul { list-style: none; margin: 0; padding: 0; display: grid; gap: .3rem; }
+.fgroup li { font-size: .94rem; opacity: .82; }
+
+/* ── Правила проживання ── */
+.rules { margin-top: 1rem; }
+.rule { display: flex; align-items: flex-start; gap: .7rem; padding: .85rem 0; border-top: 1px solid var(--line); }
+.rule:first-child { border-top: 0; padding-top: 0; }
+.rule > svg { margin-top: .15rem; }
+.rule b { display: block; font-weight: 600; font-size: .95rem; }
+.rule span { display: block; font-size: .94rem; opacity: .82; }
+
+/* ── Передоплата за номер ── */
+.pay { display: grid; gap: .7rem; }
+.pay__lead { margin: 0; font-size: .95rem; }
+.pay__rows {
+  display: grid; gap: .45rem; padding: .9rem 1rem;
+  border: 1px solid var(--line); border-radius: 4px; background: var(--bg-soft);
+}
+.pay__row { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .3rem 1rem; font-size: .9rem; }
+.pay__row span { opacity: .7; }
+.pay__row b { font-weight: 600; text-align: right; word-break: break-word; }
+.pay__copy {
+  justify-self: start; padding: .6em 1.2em; border: 1px solid var(--accent); border-radius: 4px;
+  background: none; color: var(--accent); font: inherit; font-size: .86rem; cursor: pointer;
+  transition: background .3s, color .3s;
+}
+.pay__copy:hover { background: var(--accent); color: #fff; }
+.pay__hint { margin: 0; font-size: .86rem; opacity: .7; }
+.pay--done { margin-top: 1.1rem; text-align: left; }

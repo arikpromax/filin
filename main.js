@@ -33,6 +33,87 @@
   var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
   var root = document.documentElement;
 
+  /* ── Значки для зручностей, правил і передоплати ── */
+  var FICO = {
+    guests: '<circle cx="9" cy="8" r="3.2"/><path d="M3 19.5c0-3.4 2.7-5.8 6-5.8s6 2.4 6 5.8"/><circle cx="17" cy="9" r="2.4"/><path d="M16.4 13.8c2.7.3 4.6 2.4 4.6 5.7"/>',
+    bed: '<path d="M3 18.5V5.5M3 14h18v4.5M21 14v-2.5a3 3 0 0 0-3-3h-7.5V14"/><circle cx="6.8" cy="11" r="1.8"/>',
+    bath: '<path d="M3.5 12h17v2a5 5 0 0 1-5 5h-7a5 5 0 0 1-5-5v-2zM6 12V6.5a2 2 0 0 1 4 0M7.5 19l-1 2M16.5 19l1 2"/>',
+    tv: '<rect x="3" y="5" width="18" height="12" rx="1"/><path d="M8.5 21h7"/>',
+    wifi: '<path d="M2.6 9.2a14 14 0 0 1 18.8 0M5.8 12.6a9.5 9.5 0 0 1 12.4 0M9 16a5 5 0 0 1 6 0"/><circle cx="12" cy="19.4" r="1.1"/>',
+    cup: '<path d="M4 9h13v5a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5V9zM17 10.5h1.5a2.5 2.5 0 0 1 0 5H17M8 3.5v2.5M12.5 3.5v2.5"/>',
+    sauna: '<path d="M3 20h18M5 20v-6h14v6M8 11c-1-1.2 1-2.3 0-3.5M12 11c-1-1.2 1-2.3 0-3.5M16 11c-1-1.2 1-2.3 0-3.5"/>',
+    car: '<path d="M4 16.5h16v-4l-2-4.5H6l-2 4.5v4zM5.5 16.5V19H8v-2.5M16 16.5V19h2.5v-2.5"/><circle cx="7.6" cy="13.4" r="1"/><circle cx="16.4" cy="13.4" r="1"/>',
+    clock: '<circle cx="12" cy="12" r="8.6"/><path d="M12 7v5.3l3.3 2"/>',
+    card: '<rect x="2.6" y="5.4" width="18.8" height="13.2" rx="2"/><path d="M2.6 10h18.8M6 14.6h4.4"/>',
+    smoke: '<path d="M3 16.4h12.4v3.2H3zM17.2 16.4h1.6v3.2h-1.6M20 16.4h1.4v3.2H20M18.4 13.2c0-2.2-2.6-1.6-2.6-4.4"/>',
+    kids: '<circle cx="12" cy="6.6" r="3.1"/><path d="M12 9.7v6.1M8.3 12.6 12 10.8l3.7 1.8M9 20.4l3-4.6 3 4.6"/>',
+    dot: '<circle cx="12" cy="12" r="2.6"/>'
+  };
+  var fsvg = function (n) { return '<svg viewBox="0 0 24 24" aria-hidden="true">' + (FICO[n] || FICO.dot) + '</svg>'; };
+  var hesc = function (t) {
+    return String(t).replace(/[&<>"]/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", "": "&quot;" }[c];
+    });
+  };
+  var hideWithHead = function (box) {
+    var h = box.previousElementSibling;
+    if (h && /^H[23]$/.test(h.tagName)) h.hidden = true;
+    box.hidden = true;
+  };
+
+  /* ── Зручності: розділами, як у booking. Список — у config.js ── */
+  var facBox = $('[data-facilities]');
+  if (facBox) {
+    var fgroups = (CFG.facilities || []).filter(function (g) { return g && g.items && g.items.length; });
+    if (!fgroups.length) hideWithHead(facBox);
+    else facBox.innerHTML = fgroups.map(function (g) {
+      return '<div class="fgroup"><h3>' + fsvg(g.icon) + hesc(g.title) + '</h3><ul>' +
+        g.items.map(function (i) { return '<li>' + hesc(i) + '</li>'; }).join('') + '</ul></div>';
+    }).join('');
+  }
+
+  /* ── Правила проживання: години заїзду й виїзду плюс рядки з config.js ── */
+  var rulesBox = $('[data-rules]');
+  if (rulesBox) {
+    var RL = CFG.rules || {}, rrows = [];
+    if (RL.checkIn) rrows.push({ icon: 'clock', title: 'Заїзд', text: 'з ' + RL.checkIn });
+    if (RL.checkOut) rrows.push({ icon: 'clock', title: 'Виїзд', text: 'до ' + RL.checkOut });
+    (RL.items || []).forEach(function (i) { if (i && i.text) rrows.push(i); });
+    if (!rrows.length) hideWithHead(rulesBox);
+    else rulesBox.innerHTML = rrows.map(function (r) {
+      return '<div class="rule">' + fsvg(r.icon) +
+        '<div><b>' + hesc(r.title || '') + '</b><span>' + hesc(r.text) + '</span></div></div>';
+    }).join('');
+  }
+
+  /* ── Передоплата за номер. Немає prepay — про неї не пишемо взагалі ── */
+  var PAY = CFG.payment || {};
+  var payHTML = function (no) {
+    if (!PAY.prepay) return '';
+    var head = '<p class="pay__lead">Бронь підтверджуємо після передоплати <b>' + hesc(PAY.prepay) + '</b>.</p>';
+    if (!PAY.iban) return head + '<p class="pay__hint">Реквізити надішлемо у відповідь на заявку.</p>';
+    var rows = [['Отримувач', PAY.recipient], ['IBAN', PAY.iban], ['ЄДРПОУ / ІПН', PAY.edrpou]];
+    // призначення платежу має сенс лише з номером броні — він зʼявляється в чеку
+    if (no) rows.push(['Призначення', ((PAY.purpose || '') + ' ' + no).trim()]);
+    var body = rows.filter(function (r) { return r[1]; }).map(function (r) {
+      return '<div class="pay__row"><span>' + hesc(r[0]) + '</span><b>' + hesc(r[1]) + '</b></div>';
+    }).join('');
+    return head + '<div class="pay__rows">' + body + '</div>' +
+      '<button class="pay__copy" type="button" data-pay-copy>Скопіювати IBAN</button>' +
+      (PAY.note ? '<p class="pay__hint">' + hesc(PAY.note) + '</p>' : '');
+  };
+  var paySec = $('[data-pay-sec]');
+  if (paySec && PAY.prepay) {
+    paySec.innerHTML = '<h3 class="bk__h"><i>4</i>Оплата</h3><div class="pay">' + payHTML('') + '</div>';
+    paySec.hidden = false;
+  }
+  document.addEventListener('click', function (e) {
+    var b = e.target.closest && e.target.closest('[data-pay-copy]');
+    if (!b || !PAY.iban) return;
+    var done = function () { b.textContent = 'Скопійовано'; setTimeout(function () { b.textContent = 'Скопіювати IBAN'; }, 2000); };
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(PAY.iban).then(done, function () {});
+  });
+
   /* ── Кожна сторінка відкривається згори (або одразу на блоці з #якоря),
         навіть якщо переглядач намагається відновити стару прокрутку ── */
   try { if ('scrollRestoration' in history) history.scrollRestoration = 'manual'; } catch (x) {}
@@ -943,6 +1024,8 @@
       btn.disabled = true; label.textContent = 'Надсилаємо…';
       sendBooking(data).then(function () {
         lock(true);
+        var payDone = $('[data-pay-done]', bk);
+        if (payDone && PAY.prepay) { payDone.innerHTML = payHTML(bkNo); payDone.hidden = false; }
         // на комп’ютері колонка з «чеком» гортається сама по собі, на телефоні — усе вікно
         var side = $('.bk__side', bk);
         if (getComputedStyle(side).position === 'sticky') side.scrollTop = 0;
