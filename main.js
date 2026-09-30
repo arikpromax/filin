@@ -211,7 +211,7 @@
       toneQueued = false;
       if (topbar) {
         // на головній — після першого екрана, на інших сторінках — щойно почали гортати
-        var on = window.scrollY > (heroTop ? heroTop.offsetHeight - 320 : 60);
+        var on = window.scrollY > (heroTop ? heroTop.offsetHeight - 80 : 60);
         topbar.classList.toggle('is-on', on);
         root.classList.toggle('bar-on', on);
       }
