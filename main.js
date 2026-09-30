@@ -470,7 +470,7 @@
         $('[data-val="' + k + '"]', bw).textContent = S[k];
         $$('[data-step="' + k + '"]', bw).forEach(function (b) {
           var d = +b.getAttribute('data-d');
-          b.disabled = d < 0 ? S[k] <= LIMITS[k][0] : S[k] >= LIMITS[k][1] || (full && k !== 'rooms');
+          b.disabled = d < 0 ? S[k] <= LIMITS[k][0] : S[k] >= LIMITS[k][1] || (full && k === 'adults');
         });
       });
       // підказка про місткість номера — під лічильниками гостей
@@ -782,7 +782,7 @@
       var full = rr && S.adults >= rr.cap;
       if (!full) capNote = false;
       // «+» у повному номері лишається натискним (блідим) — натискання показує підказку
-      $$('[data-step][data-d="1"]', bkForm).forEach(function (btn) {
+      $$('[data-step="adults"][data-d="1"]', bkForm).forEach(function (btn) {
         var k = btn.getAttribute('data-step');
         if (LIMITS[k] && S[k] < LIMITS[k][1]) btn.disabled = false;
         btn.classList.toggle('is-max', !!full);
