@@ -1513,3 +1513,16 @@ main {
 
 /* зайнятий день: перекреслений і недоступний */
 .cal__day.is-busy { opacity: .4; text-decoration: line-through; cursor: not-allowed; }
+
+/* ── Власна шпилька поверх карти. OpenStreetMap малює свою скриптом,
+   а на телефоні той скрипт часто не доходить — і мітка зникає.
+   Ця стоїть завжди, бо карту ми центруємо саме на потрібній точці. ── */
+.route__pin {
+  position: absolute; left: 50%; top: 50%; z-index: 1;
+  width: 26px; height: 37px; margin: -37px 0 0 -13px;   /* вістря — рівно в центр */
+  pointer-events: none;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, .35));
+}
+.route__pin svg { width: 100%; height: 100%; display: block; }
+.route__pin path { fill: var(--accent); }
+.route__pin circle { fill: #fff; }
