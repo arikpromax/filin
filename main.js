@@ -17,7 +17,18 @@
     if (userScrolled) return;
     var html = document.documentElement, prev = html.style.scrollBehavior;
     html.style.scrollBehavior = 'auto';
-    var target = location.hash.length > 1 ? document.getElementById(decodeURIComponent(location.hash.slice(1))) : null;
+    // Якір слухаємо лише коли людина прийшла за посиланням на розділ.
+    // Просто оновили сторінку — відкриваємо згори, навіть якщо в адресі
+    // лишився якір від кліку в меню.
+    var reloaded = false;
+    try {
+      var nav = performance.getEntriesByType('navigation')[0];
+      reloaded = nav ? nav.type === 'reload' : performance.navigation && performance.navigation.type === 1;
+    } catch (x) {}
+    if (reloaded && location.hash.length > 1) {
+      try { history.replaceState(null, '', location.pathname + location.search); } catch (x) {}
+    }
+    var target = (!reloaded && location.hash.length > 1) ? document.getElementById(decodeURIComponent(location.hash.slice(1))) : null;
     if (target) target.scrollIntoView({ block: 'start' });
     else { window.scrollTo(0, 0); if (document.body) document.body.scrollIntoView({ block: 'start' }); }
     html.style.scrollBehavior = prev;
