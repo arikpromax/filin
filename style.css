@@ -1263,7 +1263,8 @@ main { background: var(--bg); }
 .hero__inner, .hero__facts { position: relative; z-index: 1; }
 
 @keyframes heroFade { 0%, 42% { opacity: 1; } 50%, 92% { opacity: 0; } 100% { opacity: 1; } }
-@keyframes heroZoom { 0% { transform: scale(1.04); } 50% { transform: scale(1.13); } 100% { transform: scale(1.04); } }
+/* наїзд ледь помітний: кожен зайвий відсоток збільшення — це зайве розтягування фото */
+@keyframes heroZoom { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
 
 @media (prefers-reduced-motion: reduce) {
   .hero__media img { animation: none; opacity: 1; }
