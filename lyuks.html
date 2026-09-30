@@ -19,8 +19,8 @@
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display+SC:wght@400;700&display=swap">
-  <link rel="stylesheet" href="fonts.css?v=15">
-  <link rel="stylesheet" href="style.css?v=15">
+  <link rel="stylesheet" href="fonts.css?v=16">
+  <link rel="stylesheet" href="style.css?v=16">
   <script>document.documentElement.classList.add('js');</script>
 </head>
 <body>
@@ -279,8 +279,13 @@
               <button type="button" data-step="adults" data-d="1" aria-label="Дорослі: більше">+</button>
             </div>
           </div>
-          <div class="step">
-            <div><b>Діти</b><small>до 12 років</small></div>
+          <label class="step step--check">
+            <div><b>З дітьми</b><small>до 12 років</small></div>
+            <input type="checkbox" data-kids-on>
+            <span class="step__box" aria-hidden="true"></span>
+          </label>
+          <div class="step" data-kids-row hidden>
+            <div><b>Скільки дітей</b><small>не займають місце дорослого</small></div>
             <div class="step__ctl">
               <button type="button" data-step="children" data-d="-1" aria-label="Діти: менше">−</button>
               <output data-val="children">0</output>
@@ -376,8 +381,8 @@
   <button class="btn" type="button" data-book="lyuks"><span>Забронювати</span></button>
 </div>
 
-<script src="menu-data.js?v=15"></script>
-<script src="config.js?v=15"></script>
-<script src="main.js?v=15"></script>
+<script src="menu-data.js?v=16"></script>
+<script src="config.js?v=16"></script>
+<script src="main.js?v=16"></script>
 </body>
 </html>

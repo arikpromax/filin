@@ -202,7 +202,8 @@
         if (el.__top0 === undefined) el.__top0 = top + window.scrollY;   // де рядок стоїть без прокрутки
         // танути починає з верхньої третини вікна, але не раніше, ніж зрушить з місця
         var start = Math.min(vh * 0.35, el.__top0);   // звідки починає танути
-        var p = Math.min(1, Math.max(0, (start - top) / Math.max(1, start - end)));
+        var grace = vh * 0.08;   // поки не від’їхали хоч трохи — усе чітке
+        var p = Math.min(1, Math.max(0, (start - top - grace) / Math.max(1, start - end)));
         el.style.setProperty('--hs', (1 - p * 0.5).toFixed(3));
         el.style.setProperty('--ho', (1 - p).toFixed(3));
         el.style.setProperty('--hb', (p * 50).toFixed(1) + 'px');
