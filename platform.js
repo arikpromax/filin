@@ -84,7 +84,7 @@
   /* ---------- вміст: ціни номерів і тексти ---------- */
   var num = function (v) { return Number(String(v == null ? '' : v).replace(/[^\d.]/g, '')) || 0; };
 
-  var apply = function (rooms, texts) {
+  var apply = function (rooms, texts, live) {
     /* ціни й місткість номерів */
     CFG.prices = CFG.prices || {};
     (rooms || []).forEach(function (r) {
@@ -93,7 +93,7 @@
       if (!key) return;
       CFG.prices[key] = num(r.price);
     });
-    paintRooms(rooms || []);
+    paintRooms(rooms || [], live);
 
     /* прості тексти */
     var T = {};
@@ -135,10 +135,18 @@
     });
   };
 
+  /* Список фото картки: в адмінці це поле «Фото», перше — головне. */
+  var picsOf = function (r) {
+    var x = r.extra || {};
+    var list = Array.isArray(x.photos) ? x.photos.filter(Boolean) : [];
+    if (!list.length && r.image_url) list = [r.image_url];
+    return list;
+  };
+
   /* Назви, підписи й фото номерів. Картки на головній знаходимо за
      data-room-id, сторінку номера — за кнопкою «Забронювати» на ній,
      а ще оновлюємо список у вікні бронювання, щоб чек показував те саме. */
-  var paintRooms = function (rooms) {
+  var paintRooms = function (rooms, live) {
     var pageBtn = document.querySelector(".room-book [data-book]");
     var pageKey = pageBtn ? pageBtn.getAttribute("data-book") : "";
     var set = function (el, v) { if (el && v) el.textContent = v; };
@@ -147,6 +155,7 @@
       var x = r.extra || {};
       var key = x.key || "";
       if (!key) return;
+      var pics = picsOf(r);
 
       /* картка на головній */
       var card = document.querySelector('.rc[data-room-id="' + key + '"]');
@@ -156,7 +165,7 @@
         set(card.querySelector(".rc__meta"), x.meta);
         if (x.cap) card.setAttribute("data-cap", x.cap);
         var ci = card.querySelector(".rc__photo img");
-        if (ci && r.image_url) ci.src = r.image_url;
+        if (ci && pics[0]) ci.src = pics[0];
       }
 
       /* перемикач номера у вікні бронювання — з нього береться назва в чеку */
@@ -165,7 +174,7 @@
         if (r.title) radio.setAttribute("data-name", r.title);
         if (x.meta) radio.setAttribute("data-meta", x.meta);
         if (x.cap) radio.setAttribute("data-cap", x.cap);
-        if (r.image_url) radio.setAttribute("data-img", r.image_url);
+        if (pics[0]) radio.setAttribute("data-img", pics[0]);
       }
 
       /* сторінка цього номера */
@@ -176,8 +185,34 @@
         var lab = document.querySelector(".room-book__label");
         if (lab && r.title) lab.textContent = "Номер «" + r.title + "»";
         if (r.title) document.title = r.title + " — мотель «Філін»";
+        if (!live) paintSlider(pics, r.title || "");
       }
     });
+  };
+
+  /* Гортання фото на сторінці номера. Малюємо до запуску main.js —
+     саме він вішає на слайди стрілки, свайп і відкриття на весь екран. */
+  var paintSlider = function (pics, name) {
+    var track = document.querySelector(".room-gallery .slider__track");
+    var thumbs = document.querySelector(".room-gallery .thumbs");
+    if (!track || !pics.length) return;
+    track.innerHTML = pics.map(function (u, i) {
+      return '<button class="slide ph" data-icon="bed" type="button" data-src="' + esc(u) +
+        '" aria-label="Відкрити фото ' + (i + 1) + '">' +
+        '<span class="ph__label">Фото ' + (i + 1) + "</span>" +
+        '<img src="' + esc(u) + '" alt="' + esc(name) + ', фото ' + (i + 1) +
+        '" loading="lazy" onerror="this.remove()"></button>';
+    }).join("");
+    if (thumbs) {
+      thumbs.innerHTML = pics.map(function (u, i) {
+        return '<button class="thumb ph' + (i ? "" : " is-active") +
+          '" type="button" data-go="' + i + '" aria-label="Фото ' + (i + 1) + '">' +
+          '<span class="ph__label">' + (i + 1) + "</span>" +
+          '<img src="' + esc(u) + '" alt="" loading="lazy" onerror="this.remove()"></button>';
+      }).join("");
+    }
+    var count = document.querySelector(".room-gallery .slider__count");
+    if (count) count.textContent = "1 / " + pics.length;
   };
 
   /* Фото першого екрана. Завантажені в адмінці замінюють ті, що лежать
@@ -246,8 +281,7 @@
     if (!box || !rows.length) return;
     box.innerHTML = rows.map(function (r) {
       var x = r.extra || {};
-      var pics = (Array.isArray(x.photos) ? x.photos : []).filter(Boolean);
-      if (r.image_url) pics.unshift(r.image_url);
+      var pics = picsOf(r);
       var name = esc(r.title);
       return '<button class="gal__card ph" type="button" data-icon="' + esc(x.icon || "cup") +
         '" data-title="' + name + '" data-album="' + esc(pics.join(",")) + '">' +
@@ -291,8 +325,8 @@
      гостю кошик і відкрите фото. */
   var applyAll = function (items, texts, live) {
     var by = byCol(items);
-    apply(by.rooms || [], texts);
-    paintHero((by.site_photos || []).map(function (x) { return x.image_url; }).filter(Boolean));
+    apply(by.rooms || [], texts, live);
+    paintHero(picsOf((by.site_photos || [])[0] || {}));
     paintFaq(by.faq || []);
     if (!live) {
       paintGallery(by.gallery || []);
