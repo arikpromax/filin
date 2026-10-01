@@ -858,7 +858,48 @@
           : '<option value="">у день заїзду</option>';
         if (days.indexOf(cur) > -1) sel.value = cur;
       });
+      markSauna();
     };
+
+    /* Сауна одна, тож зайняті години гасимо: дві компанії не візьмуть
+       той самий вечір. Список приходить з бази; без адмінки він порожній
+       і всі години лишаються доступними, як раніше. */
+    var saunaTaken = [];
+    var markSauna = function () {
+      var sel = $('select[name="saunaTime"]', bkForm);
+      if (!sel) return;
+      var day = val('saunaDay');
+      var need = X.saunaHours || 2;
+      var busy = saunaTaken.filter(function (b) { return String(b.day).slice(0, 10) === day; });
+      var firstFree = '';
+      $$('option', sel).forEach(function (o) {
+        var from = parseInt(o.value, 10) || 0;
+        var clash = busy.some(function (b) {
+          var bf = +b.from_hour || 0, bh = +b.hours || 2;
+          return from < bf + bh && from + need > bf;
+        });
+        o.disabled = clash;
+        o.textContent = o.value + (clash ? ' — зайнято' : '');
+        if (!clash && !firstFree) firstFree = o.value;
+      });
+      // обрана година щойно стала зайнятою — пересуваємо на найближчу вільну
+      var cur = $('option:checked', sel);
+      if (cur && cur.disabled && firstFree) { sel.value = firstFree; changed(); }
+    };
+    if (window.FILIN_DB && window.FILIN_DB.saunaBusy) {
+      window.FILIN_DB.saunaBusy().then(function (rows) {
+        saunaTaken = rows || [];
+        markSauna();
+      }).catch(function () {});
+    }
+
+    // день чи тривалість помінялись — перерахувати, які години вільні
+    bkForm.addEventListener('change', function (e) {
+      if (e.target && e.target.name === 'saunaDay') markSauna();
+    });
+    bkForm.addEventListener('click', function (e) {
+      if (e.target.closest && e.target.closest('[data-xstep="saunaHours"]')) setTimeout(markSauna, 0);
+    });
     // що треба, щоб надіслати
     var missing = function () {
       var m = [];
