@@ -19,8 +19,8 @@
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display+SC:wght@400;700&display=swap">
-  <link rel="stylesheet" href="fonts.css?v=43">
-  <link rel="stylesheet" href="style.css?v=43">
+  <link rel="stylesheet" href="fonts.css?v=44">
+  <link rel="stylesheet" href="style.css?v=44">
   <script>document.documentElement.classList.add('js');</script>
 </head>
 <body>
@@ -54,7 +54,7 @@
     </ul>
     <div class="drawer__foot">
       <a class="btn btn--block" href="index.html#rooms"><span>Дивитись усі номери</span></a>
-      <p class="drawer__meta">Кобеляки · щодня 07:00 — 23:00</p>
+      <p class="drawer__meta" data-txt="drawer_meta">Кобеляки · щодня 07:00 — 23:00</p>
     </div>
   </nav>
 </div>
@@ -65,8 +65,8 @@
     <img src="sauna.jpg" alt="Сауна на території кафе «Філін»" onerror="this.remove()">
     <div class="phero__in">
       <p class="phero__eyebrow">Відпочинок на території</p>
-      <h1 class="phero__title">Сауна</h1>
-      <p class="phero__text">Прогрітися після дороги, посидіти компанією — і лишитися ночувати тут же, у номері.</p>
+      <h1 class="phero__title" data-txt="sauna_title">Сауна</h1>
+      <p class="phero__text" data-txt="sauna_lead">Прогрітися після дороги, посидіти компанією — і лишитися ночувати тут же, у номері.</p>
     </div>
   </div>
 </header>
@@ -79,9 +79,9 @@
         <img src="sauna.jpg" alt="Сауна на території кафе «Філін»" loading="lazy" onerror="this.remove()">
       </div>
       <div class="pgrid__text reveal" style="--d:.15s">
-        <p>Прогріваємо заздалегідь — щоб до вашого часу сауна вже була гаряча.</p>
-        <p>Якщо берете номер, замовити її можна там же, у вікні бронювання: є окремий крок «Сауна» — день, година й скільки годин топити.</p>
-        <p>Без номера теж можна — подзвоніть, підкажемо вільний час і ціну.</p>
+        <p data-txt="sauna_p1">Прогріваємо заздалегідь — щоб до вашого часу сауна вже була гаряча.</p>
+        <p data-txt="sauna_p2">Якщо берете номер, замовити її можна там же, у вікні бронювання: є окремий крок «Сауна» — день, година й скільки годин топити.</p>
+        <p data-txt="sauna_p3">Без номера теж можна — подзвоніть, підкажемо вільний час і ціну.</p>
         <a class="btn needs-phone" data-phone-link data-call hidden href="#"><span>Зателефонувати</span></a>
       </div>
     </div>
@@ -99,12 +99,14 @@
     <div class="foot__cols">
       <div>
         <h3>Адреса</h3>
-        <p>Кобеляки, Полтавська обл.<br>виїзд у бік Дніпра, об’їзна дорога</p>
+        <p data-txt="foot_address">Кобеляки, Полтавська обл.
+виїзд у бік Дніпра, об’їзна дорога</p>
         <p><a href="https://www.google.com/maps/search/?api=1&amp;query=%D0%9A%D0%B0%D1%84%D0%B5+%D0%A4%D1%96%D0%BB%D1%96%D0%BD+%D0%9A%D0%BE%D0%B1%D0%B5%D0%BB%D1%8F%D0%BA%D0%B8" target="_blank" rel="noopener">Відкрити на карті <svg class="ico ico--ext" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 16 16 8M10 8h6v6"/></svg></a></p>
       </div>
       <div>
         <h3>Години</h3>
-        <p>Щодня<br>07:00 — 23:00</p>
+        <p data-txt="foot_hours">Щодня
+07:00 — 23:00</p>
       </div>
       <div>
         <h3>Зв’язок</h3>
@@ -123,14 +125,14 @@
     </div>
 
     <div class="foot__bottom">
-      <p>© 2026 Кафе «Філін» · Кобеляки</p>
+      <p data-txt="foot_copy">© 2026 Кафе «Філін» · Кобеляки</p>
       <button type="button" data-to-top>Нагору <svg class="ico ico--up" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6"/></svg></button>
     </div>
   </div>
 </footer>
 
-<script src="config.js?v=43"></script>
-<script src="platform.js?v=43"></script>
-<script src="main.js?v=43"></script>
+<script src="config.js?v=44"></script>
+<script src="platform.js?v=44"></script>
+<script src="main.js?v=44"></script>
 </body>
 </html>

@@ -19,8 +19,8 @@
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display+SC:wght@400;700&display=swap">
-  <link rel="stylesheet" href="fonts.css?v=43">
-  <link rel="stylesheet" href="style.css?v=43">
+  <link rel="stylesheet" href="fonts.css?v=44">
+  <link rel="stylesheet" href="style.css?v=44">
   <script>document.documentElement.classList.add('js');</script>
 </head>
 <body>
@@ -49,7 +49,7 @@
     </ul>
     <div class="drawer__foot">
       <a class="btn btn--block" href="#rooms"><span>Дивитись усі номери</span></a>
-      <p class="drawer__meta">Кобеляки · щодня 07:00 — 23:00</p>
+      <p class="drawer__meta" data-txt="drawer_meta">Кобеляки · щодня 07:00 — 23:00</p>
     </div>
   </nav>
 </div>
@@ -67,18 +67,18 @@
   <div class="hero__inner">
     <img class="hero__crest" src="logo-light.png" alt="Кафе «Філін» — Кобеляки" width="447" height="360">
     <h1 class="hero__h">
-      <span class="hero__h-top">Кафе</span>
-      <span class="hero__h-script">Філін</span>
+      <span class="hero__h-top" data-txt="hero_top">Кафе</span>
+      <span class="hero__h-script" data-txt="hero_script">Філін</span>
     </h1>
-    <p class="hero__place">Кобеляки · Полтавщина</p>
+    <p class="hero__place" data-txt="hero_place">Кобеляки · Полтавщина</p>
     <hr class="hero__rule">
-    <p class="hero__lead">Домашня кухня, затишні номери та сауна.</p>
+    <p class="hero__lead" data-txt="hero_lead1">Домашня кухня, затишні номери та сауна.</p>
 
-    <p class="hero__place hero__next">Зупиніться поїсти</p>
-    <p class="hero__lead">Борщ, вареники, гаряче з печі — усе як удома.</p>
+    <p class="hero__place hero__next" data-txt="hero_next1">Зупиніться поїсти</p>
+    <p class="hero__lead" data-txt="hero_lead2">Борщ, вареники, гаряче з печі — усе як удома.</p>
 
-    <p class="hero__place hero__next hero__next--last">Або лишіться на ніч</p>
-    <p class="hero__lead">Сауну прогріємо до вашого приїзду, а зранку на вас чекатиме сніданок.</p>
+    <p class="hero__place hero__next hero__next--last" data-txt="hero_next2">Або лишіться на ніч</p>
+    <p class="hero__lead" data-txt="hero_lead3">Сауну прогріємо до вашого приїзду, а зранку на вас чекатиме сніданок.</p>
 
     <div class="hero__cta">
       <a class="btn" href="#rooms"><span>Забронювати номер</span></a>
@@ -94,8 +94,8 @@
   <div class="wrap">
     <div class="sec-head reveal">
       <div>
-        <p class="eyebrow">Номери</p>
-        <h2 class="display">Відпочинок після дороги</h2>
+        <p class="eyebrow" data-txt="rooms_eyebrow">Номери</p>
+        <h2 class="display" data-txt="rooms_title">Відпочинок після дороги</h2>
       </div>
     </div>
 
@@ -185,9 +185,9 @@
       <!-- Великою компанією: заповнює останню клітинку сітки номерів -->
       <aside class="rinfo" data-rinfo>
         <svg class="rinfo__owl" viewBox="0 0 60 72" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 4C11 14 10 22 12 30C10 46 18 60 30 67C42 60 50 46 48 30C50 22 49 14 47 4"/><path d="M13 4C20 12 26 18 30 25C34 18 40 12 47 4"/><circle cx="22.5" cy="26" r="4.6"/><circle cx="37.5" cy="26" r="4.6"/><path d="M28.6 27.5 30 32l1.4-4.5"/><path d="M6 70h48"/></g></svg>
-        <p class="rinfo__eye">Великою компанією?</p>
-        <p class="rinfo__h">Підберемо кілька номерів поруч</p>
-        <p class="rinfo__txt">Номер уміщує до 4 гостей. Якщо вас більше — зателефонуйте, усе організуємо. А сауну прогріємо до вашого приїзду.</p>
+        <p class="rinfo__eye" data-txt="rooms_more_eye">Великою компанією?</p>
+        <p class="rinfo__h" data-txt="rooms_more_h">Підберемо кілька номерів поруч</p>
+        <p class="rinfo__txt" data-txt="rooms_more_txt">Номер уміщує до 4 гостей. Якщо вас більше — зателефонуйте, усе організуємо. А сауну прогріємо до вашого приїзду.</p>
         <a class="btn btn--light needs-phone" data-phone-link data-call hidden href="#"><span>Зателефонувати</span></a>
         <a class="btn btn--light no-phone" href="https://www.instagram.com/cafe__filin__/" target="_blank" rel="noopener"><span>Написати в Instagram</span></a>
       </aside>
@@ -208,7 +208,7 @@
   <div class="wrap wrap--gal">
     <div class="sec-head reveal">
       <div>
-        <h2 class="display">Фотогалерея</h2>
+        <h2 class="display" data-txt="gallery_title">Фотогалерея</h2>
       </div>
     </div>
   </div>
@@ -261,32 +261,32 @@
   <div class="wrap">
     <div class="sec-head reveal">
       <div>
-        <p class="eyebrow">Відпочинок</p>
-        <h2 class="display">Усе поруч, на території</h2>
+        <p class="eyebrow" data-txt="leisure_eyebrow">Відпочинок</p>
+        <h2 class="display" data-txt="leisure_title">Усе поруч, на території</h2>
       </div>
     </div>
     <div class="lgrid">
       <article class="lcard reveal">
         <div class="lcard__photo ph" data-icon="sauna"><span class="ph__label">Сауна</span><img src="gallery-3.jpg" alt="Сауна" loading="lazy" onerror="this.remove()"></div>
         <div class="lcard__body">
-          <h3>Сауна</h3>
-          <p>Прогрітися й відпочити після дороги. Вільний час і вартість підкажемо.</p>
+          <h3 data-txt="leisure1_h">Сауна</h3>
+          <p data-txt="leisure1_txt">Прогрітися й відпочити після дороги. Вільний час і вартість підкажемо.</p>
           <a class="lcard__link" href="sauna.html">Про сауну</a>
         </div>
       </article>
       <article class="lcard reveal" style="--d:.1s">
         <div class="lcard__photo ph" data-icon="billiard"><span class="ph__label">Більярд</span><img src="gallery-4.jpg" alt="Більярд" loading="lazy" onerror="this.remove()"></div>
         <div class="lcard__body">
-          <h3>Більярд</h3>
-          <p>Партія для компанії ввечері, поки готується вечеря.</p>
+          <h3 data-txt="leisure2_h">Більярд</h3>
+          <p data-txt="leisure2_txt">Партія для компанії ввечері, поки готується вечеря.</p>
           <a class="lcard__link" href="bilyard.html">Про більярд</a>
         </div>
       </article>
       <article class="lcard reveal" style="--d:.2s">
         <div class="lcard__photo ph" data-icon="cup"><span class="ph__label">Кафе</span><img src="menu.jpg" alt="Кафе «Філін»" loading="lazy" onerror="this.remove()"></div>
         <div class="lcard__body">
-          <h3>Кафе</h3>
-          <p>Домашня кухня щодня з 07:00 до 23:00 — сніданки, обіди й вечері.</p>
+          <h3 data-txt="leisure3_h">Кафе</h3>
+          <p data-txt="leisure3_txt">Домашня кухня щодня з 07:00 до 23:00 — сніданки, обіди й вечері.</p>
           <a class="lcard__link" href="kafe.html">Про кафе</a>
         </div>
       </article>
@@ -301,12 +301,12 @@
 <section class="route" id="route">
   <div class="wrap route__grid">
     <div class="route__info reveal">
-      <h2 class="route__h">Наше розташування</h2>
-      <p class="route__text">Кафе «Філін» — на об’їзній дорозі Кобеляк, з боку виїзду в напрямку Дніпра.</p>
+      <h2 class="route__h" data-txt="route_title">Наше розташування</h2>
+      <p class="route__text" data-txt="route_text">Кафе «Філін» — на об’їзній дорозі Кобеляк, з боку виїзду в напрямку Дніпра.</p>
       <dl class="route__list">
-        <div><dt>Адреса</dt><dd>Кобеляки, Полтавська обл., об’їзна дорога</dd></div>
-        <div><dt>Орієнтир</dt><dd>виїзд у бік Дніпра</dd></div>
-        <div><dt>Кафе</dt><dd>щодня 07:00 — 23:00</dd></div>
+        <div><dt>Адреса</dt><dd data-txt="route_address">Кобеляки, Полтавська обл., об’їзна дорога</dd></div>
+        <div><dt>Орієнтир</dt><dd data-txt="route_mark">виїзд у бік Дніпра</dd></div>
+        <div><dt>Кафе</dt><dd data-txt="route_hours">щодня 07:00 — 23:00</dd></div>
       </dl>
       <a class="route__link" href="https://www.google.com/maps/dir/?api=1&amp;destination=49.139976%2C34.2241759" target="_blank" rel="noopener"><svg class="route__g" viewBox="0 0 24 24" aria-hidden="true"><path d="M21.6 12.2c0-.7-.06-1.2-.2-1.8H12v3.3h5.5c-.1.9-.7 2.3-2 3.2l-.02.12 2.9 2.24.2.02c1.85-1.7 2.9-4.2 2.9-7.1"/><path d="M12 22c2.6 0 4.8-.86 6.4-2.34l-3.06-2.37c-.8.57-1.9.97-3.34.97a5.8 5.8 0 0 1-5.5-4l-.11.01-3.02 2.33-.4.1A10 10 0 0 0 12 22"/><path d="M6.5 14.26a6.1 6.1 0 0 1 0-3.9L6.45 10.2 3.4 7.85l-.1.05a10 10 0 0 0 0 9l3.2-2.64"/><path d="M12 6.06c1.8 0 3 .78 3.7 1.43l2.7-2.64A9.6 9.6 0 0 0 12 2a10 10 0 0 0-8.7 5.9l3.2 2.46A5.8 5.8 0 0 1 12 6.06"/></svg><span>Прокласти маршрут</span></a>
     </div>
@@ -322,8 +322,8 @@
 <section class="faq" id="faq">
   <div class="wrap faq__grid">
     <div class="faq__head reveal">
-      <p class="eyebrow">Корисно знати</p>
-      <h2 class="display">Перед приїздом</h2>
+      <p class="eyebrow" data-txt="faq_eyebrow">Корисно знати</p>
+      <h2 class="display" data-txt="faq_title">Перед приїздом</h2>
       <p class="faq__more">Не знайшли відповідь? <a href="https://www.instagram.com/cafe__filin__/" target="_blank" rel="noopener">Напишіть нам в Instagram <svg class="ico ico--ext" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 16 16 8M10 8h6v6"/></svg></a></p>
     </div>
     <div class="faq__list reveal" style="--d:.15s">
@@ -372,12 +372,14 @@
     <div class="foot__cols">
       <div>
         <h3>Адреса</h3>
-        <p>Кобеляки, Полтавська обл.<br>виїзд у бік Дніпра, об’їзна дорога</p>
+        <p data-txt="foot_address">Кобеляки, Полтавська обл.
+виїзд у бік Дніпра, об’їзна дорога</p>
         <p><a href="https://www.google.com/maps/search/?api=1&amp;query=%D0%9A%D0%B0%D1%84%D0%B5+%D0%A4%D1%96%D0%BB%D1%96%D0%BD+%D0%9A%D0%BE%D0%B1%D0%B5%D0%BB%D1%8F%D0%BA%D0%B8" target="_blank" rel="noopener">Відкрити на карті <svg class="ico ico--ext" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 16 16 8M10 8h6v6"/></svg></a></p>
       </div>
       <div>
         <h3>Години</h3>
-        <p>Щодня<br>07:00 — 23:00</p>
+        <p data-txt="foot_hours">Щодня
+07:00 — 23:00</p>
       </div>
       <div>
         <h3>Зв’язок</h3>
@@ -396,7 +398,7 @@
     </div>
 
     <div class="foot__bottom">
-      <p>© 2026 Кафе «Філін» · Кобеляки</p>
+      <p data-txt="foot_copy">© 2026 Кафе «Філін» · Кобеляки</p>
       <button type="button" data-to-top>Нагору <svg class="ico ico--up" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6"/></svg></button>
     </div>
   </div>
@@ -413,7 +415,7 @@
   <button class="lightbox__nav lightbox__nav--next" type="button" data-next aria-label="Наступне фото"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
 </dialog>
 
-<script src="menu-data.js?v=43"></script>
+<script src="menu-data.js?v=44"></script>
 <!-- FILTER PANEL: дати, гості, ліжка — усе за бажанням -->
 <!-- /FILTER PANEL -->
 
@@ -567,9 +569,9 @@
   </div>
 </dialog>
 
-<script src="config.js?v=43"></script>
-<script src="platform.js?v=43"></script>
-<script src="main.js?v=43"></script>
+<script src="config.js?v=44"></script>
+<script src="platform.js?v=44"></script>
+<script src="main.js?v=44"></script>
 
 <!-- Картка закладу для пошуковиків: назва, адреса, телефони, години, координати.
      Дані ті самі, що на сторінці. Змінюються контакти — правити і тут. -->
