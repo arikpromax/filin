@@ -714,6 +714,8 @@ body:has(> .back-btn) .topbar__logo { margin-left: 48px; }
 .bk__side:has(.rcpt.is-done) .bk__done { order: -1; }
 .bk__done-title { font-size: 1.2rem; font-weight: 500; line-height: 1.3; }
 .bk__done-hint { margin: .45rem 0 1.1rem; font-size: .9rem; line-height: 1.55; }
+/* кнопка «Назад до форми» потрібна лише на телефоні, де вікно у дві сторінки */
+.bk__back { display: none; }
 .bk__mbar, .book-dock { display: none; }
 
 @media (max-width: 900px) {
@@ -730,6 +732,15 @@ body:has(> .back-btn) .topbar__logo { margin-left: 48px; }
     padding: 10px 16px calc(10px + env(safe-area-inset-bottom)); background: #fff; border-top: 1px solid var(--text);
     transition: transform .35s var(--ease);
   }
+  /* друга сторінка вікна: форма ховається, лишається чек, оплата й кнопка */
+  .bk.is-rcpt .bk__form { display: none; }
+  .bk.is-rcpt .bk__mbar { display: none; }
+  .bk__back {
+    align-self: start; display: none; align-items: center; gap: .5rem;
+    padding: .2rem 0; font-size: .9rem; color: var(--text); background: none; border: 0; cursor: pointer;
+  }
+  .bk__back .ico { width: 18px; height: 18px; }
+  .bk.is-rcpt .bk__back { display: inline-flex; }
   .bk__mbar.is-away { transform: translateY(110%); }
   .bk__mbar b { display: block; font-size: .95rem; font-weight: 600; line-height: 1.3; }
   .bk__mbar small { display: block; font-size: .8rem; }

@@ -1066,6 +1066,7 @@
         capNote = false;
         setRoom();
         busyLoaded = {};   // бронь могли скасувати — перепитуємо
+        toRcpt(false);     // нове вікно завжди відкривається з форми
         openDialog(bk);
         // одразу показуємо календар (після цього кліку — інакше він закриє календар як «клік поза ним»)
         if (!S.in || !S.out) setTimeout(function () { $('[data-bw]', bkForm).openDates(); }, 0);
@@ -1077,9 +1078,33 @@
     if ('IntersectionObserver' in window) {
       new IntersectionObserver(function (en) { mbar.classList.toggle('is-away', en[0].isIntersecting); }, { root: bk, threshold: .2 }).observe(rcpt);
     }
+    /* На телефоні вікно — це дві сторінки: спершу заповнення, потім чек.
+       «Далі» ховає форму й показує чек із оплатою та кнопкою надсилання,
+       «Назад до форми» повертає. На комп'ютері чек і так стоїть поруч,
+       тому там кнопка просто гортає до нього. */
+    var narrow = window.matchMedia('(max-width: 900px)');
+    var paySec = $('[data-pay-sec]', bk);
+    var sideBox = $('.bk__side', bk);
+    var goBox = $('.bk__go', bk);
+    var toRcpt = function (on) {
+      bk.classList.toggle('is-rcpt', !!on);
+      // блок оплати живе у формі, а на другій сторінці має бути біля чека
+      if (paySec && sideBox && goBox) {
+        if (on) sideBox.insertBefore(paySec, goBox);
+        else if (paySec.parentNode !== bkForm) bkForm.appendChild(paySec);
+      }
+      bk.scrollTop = 0;
+    };
     $$('[data-to-rcpt]', bk).forEach(function (b) {
-      b.addEventListener('click', function () { bkScrollTo(rcpt); });
+      b.addEventListener('click', function () {
+        if (narrow.matches) toRcpt(true); else bkScrollTo(rcpt);
+      });
     });
+    $$('[data-to-form]', bk).forEach(function (b) {
+      b.addEventListener('click', function () { toRcpt(false); });
+    });
+    // вікно розтягнули до великого екрана — двох сторінок більше не треба
+    narrow.addEventListener('change', function () { if (!narrow.matches) toRcpt(false); });
 
     bkForm.addEventListener('submit', function (e) {
       e.preventDefault();
@@ -1091,6 +1116,7 @@
         msg += (msg ? ' ' : '') + 'У номері «' + r.name + '» до ' + r.cap + ' ' + plural(r.cap, 'гостя', 'гостей', 'гостей') + ' — додайте ще номер або оберіть інший.';
       }
       if (msg) {
+        toRcpt(false);   // поля — на першій сторінці, туди й повертаємось
         bkErr.textContent = msg; bkErr.hidden = false;
         // показуємо, що саме заповнити
         if (m[0] === 'дати') { var sec = $('[data-sec="dates"]', bkForm); $('[data-bw]', sec).openDates(); bkScrollTo(sec); }
