@@ -733,6 +733,8 @@ body:has(> .back-btn) .topbar__logo { margin-left: 48px; }
     transition: transform .35s var(--ease);
   }
   /* друга сторінка вікна: форма ховається, лишається чек, оплата й кнопка */
+  /* чек живе на другій сторінці — на першій його не видно навіть прокруткою */
+  .bk:not(.is-rcpt) .bk__side { display: none; }
   .bk.is-rcpt .bk__form { display: none; }
   .bk.is-rcpt .bk__mbar { display: none; }
   .bk__back {
@@ -1701,4 +1703,6 @@ main {
 @media (prefers-reduced-motion: reduce) { .pop__foot .is-wait { animation: none; } }
 
 /* кнопка «Далі»: веде до чека, бо на телефоні він нижче за форму */
-.bk__next { margin: .2rem 0 1.8rem; }
+/* На компʼютері чек стоїть поруч із формою, тож вести до нього нікуди */
+.bk__next { display: none; margin: .2rem 0 1.8rem; }
+@media (max-width: 900px) { .bk__next { display: block; } }
