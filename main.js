@@ -107,7 +107,7 @@
   };
   var paySec = $('[data-pay-sec]');
   if (paySec && PAY.prepay) {
-    paySec.innerHTML = '<h3 class="bk__h"><i>5</i>Оплата</h3><div class="pay">' + payHTML('') + '</div>';
+    paySec.innerHTML = '<h3 class="bk__h">Оплата</h3><div class="pay">' + payHTML('') + '</div>';
     paySec.hidden = false;
   }
   document.addEventListener('click', function (e) {
@@ -1030,7 +1030,9 @@
     if ('IntersectionObserver' in window) {
       new IntersectionObserver(function (en) { mbar.classList.toggle('is-away', en[0].isIntersecting); }, { root: bk, threshold: .2 }).observe(rcpt);
     }
-    $('[data-to-rcpt]', bk).addEventListener('click', function () { bkScrollTo(rcpt); });
+    $$('[data-to-rcpt]', bk).forEach(function (b) {
+      b.addEventListener('click', function () { bkScrollTo(rcpt); });
+    });
 
     bkForm.addEventListener('submit', function (e) {
       e.preventDefault();

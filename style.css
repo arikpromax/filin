@@ -1673,7 +1673,7 @@ main {
 .bw__pick[aria-expanded="true"] { border-color: var(--text); box-shadow: 0 0 0 1px var(--text); }
 .bw__pick.is-empty span { opacity: .38; }
 /* календар один на обидві дати — лежить під полями, на всю ширину */
-.bw--form .pop { border: 1px solid var(--line); border-radius: 4px; margin: 0 0 1.2rem; }
+.bw--form .pop { grid-column: 1 / -1; border: 1px solid var(--line); border-radius: 4px; margin: 0 0 1.3rem; }
 
 /* ── Підказка в календарі: коли заїзд обрано, а виїзд ще ні ── */
 .pop__foot [data-text="hint"] { transition: color .25s; }
@@ -1688,3 +1688,6 @@ main {
   50%      { opacity: .45; }
 }
 @media (prefers-reduced-motion: reduce) { .pop__foot .is-wait { animation: none; } }
+
+/* кнопка «Далі»: веде до чека, бо на телефоні він нижче за форму */
+.bk__next { margin: .2rem 0 1.8rem; }

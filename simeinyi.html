@@ -19,8 +19,8 @@
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display+SC:wght@400;700&display=swap">
-  <link rel="stylesheet" href="fonts.css?v=35">
-  <link rel="stylesheet" href="style.css?v=35">
+  <link rel="stylesheet" href="fonts.css?v=36">
+  <link rel="stylesheet" href="style.css?v=36">
   <script>document.documentElement.classList.add('js');</script>
 </head>
 <body>
@@ -285,6 +285,13 @@
               <span>Заїзд — виїзд <i>*</i></span>
               <button class="bw__pick is-empty" type="button" data-pop="cal" aria-expanded="false"><span data-text="dates">Оберіть дати</span></button>
             </div>
+
+            <!-- календар одразу під полем дат, а не під гостями -->
+            <div class="pop pop--cal" data-panel="cal" hidden>
+              <div class="pop__head"><b>Дати проживання</b><button type="button" data-pop-close aria-label="Закрити">×</button></div>
+              <div class="cal" data-cal></div>
+              <div class="pop__foot"><span data-text="hint">Оберіть дату заїзду</span><button type="button" class="pop__link" data-cal-clear>Очистити</button></div>
+            </div>
             <label class="field">
               <span>Кількість дорослих <i>*</i></span>
               <select data-gsel="adults"></select>
@@ -295,12 +302,6 @@
             </label>
           </div>
 
-          <!-- календар один на обидві дати: спочатку заїзд, потім виїзд -->
-          <div class="pop pop--cal" data-panel="cal" hidden>
-            <div class="pop__head"><b>Дати проживання</b><button type="button" data-pop-close aria-label="Закрити">×</button></div>
-            <div class="cal" data-cal></div>
-            <div class="pop__foot"><span data-text="hint">Оберіть дату заїзду</span><button type="button" class="pop__link" data-cal-clear>Очистити</button></div>
-          </div>
 
         </div>
         <!-- гостей більше, ніж вміщує номер: більший номер або дзвінок -->
@@ -338,6 +339,9 @@
         <h3 class="bk__h"><i>4</i>Побажання</h3>
         <label class="field"><span>Що врахувати</span><textarea name="note" rows="2" placeholder="Наприклад: потрібне дитяче ліжечко"></textarea></label>
       </section>
+
+      <!-- на телефоні чек лежить нижче за форму — кнопка веде просто до нього -->
+      <p class="bk__next"><button type="button" class="btn btn--block" data-to-rcpt><span>Далі</span></button></p>
 
       <!-- Передоплата: блок з’являється, лише якщо в config.js заповнено payment -->
       <section class="bk__sec" data-pay-sec hidden></section>
@@ -385,8 +389,8 @@
   <button class="btn" type="button" data-book="simeinyi"><span>Забронювати</span></button>
 </div>
 
-<script src="menu-data.js?v=35"></script>
-<script src="config.js?v=35"></script>
-<script src="main.js?v=35"></script>
+<script src="menu-data.js?v=36"></script>
+<script src="config.js?v=36"></script>
+<script src="main.js?v=36"></script>
 </body>
 </html>
