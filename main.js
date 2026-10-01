@@ -14,20 +14,25 @@
     return r ? r.value : '';
   };
   var loadBusy = function (id) {
+    if (!id || busyLoaded[id]) return;
     var api = (CFG.booking && CFG.booking.api) || '';
-    if (!api || !id || busyLoaded[id]) return;
+    // підключена адмінка відповідає сама; інакше лишається адреса з config.js
+    var ask = window.FILIN_DB
+      ? window.FILIN_DB.busy(id)
+      : (api
+          ? fetch(api + (api.indexOf('?') < 0 ? '?' : '&') + 'room=' + encodeURIComponent(id))
+              .then(function (r) { return r.ok ? r.json() : null; })
+              .then(function (j) { return (j && (j.dates || j)) || []; })
+          : null);
+    if (!ask) return;
     busyLoaded[id] = true;
-    fetch(api + (api.indexOf('?') < 0 ? '?' : '&') + 'room=' + encodeURIComponent(id))
-      .then(function (r) { return r.ok ? r.json() : null; })
-      .then(function (j) {
-        var list = j && (j.dates || j);   // { dates: [...] } або просто [...]
-        if (!list || !list.length) return;
-        var map = {};
-        list.forEach(function (d) { map[String(d).slice(0, 10)] = true; });
-        BUSY[id] = map;
-        redrawCal();
-      })
-      .catch(function () { busyLoaded[id] = false; });
+    ask.then(function (list) {
+      if (!list || !list.length) return;
+      var map = {};
+      list.forEach(function (d) { map[String(d).slice(0, 10)] = true; });
+      BUSY[id] = map;
+      redrawCal();
+    }).catch(function () { busyLoaded[id] = false; });
   };
   var $  = function (s, r) { return (r || document).querySelector(s); };
   var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
@@ -806,6 +811,7 @@
       });
     };
     listeners.push(upRoom);
+    window.FILIN_PRICES = upRoom;   // platform.js кличе, коли ціни приїхали з адмінки
     upRoom();
   }
 
@@ -1073,7 +1079,32 @@
 
       var btn = $('button[type="submit"]', go), label = $('span', btn);
       btn.disabled = true; label.textContent = 'Надсилаємо…';
-      sendBooking(data).then(function () {
+
+      /* Підключена адмінка приймає бронь сама: записує в базу, ще раз
+         перевіряє, чи номер вільний (поки гість заповнював форму, його
+         могли забрати), і одразу штовхає Telegram-бота. Бази немає —
+         лишається старий шлях із config.js. */
+      var deliver = window.FILIN_DB
+        ? window.FILIN_DB.place({
+            room: r.id, from: S.in, to: S.out,
+            adults: S.adults, children: S.children, rooms: S.rooms,
+            guest: { name: val('name'), phone: val('phone'), via: viaVal(), note: val('note') },
+            extras: on('sauna')
+              ? { sauna: { day: val('saunaDay'), time: val('saunaTime'), hours: X.saunaHours } }
+              : {},
+            total: R.sum || 0
+          }).then(function (res) {
+            if (!res || res.ok !== true) throw (res && res.why) || 'db';
+            // номер броні дає база — він же в боті й в адмінці
+            bkNo = res.ref;
+            data.number = res.ref;
+            var noEl = $('[data-r-no]', bk);
+            if (noEl) noEl.textContent = '№ ' + res.ref;
+            busyLoaded[r.id] = false;   // дата щойно зайнялась — перепитаємо
+          })
+        : sendBooking(data);
+
+      deliver.then(function () {
         lock(true);
         var payDone = $('[data-pay-done]', bk);
         if (payDone && PAY.prepay) { payDone.innerHTML = payHTML(bkNo); payDone.hidden = false; }
@@ -1082,9 +1113,17 @@
         if (getComputedStyle(side).position === 'sticky') side.scrollTop = 0;
         else bkScrollTo(bkDone);
       }, function (why) {
-        bkErr.textContent = why === 'not-configured'
-          ? 'Надсилання заявок ще не підключене — заявка нікуди не пішла.'
-          : 'Не вдалося надіслати заявку. Перевірте інтернет і спробуйте ще раз.';
+        if (why === 'busy') {
+          bkErr.textContent = 'На ці дати номер «' + r.name + '» уже зайнятий — оберіть інші дати або інший номер.';
+          busyLoaded[r.id] = false;
+          loadBusy(r.id);
+        } else if (why === 'dates') {
+          bkErr.textContent = 'Перевірте дати: виїзд має бути пізніше за заїзд.';
+        } else {
+          bkErr.textContent = why === 'not-configured'
+            ? 'Надсилання заявок ще не підключене — заявка нікуди не пішла.'
+            : 'Не вдалося надіслати заявку. Перевірте інтернет і спробуйте ще раз.';
+        }
         bkErr.hidden = false;
       }).then(function () { btn.disabled = false; label.textContent = 'Надіслати заявку'; });
     });
