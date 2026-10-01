@@ -93,6 +93,7 @@
       if (!key) return;
       CFG.prices[key] = num(r.price);
     });
+    if (!live) { paintGrid(rooms || []); paintBkRooms(rooms || []); }
     paintRooms(rooms || [], live);
 
     /* прості тексти */
@@ -141,6 +142,65 @@
     var list = Array.isArray(x.photos) ? x.photos.filter(Boolean) : [];
     if (!list.length && r.image_url) list = [r.image_url];
     return list;
+  };
+
+  /* Список номерів на головній. Додали номер в адмінці — зʼявиться
+     картка, прибрали — зникне. Малюємо до запуску main.js: саме він
+     рахує ціни й відкриває вікно бронювання з цих карток.
+     Номер без своєї сторінки просто не має посилання — забронювати
+     його все одно можна. */
+  var paintGrid = function (rooms) {
+    var grid = document.querySelector("[data-rooms]");
+    if (!grid || !rooms.length) return;
+    var info = grid.querySelector(".rinfo");
+    Array.prototype.forEach.call(grid.querySelectorAll(".rc"), function (el) { el.remove(); });
+
+    var html = rooms.map(function (r) {
+      var x = r.extra || {};
+      var key = esc(x.key || "");
+      var name = esc(r.title || "");
+      var pic = picsOf(r)[0] || "";
+      var page = String(x.page || "").trim();
+      var photo = page
+        ? '<a class="rc__photo ph" data-icon="bed" href="' + esc(page) +
+          '" aria-label="Відкрити номер «' + name + '»">'
+        : '<div class="rc__photo ph" data-icon="bed">';
+      var photoEnd = page ? "</a>" : "</div>";
+      var title = page
+        ? '<h3 class="rc__name"><a href="' + esc(page) + '">' + name + "</a></h3>"
+        : '<h3 class="rc__name">' + name + "</h3>";
+      return '<article class="rc" id="' + key + '" data-room-id="' + key +
+        '" data-cap="' + esc(x.cap || 2) + '"' + (page ? ' data-href="' + esc(page) + '"' : "") + ">" +
+        photo +
+          '<span class="ph__label">Фото</span>' +
+          (pic ? '<img src="' + esc(pic) + '" alt="Номер «' + name +
+            '»" loading="lazy" onerror="this.remove()">' : "") +
+          '<span class="rc__hover"><b>' + name + "</b><span>Детальніше про номер</span></span>" +
+        photoEnd +
+        '<div class="rc__body">' +
+          '<p class="rc__kind">Номер у мотелі</p>' + title +
+          '<p class="rc__meta">' + esc(x.meta || "") + "</p>" +
+          '<div class="rc__foot"><p class="rc__price" data-price></p>' +
+          '<button class="btn" type="button" data-book="' + key +
+          '"><span>Забронювати</span></button></div>' +
+        "</div></article>";
+    }).join("");
+
+    if (info) info.insertAdjacentHTML("beforebegin", html);
+    else grid.insertAdjacentHTML("beforeend", html);
+  };
+
+  /* Той самий список у вікні бронювання — щоб у чеку стояла та сама назва. */
+  var paintBkRooms = function (rooms) {
+    var box = document.querySelector(".bk-rooms");
+    if (!box || !rooms.length) return;
+    box.innerHTML = rooms.map(function (r) {
+      var x = r.extra || {};
+      var pic = picsOf(r)[0] || "";
+      return '<input type="radio" name="room" value="' + esc(x.key || "") +
+        '" data-name="' + esc(r.title || "") + '" data-cap="' + esc(x.cap || 2) +
+        '" data-meta="' + esc(x.meta || "") + '" data-img="' + esc(pic) + '">';
+    }).join("");
   };
 
   /* Назви, підписи й фото номерів. Картки на головній знаходимо за
@@ -217,14 +277,24 @@
 
   /* Фото першого екрана. Завантажені в адмінці замінюють ті, що лежать
      поруч із сайтом; немає жодного — лишаються файли hero-1 і hero-2. */
+  var heroTimer = 0;
   var paintHero = function (pics) {
     var box = document.querySelector(".hero__media");
     if (!box || !pics.length) return;
-    var imgs = box.querySelectorAll("img");
-    for (var i = 0; i < imgs.length; i++) {
-      if (pics[i]) imgs[i].src = pics[i];
-      else imgs[i].remove();
-    }
+    /* Фото може бути скільки завгодно, тож зміну веде скрипт, а не
+       покадрова анімація у стилях: вона вміє рівно два знімки. */
+    box.innerHTML = pics.map(function (u, i) {
+      return '<img class="hero__pic' + (i ? "" : " is-on") + '" src="' + esc(u) + '" alt="">';
+    }).join("");
+    if (pics.length < 2) return;
+    var imgs = box.querySelectorAll(".hero__pic");
+    var at = 0;
+    clearInterval(heroTimer);
+    heroTimer = setInterval(function () {
+      imgs[at].classList.remove("is-on");
+      at = (at + 1) % imgs.length;
+      imgs[at].classList.add("is-on");
+    }, 6000);
   };
   var paint = function (T) {
     var each = function (sel, fn) {

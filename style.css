@@ -1706,3 +1706,16 @@ main {
 /* На компʼютері чек стоїть поруч із формою, тож вести до нього нікуди */
 .bk__next { display: none; margin: .2rem 0 1.8rem; }
 @media (max-width: 900px) { .bk__next { display: block; } }
+
+/* ── Фото першого екрана з адмінки: їх може бути скільки завгодно,
+   тож зміну веде скрипт, а не покадрова анімація (вона вміє рівно два) ── */
+.hero__media .hero__pic {
+  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+  opacity: 0; animation: none;
+  transform: scale(1.08); transform-origin: 50% 50%;
+  transition: opacity 1.2s linear, transform 12s ease-out;
+}
+.hero__media .hero__pic.is-on { opacity: 1; transform: scale(1); }
+@media (prefers-reduced-motion: reduce) {
+  .hero__media .hero__pic { transition: opacity .4s linear; transform: none; }
+}
