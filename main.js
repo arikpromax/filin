@@ -67,16 +67,32 @@
     box.hidden = true;
   };
 
-  /* ── Зручності: розділами, як у booking. Список — у config.js ── */
+  /* ── Зручності: розділами, як у booking. Без адмінки — із config.js,
+       з адмінкою — ті, що відмічені галочками саме в цьому номері ── */
   var facBox = $('[data-facilities]');
-  if (facBox) {
-    var fgroups = (CFG.facilities || []).filter(function (g) { return g && g.items && g.items.length; });
-    if (!fgroups.length) hideWithHead(facBox);
-    else facBox.innerHTML = fgroups.map(function (g) {
+  var paintFacilities = function (groups) {
+    if (!facBox) return;
+    var fgroups = (groups || []).filter(function (g) { return g && g.items && g.items.length; });
+    var head = facBox.previousElementSibling;
+    if (!fgroups.length) { hideWithHead(facBox); return; }
+    facBox.hidden = false;
+    if (head && /^H[23]$/.test(head.tagName)) head.hidden = false;
+    facBox.innerHTML = fgroups.map(function (g) {
       return '<div class="fgroup"><h3>' + fsvg(g.icon) + hesc(g.title) + '</h3><ul>' +
         g.items.map(function (i) { return '<li>' + hesc(i) + '</li>'; }).join('') + '</ul></div>';
     }).join('');
-  }
+  };
+  window.FILIN_FACILITIES = paintFacilities;
+  paintFacilities(CFG.facilities);
+
+  /* ── Плитки вгорі сторінки номера: гості, ліжко й найголовніше ── */
+  var paintChips = function (chips) {
+    var box = $('.rchips');
+    if (!box || !chips || !chips.length) return;
+    box.innerHTML = chips.map(function (c) { return '<li>' + fsvg(c.icon) + hesc(c.text) + '</li>'; }).join('');
+  };
+  window.FILIN_CHIPS = paintChips;
+  if (CFG.roomChips) paintChips(CFG.roomChips);
 
   /* ── Правила проживання: години заїзду й виїзду плюс рядки з config.js ── */
   var rulesBox = $('[data-rules]');

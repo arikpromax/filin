@@ -203,6 +203,33 @@
     }).join("");
   };
 
+  /* Зручності номера: власник веде один список (колекція amenities),
+     а в кожному номері ставить галочки — назви зберігаються рядками. */
+  var GROUPS = ['Ванна кімната', 'Спальня', 'Інтернет', 'Медіа', 'Кухня', 'Інше'];
+  var GROUP_ICON = { 'Ванна кімната': 'bath', 'Спальня': 'bed', 'Інтернет': 'wifi', 'Медіа': 'tv', 'Кухня': 'cup', 'Інше': 'dot' };
+  var AMEN = [];   // увесь список зручностей сайту
+  var roomAmenities = function (r) {
+    var x = r.extra || {};
+    var chosen = String(x.amenities || '').split(/[\n,;]+/).map(function (t) { return t.trim().toLowerCase(); }).filter(Boolean);
+    var picked = AMEN.filter(function (a) { return chosen.indexOf(String(a.title).trim().toLowerCase()) > -1; });
+    var groups = GROUPS.map(function (g) {
+      return {
+        title: g, icon: GROUP_ICON[g],
+        items: picked.filter(function (a) { return ((a.extra || {}).group || 'Інше') === g; })
+          .map(function (a) { return a.title; })
+      };
+    });
+    var cap = Number(x.cap) || 0;
+    var chips = [];
+    if (cap) chips.push({ icon: 'guests', text: cap === 1 ? '1 гість' : 'До ' + cap + ' гостей' });
+    if (x.beds) chips.push({ icon: 'bed', text: String(x.beds).charAt(0).toUpperCase() + String(x.beds).slice(1) });
+    picked.forEach(function (a) {
+      var ax = a.extra || {};
+      if (ax.top === true || ax.top === 'true') chips.push({ icon: GROUP_ICON[ax.group] || 'dot', text: a.title });
+    });
+    return { groups: groups, chips: chips, beds: x.beds || '', has: !!AMEN.length };
+  };
+
   /* Назви, підписи й фото номерів. Картки на головній знаходимо за
      data-room-id, сторінку номера — за кнопкою «Забронювати» на ній,
      а ще оновлюємо список у вікні бронювання, щоб чек показував те саме. */
@@ -246,6 +273,18 @@
         if (lab && r.title) lab.textContent = "Номер «" + r.title + "»";
         if (r.title) document.title = r.title + " — мотель «Філін»";
         if (!live) paintSlider(pics, r.title || "");
+        var am = roomAmenities(r);
+        if (am.beds) {
+          var bedsEl = document.querySelector(".rbeds");
+          if (bedsEl) bedsEl.innerHTML = "<b>Ліжка:</b> " + esc(am.beds);
+        }
+        if (am.has) {
+          // main.js ще не запущений — він сам намалює з CFG; уже запущений — малюємо одразу
+          CFG.facilities = am.groups;
+          CFG.roomChips = am.chips;
+          if (typeof window.FILIN_FACILITIES === "function") window.FILIN_FACILITIES(am.groups);
+          if (typeof window.FILIN_CHIPS === "function") window.FILIN_CHIPS(am.chips);
+        }
       }
     });
   };
@@ -395,6 +434,7 @@
      гостю кошик і відкрите фото. */
   var applyAll = function (items, texts, live) {
     var by = byCol(items);
+    AMEN = by.amenities || [];
     apply(by.rooms || [], texts, live);
     paintHero(picsOf((by.site_photos || [])[0] || {}));
     paintFaq(by.faq || []);
