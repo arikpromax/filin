@@ -94,20 +94,26 @@
   window.FILIN_CHIPS = paintChips;
   if (CFG.roomChips) paintChips(CFG.roomChips);
 
-  /* ── Правила проживання: години заїзду й виїзду плюс рядки з config.js ── */
+  /* ── Правила проживання: години заїзду й виїзду плюс рядки правил.
+       Без адмінки — із config.js, з адмінкою — зі списку «Правила проживання» ── */
   var rulesBox = $('[data-rules]');
-  if (rulesBox) {
+  var paintRules = function () {
+    if (!rulesBox) return;
     var RL = CFG.rules || {}, rrows = [];
     if (RL.checkIn) rrows.push({ icon: 'clock', title: 'Заїзд', text: 'з ' + RL.checkIn });
     if (RL.checkOut) rrows.push({ icon: 'clock', title: 'Виїзд', text: 'до ' + RL.checkOut });
     (RL.items || []).forEach(function (i) { if (i && i.text) rrows.push(i); });
+    var rbox = rulesBox.closest('details');
     // порожньо — ховаємо всю коробку разом із заголовком-кнопкою
-    if (!rrows.length) { var rbox = rulesBox.closest('details'); if (rbox) rbox.hidden = true; else hideWithHead(rulesBox); }
-    else rulesBox.innerHTML = rrows.map(function (r) {
+    if (!rrows.length) { if (rbox) rbox.hidden = true; else hideWithHead(rulesBox); return; }
+    if (rbox) rbox.hidden = false;
+    rulesBox.innerHTML = rrows.map(function (r) {
       return '<div class="rule">' + fsvg(r.icon) +
         '<div><b>' + hesc(r.title || '') + '</b><span>' + hesc(r.text) + '</span></div></div>';
     }).join('');
-  }
+  };
+  window.FILIN_RULES = paintRules;
+  paintRules();
 
   /* ── Передоплата за номер. Немає prepay — про неї не пишемо взагалі ── */
   var PAY = CFG.payment || {};

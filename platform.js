@@ -487,6 +487,15 @@
     paintPhotos(by.site_photos || []);
     if (!live) paintOthers(by.rooms || []);
     paintFaq(by.faq || []);
+
+    // правила проживання зі списку в адмінці (години заїзду-виїзду — окремими полями)
+    if ((by.rules || []).length) {
+      CFG.rules = CFG.rules || {};
+      CFG.rules.items = by.rules.map(function (r) {
+        return { icon: (r.extra || {}).icon || 'dot', title: r.title, text: r.text };
+      });
+    }
+    if (typeof window.FILIN_RULES === 'function') window.FILIN_RULES();
     if (!live) {
       paintGallery(by.gallery || []);
       applyMenu(by.mcats || [], by.menu || []);
