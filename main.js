@@ -566,7 +566,9 @@
       var hintEl = $('[data-text="hint"]', bw);
       if (hintEl) {
         hintEl.textContent = !S.in ? 'Оберіть дату заїзду'
-          : !S.out ? 'Тепер оберіть дату виїзду' : nightsText(nights(S.in, S.out));
+          : !S.out
+            ? (checkoutLimit() ? 'Тепер оберіть дату виїзду — не пізніше ' + fmtShort(checkoutLimit()) : 'Тепер оберіть дату виїзду')
+            : nightsText(nights(S.in, S.out));
         // заїзд є, виїзду ще немає — підказку підсвічуємо, щоб гість не загубився
         hintEl.classList.toggle('is-wait', !!(S.in && !S.out));
       }
@@ -604,6 +606,14 @@
       }
     };
 
+    /* Найпізніший можливий виїзд: ранок першої зайнятої ночі після заїзду.
+       Далі вибрати не можна — інакше проміжок перескочив би через чужу
+       бронь, і гість дізнався б про це лише після надсилання. */
+    var checkoutLimit = function () {
+      if (!S.in || S.out) return '';
+      return Object.keys(busyFor(curRoomId())).filter(function (k) { return k > S.in; }).sort()[0] || '';
+    };
+
     var renderCal = function () {
       var html = '<div class="cal__nav">' +
         '<button type="button" data-cal-nav="-1" aria-label="Попередній місяць"' +
@@ -621,12 +631,22 @@
           var iso = toISO(new Date(first.getFullYear(), first.getMonth(), d));
           var cls = 'cal__day';
           var busy = busyFor(curRoomId())[iso];
+          var limit = checkoutLimit();
+          var outOk = limit && iso === limit;      // зайнято на ніч, але виїхати цього ранку можна
+          var cut = limit && iso > limit;          // між заїздом і цим днем — чужа бронь
           if (busy) cls += ' is-busy';
+          if (outOk) cls += ' is-outok';
+          if (cut) cls += ' is-cut';
           if (iso === todayISO) cls += ' is-today';
           if (iso === S.in) cls += ' is-start';
           if (iso === S.out) cls += ' is-end';
           if (S.in && S.out && iso > S.in && iso < S.out) cls += ' is-range';
-          html += '<button type="button" class="' + cls + '" data-day="' + iso + '"' + (iso < todayISO || busy ? ' disabled' : '') + (busy ? ' title="Уже заброньовано"' : '') + '>' + d + '</button>';
+          var dis = iso < todayISO || (busy && !outOk) || cut;
+          var tip = outOk ? 'Цього дня можна виїхати — далі номер уже зайнятий'
+            : busy ? 'Уже заброньовано'
+            : cut ? 'Номер зайнятий раніше — виїзд не пізніше ' + fmtShort(limit) : '';
+          html += '<button type="button" class="' + cls + '" data-day="' + iso + '"' + (dis ? ' disabled' : '') +
+            (tip ? ' title="' + tip + '"' : '') + '>' + d + '</button>';
         }
         html += '</div></div>';
       }

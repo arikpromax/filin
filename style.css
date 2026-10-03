@@ -1523,6 +1523,10 @@ main {
 
 /* зайнятий день: перекреслений і недоступний */
 .cal__day.is-busy { opacity: .4; text-decoration: line-through; cursor: not-allowed; }
+/* виїхати можна й того ранку, коли заїжджає наступний гість */
+.cal__day.is-busy.is-outok { opacity: 1; text-decoration: none; cursor: pointer; }
+/* далі першої зайнятої ночі виїзд не вибрати — проміжок перескочив би чужу бронь */
+.cal__day.is-cut { text-decoration: none; }
 
 /* ── Фотогалерея на всю ширину екрана, як на osonnya ── */
 .wrap--gal { max-width: none; padding-inline: clamp(16px, 1.3vw, 24px); }
