@@ -365,6 +365,53 @@
     });
   };
 
+  /* Фото за місцями: кожне місце на сайті підписане data-photo="slot",
+     а в адмінці це рядок колекції site_photos із тим самим slot.
+     Фото ще немає (файл поруч із сайтом сам прибрав себе) — створюємо. */
+  var paintPhotos = function (rows) {
+    var bySlot = {};
+    rows.forEach(function (r) {
+      var slot = (r.extra || {}).slot;
+      var pic = picsOf(r)[0];
+      if (slot && pic) bySlot[slot] = pic;
+    });
+    Array.prototype.forEach.call(document.querySelectorAll("[data-photo]"), function (box) {
+      var url = bySlot[box.getAttribute("data-photo")];
+      if (!url) return;
+      var img = box.querySelector("img");
+      if (!img) {
+        img = document.createElement("img");
+        img.alt = "";
+        img.loading = "lazy";
+        box.insertBefore(img, box.firstChild);
+      }
+      img.removeAttribute("onerror");
+      img.src = url;
+    });
+  };
+  var heroOf = function (rows) {
+    var hero = rows.filter(function (r) { return (r.extra || {}).slot === "hero"; })[0];
+    return hero ? picsOf(hero) : [];
+  };
+
+  /* «Інші номери» внизу сторінки номера: решта номерів із бази */
+  var paintOthers = function (rooms) {
+    var track = document.querySelector(".more [data-car-track]");
+    var btn = document.querySelector(".room-book [data-book]");
+    if (!track || !btn || !rooms.length) return;
+    var here = btn.getAttribute("data-book");
+    track.innerHTML = rooms.filter(function (r) { return (r.extra || {}).key !== here; }).map(function (r) {
+      var x = r.extra || {};
+      var pic = picsOf(r)[0] || "";
+      var href = x.page ? esc(x.page) : "index.html#" + esc(x.key || "");
+      return '<a class="ocard" href="' + href + '">' +
+        '<span class="ocard__photo ph" data-icon="bed"><span class="ph__label">Фото</span>' +
+        (pic ? '<img src="' + esc(pic) + '" alt="Номер «' + esc(r.title) + '»" loading="lazy">' : "") + "</span>" +
+        '<span class="ocard__name">' + esc(r.title) + "</span>" +
+        '<span class="ocard__meta">' + esc(x.meta || "") + "</span></a>";
+    }).join("");
+  };
+
   /* Рядки бази розкладаємо по колекціях: один запит на весь вміст. */
   var byCol = function (rows) {
     var m = {};
@@ -436,7 +483,9 @@
     var by = byCol(items);
     AMEN = by.amenities || [];
     apply(by.rooms || [], texts, live);
-    paintHero(picsOf((by.site_photos || [])[0] || {}));
+    paintHero(heroOf(by.site_photos || []));
+    paintPhotos(by.site_photos || []);
+    if (!live) paintOthers(by.rooms || []);
     paintFaq(by.faq || []);
     if (!live) {
       paintGallery(by.gallery || []);

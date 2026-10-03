@@ -1303,7 +1303,7 @@
   var cardHTML = function (d, withQty) {
     return '<article class="dcard" data-dish="' + d.id + '">' +
       '<button type="button" class="dcard__photo ph" data-icon="dish" data-open-dish="' + d.id + '" aria-label="' + esc(d.name) + ': фото й опис">' +
-        iconSVG('dish') + '<span class="ph__label">Фото страви</span><img src="dish-' + d.id + '.jpg" alt="' + esc(d.name) + '" loading="lazy"></button>' +
+        iconSVG('dish') + '<span class="ph__label">Фото страви</span><img src="' + esc(d.img || 'dish-' + d.id + '.jpg') + '" alt="' + esc(d.name) + '" loading="lazy"></button>' +
       '<div class="dcard__body">' +
         '<h3 class="dcard__name"><button type="button" data-open-dish="' + d.id + '">' + esc(d.name) + '</button></h3>' +
         (d.desc ? '<p class="dcard__desc">' + esc(d.desc) + '</p>' : '') +
@@ -1389,7 +1389,7 @@
       currentDish = id;
       var ph = $('.dish-dlg__photo', dishDlg);
       var old = $('img', ph); if (old) old.remove();
-      var img = new Image(); img.alt = d.name; img.src = 'dish-' + id + '.jpg'; dropBroken(img); ph.appendChild(img);
+      var img = new Image(); img.alt = d.name; img.src = (DISH[id] && DISH[id].img) || 'dish-' + id + '.jpg'; dropBroken(img); ph.appendChild(img);
       $('[data-dish-cat]', dishDlg).textContent = d.cat;
       $('[data-dish-name]', dishDlg).textContent = d.name;
       $('[data-dish-desc]', dishDlg).textContent = d.desc || '';

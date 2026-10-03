@@ -19,8 +19,8 @@
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display+SC:wght@400;700&display=swap">
-  <link rel="stylesheet" href="fonts.css?v=52">
-  <link rel="stylesheet" href="style.css?v=52">
+  <link rel="stylesheet" href="fonts.css?v=53">
+  <link rel="stylesheet" href="style.css?v=53">
   <script>document.documentElement.classList.add('js');</script>
 </head>
 <body>
@@ -61,7 +61,7 @@
 
 <!-- Шапка сторінки: фото, а на ньому назва — проявляється плавно -->
 <header class="phero">
-  <div class="phero__media">
+  <div class="phero__media" data-photo="bilyard">
     <img src="bilyard.jpg" alt="Більярд у кафе «Філін»" onerror="this.remove()">
     <div class="phero__in">
       <p class="phero__eyebrow">Відпочинок на території</p>
@@ -74,7 +74,7 @@
 <main class="page page--phero">
   <div class="wrap">
     <div class="pgrid">
-      <div class="pgrid__photo ph reveal" data-icon="billiard">
+      <div class="pgrid__photo ph reveal" data-icon="billiard" data-photo="bilyard">
         <span class="ph__label">Фото більярда</span>
         <img src="bilyard.jpg" alt="Більярд у кафе «Філін»" loading="lazy" onerror="this.remove()">
       </div>
@@ -130,8 +130,8 @@
   </div>
 </footer>
 
-<script src="config.js?v=52"></script>
-<script src="platform.js?v=52"></script>
-<script src="main.js?v=52"></script>
+<script src="config.js?v=53"></script>
+<script src="platform.js?v=53"></script>
+<script src="main.js?v=53"></script>
 </body>
 </html>
