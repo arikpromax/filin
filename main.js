@@ -1168,6 +1168,12 @@
             var noEl = $('[data-r-no]', bk);
             if (noEl) noEl.textContent = '№ ' + res.ref;
             busyLoaded[r.id] = false;   // дата щойно зайнялась — перепитаємо
+            // база вже закріпила дати — так і кажемо, а не «підтвердимо пізніше»
+            var doneT = $('.bk__done-title', bk), doneH = $('.bk__done-hint', bk);
+            if (doneT) doneT.textContent = 'Готово! Номер за вами';
+            if (doneH) doneH.textContent = PAY.prepay
+              ? 'Дати вже закріплені за вами. Ми зв’яжемося щодо передоплати — збережіть цей чек.'
+              : 'Дати вже закріплені за вами. Чекаємо на вас — збережіть цей чек.';
           })
         : sendBooking(data);
 
