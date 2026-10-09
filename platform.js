@@ -20,7 +20,25 @@
 
   var CFG = window.FILIN || {};
   var id = Number(CFG.siteId || 0);
-  if (!id) return;                       // номера сайту ще немає — нічого не робимо
+
+  /* Спільна сторінка номера (nomer.html?id=ключ) сама нічого не знає
+     про номер — усе бере з адмінки. Тому main.js вона підключає не
+     тегом, а через нас (data-then): щойно дані номера на сторінці.
+     main.js з них малює гортання фото й вікно бронювання. */
+  var me = document.currentScript;
+  var THEN = me ? me.getAttribute('data-then') || '' : '';
+  var started = false;
+  var startMain = function () {
+    if (started || !THEN) return;
+    started = true;
+    var sc = document.createElement('script');
+    sc.src = THEN;
+    document.body.appendChild(sc);
+  };
+  var roomPage = document.querySelector('[data-room-page]');
+  var ROOM = roomPage ? (new URLSearchParams(location.search).get('id') || '') : null;
+
+  if (!id) { startMain(); return; }      // номера сайту ще немає — нічого не робимо
 
   var DB = 'https://ortiatyxntdikaldepbp.supabase.co/rest/v1';
   var KEY = 'sb_publishable_UW1Z8ukEU1XWVCdQxIGkDw_firK4hpO'; /* публічний ключ лише на читання */
@@ -94,6 +112,7 @@
       CFG.prices[key] = num(r.price);
     });
     if (!live) { paintGrid(rooms || []); paintBkRooms(rooms || []); }
+    if (!live && ROOM !== null) bindRoomPage(rooms || []);
     paintRooms(rooms || [], live);
 
     /* прості тексти */
@@ -144,11 +163,38 @@
     return list;
   };
 
+  /* Сторінка номера: в перших номерів своя (standart.html…),
+     у доданих в адмінці — спільна nomer.html, яка бере все з бази. */
+  var pageOf = function (r) {
+    var x = r.extra || {};
+    return String(x.page || "").trim() || "nomer.html?id=" + encodeURIComponent(x.key || "");
+  };
+
+  /* Спільна сторінка номера: який саме номер — з адреси ?id=ключ.
+     Підписуємо ним кнопки «Забронювати» й ціну, а далі сторінка
+     малюється так само, як standart.html. Номер прибрали — так і кажемо. */
+  var bindRoomPage = function (rooms) {
+    var r = rooms.filter(function (x) { return (x.extra || {}).key === ROOM; })[0];
+    var each = function (sel, fn) { Array.prototype.forEach.call(document.querySelectorAll(sel), fn); };
+    if (!r) {
+      var h = document.querySelector(".room-head h1");
+      if (h) h.textContent = "Номер не знайдено";
+      var m = document.querySelector(".room-head__meta");
+      if (m) m.textContent = "Можливо, його вже прибрали. Подивіться інші номери нижче.";
+      each(".room-layout, .book-dock", function (el) { el.hidden = true; });
+      document.title = "Номер не знайдено — мотель «Філін»";
+      return;
+    }
+    each("[data-book]", function (el) { el.setAttribute("data-book", ROOM); });
+    each("[data-room-price]", function (el) { el.setAttribute("data-room-price", ROOM); });
+    roomPage.setAttribute("data-name", r.title || "");
+    var dock = document.querySelector(".book-dock b");
+    if (dock && r.title) dock.textContent = r.title;
+  };
+
   /* Список номерів на головній. Додали номер в адмінці — зʼявиться
      картка, прибрали — зникне. Малюємо до запуску main.js: саме він
-     рахує ціни й відкриває вікно бронювання з цих карток.
-     Номер без своєї сторінки просто не має посилання — забронювати
-     його все одно можна. */
+     рахує ціни й відкриває вікно бронювання з цих карток. */
   var paintGrid = function (rooms) {
     var grid = document.querySelector("[data-rooms]");
     if (!grid || !rooms.length) return;
@@ -160,25 +206,19 @@
       var key = esc(x.key || "");
       var name = esc(r.title || "");
       var pic = picsOf(r)[0] || "";
-      var page = String(x.page || "").trim();
-      var photo = page
-        ? '<a class="rc__photo ph" data-icon="bed" href="' + esc(page) +
-          '" aria-label="Відкрити номер «' + name + '»">'
-        : '<div class="rc__photo ph" data-icon="bed">';
-      var photoEnd = page ? "</a>" : "</div>";
-      var title = page
-        ? '<h3 class="rc__name"><a href="' + esc(page) + '">' + name + "</a></h3>"
-        : '<h3 class="rc__name">' + name + "</h3>";
+      var page = esc(pageOf(r));
       return '<article class="rc" id="' + key + '" data-room-id="' + key +
-        '" data-cap="' + esc(x.cap || 2) + '"' + (page ? ' data-href="' + esc(page) + '"' : "") + ">" +
-        photo +
+        '" data-cap="' + esc(x.cap || 2) + '" data-href="' + page + '">' +
+        '<a class="rc__photo ph" data-icon="bed" href="' + page +
+          '" aria-label="Відкрити номер «' + name + '»">' +
           '<span class="ph__label">Фото</span>' +
           (pic ? '<img src="' + esc(pic) + '" alt="Номер «' + name +
             '»" loading="lazy" onerror="this.remove()">' : "") +
           '<span class="rc__hover"><b>' + name + "</b><span>Детальніше про номер</span></span>" +
-        photoEnd +
+        "</a>" +
         '<div class="rc__body">' +
-          '<p class="rc__kind">Номер у мотелі</p>' + title +
+          '<p class="rc__kind">Номер у мотелі</p>' +
+          '<h3 class="rc__name"><a href="' + page + '">' + name + "</a></h3>" +
           '<p class="rc__meta">' + esc(x.meta || "") + "</p>" +
           '<div class="rc__foot"><p class="rc__price" data-price></p>' +
           '<button class="btn" type="button" data-book="' + key +
@@ -227,7 +267,9 @@
       var ax = a.extra || {};
       if (ax.top === true || ax.top === 'true') chips.push({ icon: GROUP_ICON[ax.group] || 'dot', text: a.title });
     });
-    return { groups: groups, chips: chips, beds: x.beds || '', has: !!AMEN.length };
+    // перші плитки — гості й ліжко: вони ж короткі факти біля ціни
+    var facts = chips.slice(0, (cap ? 1 : 0) + (x.beds ? 1 : 0)).map(function (c) { return c.text; });
+    return { groups: groups, chips: chips, facts: facts, beds: x.beds || '', has: !!AMEN.length };
   };
 
   /* Назви, підписи й фото номерів. Картки на головній знаходимо за
@@ -276,13 +318,20 @@
         var am = roomAmenities(r);
         if (am.beds) {
           var bedsEl = document.querySelector(".rbeds");
-          if (bedsEl) bedsEl.innerHTML = "<b>Ліжка:</b> " + esc(am.beds);
+          if (bedsEl) { bedsEl.innerHTML = "<b>Ліжка:</b> " + esc(am.beds); bedsEl.hidden = false; }
         }
-        if (am.has) {
+        var facts = document.querySelector(".room-book__facts");
+        if (facts && am.facts.length) {
+          facts.innerHTML = am.facts.map(function (t) { return "<li>" + esc(t) + "</li>"; }).join("");
+        }
+        // на спільній сторінці плиток у розмітці немає — малюємо навіть без списку зручностей
+        var chipsBox = document.querySelector(".rchips");
+        var noChips = chipsBox && !chipsBox.children.length;
+        if (am.has || noChips) {
           // main.js ще не запущений — він сам намалює з CFG; уже запущений — малюємо одразу
-          CFG.facilities = am.groups;
+          if (am.has) CFG.facilities = am.groups;
           CFG.roomChips = am.chips;
-          if (typeof window.FILIN_FACILITIES === "function") window.FILIN_FACILITIES(am.groups);
+          if (am.has && typeof window.FILIN_FACILITIES === "function") window.FILIN_FACILITIES(am.groups);
           if (typeof window.FILIN_CHIPS === "function") window.FILIN_CHIPS(am.chips);
         }
       }
@@ -403,8 +452,7 @@
     track.innerHTML = rooms.filter(function (r) { return (r.extra || {}).key !== here; }).map(function (r) {
       var x = r.extra || {};
       var pic = picsOf(r)[0] || "";
-      var href = x.page ? esc(x.page) : "index.html#" + esc(x.key || "");
-      return '<a class="ocard" href="' + href + '">' +
+      return '<a class="ocard" href="' + esc(pageOf(r)) + '">' +
         '<span class="ocard__photo ph" data-icon="bed"><span class="ph__label">Фото</span>' +
         (pic ? '<img src="' + esc(pic) + '" alt="Номер «' + esc(r.title) + '»" loading="lazy">' : "") + "</span>" +
         '<span class="ocard__name">' + esc(r.title) + "</span>" +
@@ -526,9 +574,28 @@
   };
 
   /* Збережене прикладаємо одразу, ще до main.js — тож сторінка
-     малюється одразу з правильними цінами. */
+     малюється одразу з правильними цінами. Спільна сторінка номера
+     бере збережене, лише якщо там уже є цей номер (щойно доданого
+     ще немає) — інакше чекає на свіже. */
   var box = recall();
-  if (box && box.items) applyAll(box.items, box.texts, false);
+  var boxHasRoom = function () {
+    return (box.items || []).some(function (r) {
+      return r.collection === 'rooms' && (r.extra || {}).key === ROOM;
+    });
+  };
+  if (box && box.items && (ROOM === null || boxHasRoom())) {
+    applyAll(box.items, box.texts, false);
+    startMain();
+  }
+
+  /* База довго мовчить — запускаємо сторінку з тим, що є */
+  var fallback = function () {
+    if (started || !THEN) return;
+    if (box && box.items) applyAll(box.items, box.texts, false);
+    else if (ROOM !== null) bindRoomPage([]);
+    startMain();
+  };
+  if (THEN && !started) setTimeout(fallback, 6000);
 
   /* А свіже тягнемо тихо. Власник щойно змінив ціну в адмінці —
      гість побачить її за секунду, без перезавантаження. */
@@ -537,8 +604,10 @@
         '&order=collection,sort_order&select=id,collection,title,text,price,image_url,extra'),
     get('/texts?site_id=eq.' + id + '&select=key,value')
   ]).then(function (r) {
-    applyAll(r[0], r[1], true);
+    // main.js ще не запущений (спільна сторінка номера) — малюємо все, як із памʼяті
+    applyAll(r[0], r[1], !(THEN && !started));
     remember(r[0], r[1]);
+    startMain();
     repaint();
-  }).catch(function () { /* бази немає — лишаємось на config.js */ });
+  }).catch(function () { fallback(); /* бази немає — лишаємось на config.js */ });
 })();
